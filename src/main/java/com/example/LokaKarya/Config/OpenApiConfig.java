@@ -23,21 +23,21 @@ public class OpenApiConfig implements WebMvcConfigurer {
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI()
-                .components(new Components().addSecuritySchemes("bearerAuth",
-                                new SecurityScheme()
-                                        .type(SecurityScheme.Type.HTTP)
-                                        .scheme("bearer")))
+//                .components(new Components().addSecuritySchemes("bearerAuth",
+//                                new SecurityScheme()
+//                                        .type(SecurityScheme.Type.HTTP)
+//                                        .scheme("bearer")))
                 .info(new Info()
-                        .title("Ogya Hr API")
-                        .description("Ahmad Raihan API")
+                        .title("Loka Karya API")
+                        .description("Kelompok 4 API")
                         .version("v1.0.0")
                         .termsOfService("terms of service")
                         .license(new License()
                             .name("Apache License Versi 2.0")
                             .url("https://www.apache.org/licenses/LICENSE-2.0"))
                         .contact(new Contact()
-                                .name("Ahmad Raihan")
-                                .email("ahmad.reyhan2230@gmail.com"))
+                                .name("Banu & Raihan")
+                                .email("abcd@gmail.com"))
                 );
 
     }
