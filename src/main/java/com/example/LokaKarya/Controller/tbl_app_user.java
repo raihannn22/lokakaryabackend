@@ -16,7 +16,7 @@ public class tbl_app_user {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", length = 32, nullable = false)
-    private String id;
+    private String ida;
 
     @Column(name = "USERNAME", length = 100, nullable = false)
     private String username;
