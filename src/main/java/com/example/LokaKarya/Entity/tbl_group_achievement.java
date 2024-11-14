@@ -13,8 +13,13 @@ import java.util.UUID;
 @ToString
 @Table(name = "TBL_GROUP_ACHIEVEMENT")
 public class tbl_group_achievement {
+    // @Id
+    // @Column(name = "ID", length = 32, nullable = false)
+    // private UUID id;
+
     @Id
-    @Column(name = "ID", length = 32, nullable = false)
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "ID",nullable = false)
     private UUID id;
 
     @Column(name = "GROUP_NAME", length = 100, nullable = false)

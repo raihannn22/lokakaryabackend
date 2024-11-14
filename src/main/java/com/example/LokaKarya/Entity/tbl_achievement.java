@@ -15,6 +15,7 @@ import java.util.UUID;
 @Table(name = "TBL_ACHIEVEMENT")
 public class tbl_achievement {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO) // Menghasilkan UUID secara otomatis
     @Column(name = "ID", length = 32, nullable = false)
     private UUID id;
 
