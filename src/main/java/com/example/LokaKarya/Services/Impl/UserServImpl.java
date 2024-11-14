@@ -17,7 +17,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class UserServImpl implements UserServ {
+public class
+
+
+UserServImpl implements UserServ {
 
     private final Logger Log = LoggerFactory.getLogger(UserServImpl.class);
 

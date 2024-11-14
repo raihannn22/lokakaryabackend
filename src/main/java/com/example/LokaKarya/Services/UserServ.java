@@ -11,7 +11,6 @@ public interface UserServ {
     UserDto getUserById(UUID id);
     UserDto createUser(UserReqDto userDto);
     UserDto updateUser(UUID id, UserReqDto userDto);
-//    UserDto createUser(UserReqDto userDto);
     Boolean deleteUser(UUID id);
 }
 

@@ -34,7 +34,7 @@ public class AssessmentSummary {
     private Integer year;
 
     @Column(name = "SCORE",length = 3, nullable = false)
-    private Float score;
+    private Integer score;
 
     @Column(name = "STATUS", nullable = false)
     private Integer status = 1;
