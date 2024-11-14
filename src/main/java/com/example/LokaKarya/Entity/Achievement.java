@@ -2,7 +2,8 @@ package com.example.LokaKarya.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.sql.Date;
+
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -11,31 +12,31 @@ import java.util.UUID;
 @Data
 @Entity
 @ToString
-@Table(name = "TBL_EMP_ATTITUDE_SKILL")
-public class tbl_emp_attitude_skill {
-
+@Table(name = "TBL_ACHIEVEMENT")
+public class Achievement {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO) // Menghasilkan UUID secara otomatis
     @Column(name = "ID", length = 32, nullable = false)
     private UUID id;
 
-    @Column(name = "USER_ID", length = 32, nullable = false)
-    private UUID userId;
+    @Column(name = "ACHIEVEMENT", length = 100, nullable = false)
+    private String achievement;
 
-    @Column(name = "ATTITUDE_SKILL_ID", length = 32, nullable = false)
-    private UUID attitudeSkillId;
+    @Column(name = "GROUP_ID", length = 32, nullable = false)
+    private UUID groupId;
 
-    @Column(name = "SCORE", length = 3, nullable = false)
-    private Integer score;
+    @Column(name = "ENABLED", length = 1)
+    private Integer enabled = 1;
 
     @Column(name = "CREATED_AT", nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
     @Column(name = "CREATED_BY", length = 32)
     private UUID createdBy;
 
     @Column(name = "UPDATED_AT")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
     @Column(name = "UPDATED_BY", length = 32)

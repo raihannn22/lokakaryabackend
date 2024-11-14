@@ -11,8 +11,8 @@ import java.util.UUID;
 @Data
 @Entity
 @ToString
-@Table(name = "TBL_EMP_SUGGESTION")
-public class tbl_emp_suggestion {
+@Table(name = "TBL_EMP_TECHNICAL_SKILL")
+public class EmpTechnicalSkill {
     @Id
     @Column(name = "ID", length = 32, nullable = false)
     private UUID id;
@@ -20,10 +20,13 @@ public class tbl_emp_suggestion {
     @Column(name = "USER_ID", length = 32, nullable = false)
     private UUID userId;
 
-    @Column(name = "SUGGESTION", length = 200)
-    private String suggestion;
+    @Column(name = "TECHNICAL_SKILL_ID", length = 32, nullable = false)
+    private UUID technicalSkillId;
 
-    @Column(name = "ASSESSMENT_YEAR", length = 4)
+    @Column(name = "SCORE", length = 3, nullable = false)
+    private Integer score;
+
+    @Column(name = "ASSESSMENT_YEAR", length = 4, nullable = false)
     private Integer assessmentYear;
 
     @Column(name = "CREATED_AT", nullable = false)

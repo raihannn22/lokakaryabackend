@@ -2,7 +2,7 @@ package com.example.LokaKarya.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.Date;
+import java.sql.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -11,8 +11,8 @@ import java.util.UUID;
 @Data
 @Entity
 @ToString
-@Table(name = "TBL_EMP_ACHIEVEMENT_SKILL")
-public class tbl_emp_achievement_skill {
+@Table(name = "TBL_EMP_SUGGESTION")
+public class EmpSuggestion {
     @Id
     @Column(name = "ID", length = 32, nullable = false)
     private UUID id;
@@ -20,31 +20,25 @@ public class tbl_emp_achievement_skill {
     @Column(name = "USER_ID", length = 32, nullable = false)
     private UUID userId;
 
-    @Column(name = "NOTES", length = 100, nullable = false)
-    private String notes;
+    @Column(name = "SUGGESTION", length = 200)
+    private String suggestion;
 
-    @Column(name = "ACHIEVEMENT_ID", length = 32, nullable = false)
-    private UUID achievementId;
-
-    @Column(name = "SCORE", length = 3, nullable = false)
-    private Integer score;
-
-    @Column(name = "ASSESMENT_YEAR", length = 4, nullable = false)
-    private Integer assesmentYear;
+    @Column(name = "ASSESSMENT_YEAR", length = 4)
+    private Integer assessmentYear;
 
     @Column(name = "CREATED_AT", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date createdAt;
 
     @Column(name = "CREATED_BY", length = 32)
     private UUID createdBy;
 
     @Column(name = "UPDATED_AT")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date updatedAt;
 
     @Column(name = "UPDATED_BY", length = 32)
     private UUID updatedBy;
 
-}
     
+}

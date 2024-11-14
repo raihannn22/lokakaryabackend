@@ -12,7 +12,7 @@ import java.util.UUID;
 @Entity
 @ToString
 @Table(name = "TBL_GROUP_ATTITUDE_SKILL")
-public class tbl_group_attitude_skill {
+public class GroupAttitudeSkill {
     @Id
     @Column(name = "ID", length = 32, nullable = false)
     private UUID id;

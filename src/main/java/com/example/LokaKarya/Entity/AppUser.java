@@ -12,7 +12,7 @@ import java.util.UUID;
 @Entity
 @ToString
 @Table(name = "TBL_APP_USER")
-public class tbl_app_user {
+public class AppUser {
     @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", length = 32, nullable = false)

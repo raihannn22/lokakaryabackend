@@ -11,17 +11,21 @@ import java.util.UUID;
 @Data
 @Entity
 @ToString
-@Table(name = "TBL_TECHNICAL_SKILL")
-public class tbl_technical_skill {
+@Table(name = "TBL_EMP_ATTITUDE_SKILL")
+public class EmpAttitudeSkill {
+
     @Id
     @Column(name = "ID", length = 32, nullable = false)
     private UUID id;
 
-    @Column(name = "TECHNICAL_SKILL", length = 100, nullable = false)
-    private String technicalSkill;
+    @Column(name = "USER_ID", length = 32, nullable = false)
+    private UUID userId;
 
-    @Column(name = "ENABLED", length = 1)
-    private Integer enabled = 1;
+    @Column(name = "ATTITUDE_SKILL_ID", length = 32, nullable = false)
+    private UUID attitudeSkillId;
+
+    @Column(name = "SCORE", length = 3, nullable = false)
+    private Integer score;
 
     @Column(name = "CREATED_AT", nullable = false)
     @Temporal(TemporalType.DATE)

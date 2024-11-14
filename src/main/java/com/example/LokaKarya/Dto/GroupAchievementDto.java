@@ -1,18 +1,16 @@
 package com.example.LokaKarya.Dto;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.Date;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
 import lombok.Setter;
 
 @Data
-// @Getter
-// @Setter
+@Getter
+@Setter
 @AllArgsConstructor
 public class GroupAchievementDto {
     private UUID id;
