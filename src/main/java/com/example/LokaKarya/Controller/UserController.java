@@ -24,7 +24,7 @@ public class UserController extends ServerResponseList {
 @Autowired
     UserServ userServ;
 
-    @GetMapping("/all")
+    @GetMapping("/get/all")
     public ResponseEntity<ManagerDto<List<UserDto>>>  getAllUsers() {
         Log.info("Start getAllUsers in UserController");
         long startTime = System.currentTimeMillis();
@@ -58,7 +58,7 @@ public class UserController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
-    @GetMapping("/detail/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<ManagerDto<UserDto>>  getUserDetail(@PathVariable("id") UUID id) {
         Log.info("Start getUserDetail in UserController");
         long startTime = System.currentTimeMillis();

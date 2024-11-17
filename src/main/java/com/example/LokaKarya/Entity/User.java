@@ -43,15 +43,12 @@ public class User {
     @Column(name = "PASSWORD", length = 100)
     private String password;
 
-    @Column(name = "ROLE_ID")
-    private UUID roleId;
-
     @Column(name = "DIVISION_ID")
     private UUID divisionId;
 
     @Column(name = "CREATED_AT")
     @Temporal(TemporalType.DATE)
-    private Date createdAt;
+    private Date createdAt = new Date(System.currentTimeMillis());
 
     @Column(name = "CREATED_BY")
     private UUID createdBy;

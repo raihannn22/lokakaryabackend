@@ -44,7 +44,7 @@ public class AssessmentSummary {
 
     @Column(name = "CREATED_AT")
     @Temporal(TemporalType.DATE)
-    private Date createdAt;
+    private Date createdAt = new Date(System.currentTimeMillis());
 
     @Column(name = "UPDATED_BY", length = 32)
     private UUID updatedBy;

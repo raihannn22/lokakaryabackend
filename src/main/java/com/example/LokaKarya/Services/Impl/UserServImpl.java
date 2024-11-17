@@ -2,7 +2,11 @@ package com.example.LokaKarya.Services.Impl;
 
 import com.example.LokaKarya.Dto.User.UserDto;
 import com.example.LokaKarya.Dto.User.UserReqDto;
+import com.example.LokaKarya.Entity.AppRole;
+import com.example.LokaKarya.Entity.AppUserRole;
 import com.example.LokaKarya.Entity.User;
+import com.example.LokaKarya.Repository.AppRoleRepo;
+import com.example.LokaKarya.Repository.AppUserRoleRepo;
 import com.example.LokaKarya.Repository.UserRepo;
 import com.example.LokaKarya.Services.UserServ;
 import org.slf4j.Logger;
@@ -26,6 +30,12 @@ UserServImpl implements UserServ {
 
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private AppRoleRepo appRoleRepo;
+
+    @Autowired
+    private AppUserRoleRepo appUserRoleRepo;
 
     @Override
     public List<UserDto> getAllUsers() {
@@ -53,7 +63,21 @@ UserServImpl implements UserServ {
     @Override
     public UserDto createUser(UserReqDto userDto) {
 //        Log.info("Start createUser in UserServImpl");
-
+//        idRole = appRoleRepo.findById()
+        System.out.println(userDto.getAppRole());
+        if (userDto.getAppRole() !=null) {
+            for (UUID roleId: userDto.getAppRole()) {
+               Optional<AppRole> idRole =  appRoleRepo.findById(roleId);
+               if (idRole.isEmpty()) {
+                   throw new RuntimeException("Role not found");
+               }else {
+                   AppUserRole appUserRole = new AppUserRole();
+                   appUserRole.setAppRole(idRole.get());
+                   appUserRole.setUser(UserReqDto.toEntity(userDto));
+                   appUserRoleRepo.save(appUserRole);
+               }
+            };
+        }
         User user = UserReqDto.toEntity(userDto);
 
         userRepo.save(user);
@@ -107,9 +131,6 @@ UserServImpl implements UserServ {
         }
         if (userDto.getPassword() != null) {
             existingUser.setPassword(userDto.getPassword());
-        }
-        if (userDto.getRoleId() != null) {
-            existingUser.setRoleId(userDto.getRoleId());
         }
         if (userDto.getDivisionId() != null) {
             existingUser.setDivisionId(userDto.getDivisionId());

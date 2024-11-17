@@ -78,4 +78,21 @@ public class AssessmentSummaryController extends ServerResponseList {
         Log.info("End saveAssessmentSummary in AssessmentSummaryController");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @DeleteMapping
+    public ResponseEntity<ManagerDto<Boolean>> deleteAssessmentSummary(@RequestParam("id") UUID id) {
+        Log.info("Start deleteAssessmentSummary in AssessmentSummaryController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<Boolean> response = new ManagerDto<>();
+        Boolean content = assessmentSummaryServ.deleteAssessmentSummary(id);
+        response.setContent(content);
+        response.setTotalRows(1);
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success delete data", executionTime));
+        Log.info("End deleteAssessmentSummary in AssessmentSummaryController");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
