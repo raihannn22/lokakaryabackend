@@ -12,7 +12,7 @@ import java.util.UUID;
 @Entity
 @ToString
 @Table(name = "TBL_GROUP_ACHIEVEMENT")
-public class tbl_group_achievement {
+public class GroupAchievement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -28,18 +28,18 @@ public class tbl_group_achievement {
     @Column(name = "ENABLED", length = 1)
     private Integer enabled = 1;
 
-    @Column(name = "CREATED_AT", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CREATED_AT")
+    @Temporal(TemporalType.DATE)
     private Date createdAt;
 
-    @Column(name = "CREATED_BY", length = 32)
+    @Column(name = "CREATED_BY")
     private UUID createdBy;
 
     @Column(name = "UPDATED_AT")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date updatedAt;
 
-    @Column(name = "UPDATED_BY", length = 32)
+    @Column(name = "UPDATED_BY")
     private UUID updatedBy;
 
     

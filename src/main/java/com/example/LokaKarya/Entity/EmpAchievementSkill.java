@@ -14,7 +14,8 @@ import java.util.UUID;
 @Table(name = "TBL_EMP_ACHIEVEMENT_SKILL")
 public class EmpAchievementSkill {
     @Id
-    @Column(name = "ID", length = 32, nullable = false)
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "ID",nullable = false)
     private UUID id;
 
     @Column(name = "USER_ID", length = 32, nullable = false)
@@ -29,21 +30,21 @@ public class EmpAchievementSkill {
     @Column(name = "SCORE", length = 3, nullable = false)
     private Integer score;
 
-    @Column(name = "ASSESMENT_YEAR", length = 4, nullable = false)
-    private Integer assesmentYear;
+    @Column(name = "ASSESSMENT_YEAR", length = 4, nullable = false)
+    private Integer assessmentYear;
 
-    @Column(name = "CREATED_AT", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CREATED_AT")
+    @Temporal(TemporalType.DATE)
     private Date createdAt;
 
-    @Column(name = "CREATED_BY", length = 32)
+    @Column(name = "CREATED_BY")
     private UUID createdBy;
 
     @Column(name = "UPDATED_AT")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date updatedAt;
 
-    @Column(name = "UPDATED_BY", length = 32)
+    @Column(name = "UPDATED_BY")
     private UUID updatedBy;
 
 }

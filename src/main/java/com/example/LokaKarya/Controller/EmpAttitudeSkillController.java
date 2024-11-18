@@ -2,9 +2,9 @@ package com.example.LokaKarya.Controller;
 
 
 import com.example.LokaKarya.Dto.ManagerDto;
-import com.example.LokaKarya.Dto.GroupAchievement.GroupAchievementDto;
-import com.example.LokaKarya.Dto.GroupAchievement.GroupAchievementReqDto;
-import com.example.LokaKarya.Services.GroupAchievementServ;
+import com.example.LokaKarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillDto;
+import com.example.LokaKarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillReqDto;
+import com.example.LokaKarya.Services.EmpAttitudeSkillServ;
 import com.example.LokaKarya.util.ServerResponseList;
 import lombok.extern.java.Log;
 import org.slf4j.Logger;
@@ -18,94 +18,94 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/group-achievement")
-public class GroupAchievementController extends ServerResponseList {
-    private final Logger Log = LoggerFactory.getLogger(GroupAchievementController.class);
+@RequestMapping("/emp-attitude-skill")
+public class EmpAttitudeSkillController extends ServerResponseList {
+    private final Logger Log = LoggerFactory.getLogger(EmpAttitudeSkillController.class);
 @Autowired
-    GroupAchievementServ groupAchievementServ;
+    EmpAttitudeSkillServ empAttitudeSkillServ;
 
     @GetMapping("/all")
-    public ResponseEntity<ManagerDto<List<GroupAchievementDto>>>  getAllGroupAchievement() {
-        Log.info("Start getAllGroupAchievement in GroupAchievementController");
+    public ResponseEntity<ManagerDto<List<EmpAttitudeSkillDto>>>  getAllEmpAttitudeSkill() {
+        Log.info("Start getAllEmpAttitudeSkill in EmpAttitudeSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<List<GroupAchievementDto>> response = new ManagerDto<>();
-        List<GroupAchievementDto> content = groupAchievementServ.getAllGroupAchievement();
+        ManagerDto<List<EmpAttitudeSkillDto>> response = new ManagerDto<>();
+        List<EmpAttitudeSkillDto> content = empAttitudeSkillServ.getAllEmpAttitudeSkill();
 
         response.setContent(content);
         response.setTotalRows(content.size());
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAllGroupAchievement in GroupAchievementController");
+        Log.info("End getAllEmpAttitudeSkill in EmpAttitudeSkillController");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping("/save")
-    public ResponseEntity<ManagerDto<GroupAchievementDto>>  saveGroupAchievement(@RequestBody GroupAchievementReqDto groupAchievementDto) {
+    public ResponseEntity<ManagerDto<EmpAttitudeSkillDto>> saveEmpAttitudeSkill(@RequestBody EmpAttitudeSkillReqDto empAttitudeSkillDto) {
         Log.info("Start saveGroupAchievement in GroupAchievementController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<GroupAchievementDto> response = new ManagerDto<>();
-        GroupAchievementDto content = groupAchievementServ.createGroupAchievement(groupAchievementDto);
+        ManagerDto<EmpAttitudeSkillDto> response = new ManagerDto<>();
+        EmpAttitudeSkillDto content = empAttitudeSkillServ.createEmpAttitudeSkill(empAttitudeSkillDto);
 
         response.setContent(content);
         response.setTotalRows(1);
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success save data", executionTime));
-        Log.info("End saveGroupAchievement in GroupAchievementController");
+        Log.info("End saveEmpAttitudeSkill in EmpAttitudeSkillController");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
     @GetMapping("/detail/{id}")
-    public ResponseEntity<ManagerDto<GroupAchievementDto>>  getGroupAchievementDetail(@PathVariable("id") UUID id) {
-        Log.info("Start getGroupAchievementDetail in GroupAchievementController");
+    public ResponseEntity<ManagerDto<EmpAttitudeSkillDto>>  getEmpAttitudeSkillDetail(@PathVariable("id") UUID id) {
+        Log.info("Start getEmpAttitudeSkillDetail in EmpAttitudeSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<GroupAchievementDto> response = new ManagerDto<>();
-        GroupAchievementDto content = groupAchievementServ.getGroupAchievementById(id);
+        ManagerDto<EmpAttitudeSkillDto> response = new ManagerDto<>();
+        EmpAttitudeSkillDto content = empAttitudeSkillServ.getEmpAttitudeSkillById(id);
 
         response.setContent(content);
         response.setTotalRows(1);
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getGroupAchievementDetail in GroupAchievementController");
+        Log.info("End getEmpAttitudeSkillDetail in EmpAttitudeSkillController");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<ManagerDto<GroupAchievementDto>>  updateGroupAchievement(@PathVariable("id") UUID id, @RequestBody GroupAchievementReqDto groupAchievementDto) {
-        Log.info("Start updateGroupAchievement in GroupAchievementController");
+    public ResponseEntity<ManagerDto<EmpAttitudeSkillDto>>  updateEmpAttitudeSkill(@PathVariable("id") UUID id, @RequestBody EmpAttitudeSkillReqDto empAttitudeSkillDto) {
+        Log.info("Start updateEmpAttitudeSkill in EmpAttitudeSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<GroupAchievementDto> response = new ManagerDto<>();
-        GroupAchievementDto content = groupAchievementServ.updateGroupAchievement(id, groupAchievementDto);
+        ManagerDto<EmpAttitudeSkillDto> response = new ManagerDto<>();
+        EmpAttitudeSkillDto content = empAttitudeSkillServ.updateEmpAttitudeSkill(id, empAttitudeSkillDto);
 
         response.setContent(content);
         response.setTotalRows(1);
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success update data", executionTime));
-        Log.info("End updateGroupAchievement in GroupAchievementController");
+        Log.info("End updateEmpAttitudeSkill in EmpAttitudeSkillController");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ManagerDto<Boolean>> deleteGroupAchievement(@PathVariable("id") UUID id) {
-        Log.info("Start deleteGroupAchievement in GroupAchievementController");
+    public ResponseEntity<ManagerDto<Boolean>> deleteEmpAttitudeSkill(@PathVariable("id") UUID id) {
+        Log.info("Start deleteEmpAttitudeSkill in EmpAttitudeSkillController");
         long startTime = System.currentTimeMillis();
 
         ManagerDto<Boolean> response = new ManagerDto<>();
-        Boolean content = groupAchievementServ.deleteGroupAchievement(id);
+        Boolean content = empAttitudeSkillServ.deleteEmpAttitudeSkill(id);
 
         response.setContent(content);
         response.setTotalRows(1);
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success delete data", executionTime));
-        Log.info("End deleteGroupAchievement in GroupAchievementController");
+        Log.info("End deleteEmpAttitudeSkill in EmpAttitudeSkillController");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
