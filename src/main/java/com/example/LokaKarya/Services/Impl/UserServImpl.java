@@ -1,6 +1,5 @@
 package com.example.LokaKarya.Services.Impl;
 
-import com.example.LokaKarya.Dto.AppUserRole.AppUserRoleDto;
 import com.example.LokaKarya.Dto.AppUserRole.AppUserRoleReqDto;
 import com.example.LokaKarya.Dto.User.UserDto;
 import com.example.LokaKarya.Dto.User.UserReqDto;
@@ -100,35 +99,46 @@ UserServImpl implements UserServ {
     }
 
     @Override
-    public UserDto updateUser (UUID id, UserReqDto userDto) {
-//        Log.info("Start updateUser in UserServImpl");
+    public List<AppUserRoleReqDto> updateUser (UUID id, UserReqDto userDto) {
+        Log.info("Start updateUser in UserServImpl");
+        List<AppUserRole> appRole = appUserRoleRepo.findByUserId(id);
         User findUser  = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User  not found"));
-
-        List<AppRole> appRoles = appUserRoleRepo.findByUserId(id);
-//        User user = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User  not found"));
-//        List<AppUserRoleReqDto> appUserRoles = new ArrayList<>();
-//        for (AppRole appRole : appRoles) {
-//            appUserRoles.add(AppUserRoleReqDto.fromEntity(
-//
-//            ));
-//        }
-//        userDto.setAppRole(appUserRoles);
-
-        if (userDto.getDivision() !=null) {
-            Optional<Division> idDivision =  divisionRepo.findById(userDto.getDivision());
-            if (idDivision.isEmpty()) {
-                throw new RuntimeException("Division not found");
-            }else {
-                findUser.setDivision(idDivision.get());
+        List<AppUserRoleReqDto> appUserRoles = new ArrayList<>();
+        for (AppUserRole userRole : appRole) {
+            appUserRoleRepo.delete(userRole);
             }
+        if (userDto.getDivision() != null) {
+            Division division = divisionRepo.findById(userDto.getDivision()).orElseThrow(() -> new RuntimeException("Division not found"));
+            findUser.setDivision(division);
         }
-        // Update fields based on userDto, falling back to findUser  if userDto field is null
-        updateUserFields(findUser , userDto);
 
+        for (UUID roleId: userDto.getAppRole()) {
+            AppRole role = appRoleRepo.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found"));
+            AppUserRole appUserRole = new AppUserRole();
+            appUserRole.setAppRole(role);
+            appUserRole.setUser(findUser);
+            appUserRoleRepo.save(appUserRole);
+            appUserRoles.add(AppUserRoleReqDto.fromEntity(appUserRole));
+        }
 
-        userRepo.save(findUser);
-//        Log.info("End updateUser in UserServImpl");
-        return UserDto.fromEntity(findUser);
+        return appUserRoles;
+//        userDto.setAppRole(appUserRoles);
+//
+//        if (userDto.getDivision() !=null) {
+//            Optional<Division> idDivision =  divisionRepo.findById(userDto.getDivision());
+//            if (idDivision.isEmpty()) {
+//                throw new RuntimeException("Division not found");
+//            }else {
+//                findUser.setDivision(idDivision.get());
+//            }
+//        }
+//        // Update fields based on userDto, falling back to findUser  if userDto field is null
+//        updateUserFields(findUser , userDto);
+//
+//
+//        userRepo.save(findUser);
+////        Log.info("End updateUser in UserServImpl");
+//        return UserDto.fromEntity(findUser);
     }
 
     @Override
