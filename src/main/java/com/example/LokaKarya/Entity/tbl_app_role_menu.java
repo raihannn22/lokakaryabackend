@@ -1,4 +1,4 @@
-//package com.example.LokaKarya.Entity;
+    //package com.example.LokaKarya.Entity;
 //
 //
 //import jakarta.persistence.Column;

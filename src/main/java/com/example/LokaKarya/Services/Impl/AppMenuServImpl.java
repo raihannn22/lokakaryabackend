@@ -48,7 +48,12 @@ public class AppMenuServImpl implements AppMenuServ {
 
     @Override
     public AppMenuReqDto updateAppMenu(UUID id, AppMenuDto appMenuDto) {
-        return null;
+        AppMenu appMenu = appMenuRepo.findById(id).orElseThrow(() -> new RuntimeException("AppMenu not found"));
+        appMenu.setMenuName(appMenuDto.getMenuName());
+        appMenu.setUpdatedBy(UUID.randomUUID());
+        appMenu.setUpdatedAt(Date.valueOf(LocalDate.now()));
+        appMenuRepo.save(appMenu);
+        return AppMenuReqDto.fromEntity(appMenu);
     }
 
     @Override

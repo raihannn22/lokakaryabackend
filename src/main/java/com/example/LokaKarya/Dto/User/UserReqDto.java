@@ -1,5 +1,6 @@
 package com.example.LokaKarya.Dto.User;
 
+import com.example.LokaKarya.Entity.Division;
 import com.example.LokaKarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -34,7 +35,7 @@ public class UserReqDto {
     @JsonProperty("password")
     private String password;
     @JsonProperty("division_id")
-    private UUID divisionId;
+    private UUID division;
 
     public static User toEntity(UserReqDto userDto) {
         User user = new User();
@@ -46,7 +47,6 @@ public class UserReqDto {
         user.setJoinDate(userDto.getJoinDate() != null ? Date.valueOf(userDto.getJoinDate().toLocalDate()) : null);
         user.setEnabled(userDto.getEnabled());
         user.setPassword(userDto.getPassword());
-        user.setDivisionId(userDto.getDivisionId());
         return user;
     }
 }
