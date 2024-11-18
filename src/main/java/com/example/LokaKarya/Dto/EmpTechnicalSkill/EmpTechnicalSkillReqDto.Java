@@ -1,11 +1,11 @@
 package com.example.LokaKarya.Dto.EmpTechnicalSkill;
 
-import com.example.LokaKarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillReqDto;
+import com.example.LokaKarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillDto;
 import com.example.LokaKarya.Entity.EmpTechnicalSkill;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.*;
 
-import java.sql.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
