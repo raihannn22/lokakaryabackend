@@ -75,6 +75,23 @@ public class DevPlanController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<ManagerDto<DevPlanReqDto>> updateDevPlan(@PathVariable("id") UUID id, @RequestBody DevPlanDto devPlanDto) {
+        Log.info("Start updateDevPlan in DevPlanController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<DevPlanReqDto> response = new ManagerDto<>();
+        DevPlanReqDto content = devPlanServImpl.updateDevPlan(id, devPlanDto);
+        response.setContent(content);
+        response.setTotalRows(1);
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success update data", executionTime));
+        Log.info("End updateDevPlan in DevPlanController");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ManagerDto<Boolean>> deleteDevPlan(@PathVariable("id") UUID id) {
         Log.info("Start deleteDevPlan in DevPlanController");

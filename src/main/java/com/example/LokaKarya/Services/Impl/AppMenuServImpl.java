@@ -41,7 +41,7 @@ public class AppMenuServImpl implements AppMenuServ {
 
     @Override
     public AppMenuReqDto createAppMenu(AppMenuDto appMenuDto) {
-        AppMenu appMenu = AppMenuDto.toEntity(appMenuDto, UUID.randomUUID(), Date.valueOf(LocalDate.now()), UUID.randomUUID());
+        AppMenu appMenu = AppMenuDto.toEntity(appMenuDto, null, null, UUID.randomUUID(), new java.util.Date());
         appMenuRepo.save(appMenu);
         return AppMenuReqDto.fromEntity(appMenu);
     }
@@ -49,10 +49,9 @@ public class AppMenuServImpl implements AppMenuServ {
     @Override
     public AppMenuReqDto updateAppMenu(UUID id, AppMenuDto appMenuDto) {
         AppMenu appMenu = appMenuRepo.findById(id).orElseThrow(() -> new RuntimeException("AppMenu not found"));
-        appMenu.setMenuName(appMenuDto.getMenuName());
-        appMenu.setUpdatedBy(UUID.randomUUID());
-        appMenu.setUpdatedAt(Date.valueOf(LocalDate.now()));
-        appMenuRepo.save(appMenu);
+        AppMenu appMenuUpdate = AppMenuDto.toEntity(appMenuDto, appMenu.getUpdatedBy(), new java.util.Date(), appMenu.getCreatedBy() ,appMenu.getCreatedAt());
+        appMenuUpdate.setId(id);
+        appMenuRepo.save(appMenuUpdate);
         return AppMenuReqDto.fromEntity(appMenu);
     }
 

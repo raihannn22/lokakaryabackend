@@ -20,7 +20,7 @@ public class AppMenuReqDto {
     private String menuName;
 
     @JsonProperty("CREATED_AT")
-    private Date createdAt;
+    private java.util.Date createdAt;
 
     @JsonProperty("CREATED_BY")
     private UUID createdBy;
@@ -29,7 +29,7 @@ public class AppMenuReqDto {
     private UUID updatedBy;
 
     @JsonProperty("UPDATED_AT")
-    private Date updatedAt;
+    private java.util.Date updatedAt;
 
     public static  AppMenuReqDto fromEntity(AppMenu appMenu) {
         AppMenuReqDto appMenuReqDto = new AppMenuReqDto();

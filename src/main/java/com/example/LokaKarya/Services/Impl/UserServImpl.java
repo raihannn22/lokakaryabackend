@@ -41,7 +41,7 @@ UserServImpl implements UserServ {
 
     @Override
     public List<UserDto> getAllUsers() {
-//        Log.info("Start getAllUsers in UserServImpl");
+        Log.info("Start getAllUsers in UserServImpl");
         List<User> response = userRepo.findAll();
         List<UserDto> userList = new ArrayList<>();
 
@@ -49,7 +49,7 @@ UserServImpl implements UserServ {
             UserDto userDto = UserDto.fromEntity(user);
             userList.add(userDto);
         }
-//        Log.info("End getAllUsers in UserServImpl");
+        Log.info("End getAllUsers in UserServImpl");
         return userList;
     }
 

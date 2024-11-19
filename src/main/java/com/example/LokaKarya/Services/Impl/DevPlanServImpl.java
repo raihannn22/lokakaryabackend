@@ -48,7 +48,10 @@ public class DevPlanServImpl implements DevPlanServ {
 
     @Override
     public DevPlanReqDto updateDevPlan(UUID id, DevPlanDto devPlanDto) {
-        return null;
+        DevPlan devPlan = devPlanRepo.findById(id).orElseThrow(()-> new RuntimeException("DevPlan not found"));
+        DevPlan devPlan1 = devPlanDto.toEntity(devPlanDto, devPlan.getUpdatedBy(), devPlan.getCreatedBy(), Date.valueOf(LocalDate.now()));
+        devPlan1.setId(id);
+        return DevPlanReqDto.fromEntity(devPlanRepo.save(devPlan1));
     }
 
     @Override

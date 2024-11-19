@@ -23,8 +23,7 @@ public class AppMenu {
     private String menuName;
 
     @Column(name = "CREATED_AT", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date createdAt  = new Date(System.currentTimeMillis());
+    private java.util.Date createdAt;
 
     @Column(name = "CREATED_BY")
     private UUID createdBy;
@@ -33,6 +32,5 @@ public class AppMenu {
     private UUID updatedBy;
 
     @Column(name = "UPDATED_AT")
-    @Temporal(TemporalType.DATE)
-    private Date updatedAt;
+    private java.util.Date updatedAt;
 }

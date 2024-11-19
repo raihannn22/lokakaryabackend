@@ -27,7 +27,7 @@ public class AssessmentSummaryDto {
     private Integer status = 1;
 
     public static AssessmentSummary toEntity(AssessmentSummaryDto assessmentSummaryDto, User user, UUID updatedBy
-    , Date updatedAt, UUID createdBy, Date createdAt) {
+    , Date updatedAt, UUID createdBy) {
         AssessmentSummary assessmentSummary = new AssessmentSummary();
         assessmentSummary.setId(assessmentSummaryDto.getId());
         assessmentSummary.setUser(user);
@@ -37,7 +37,6 @@ public class AssessmentSummaryDto {
         assessmentSummary.setUpdatedBy(updatedBy);
         assessmentSummary.setUpdatedAt(updatedAt);
         assessmentSummary.setCreatedBy(createdBy);
-        assessmentSummary.setCreatedAt(createdAt);
         return assessmentSummary;
     }
 }

@@ -53,9 +53,10 @@ public class DivisionServImpl implements DivisionServ {
 
     @Override
     public DivisionReqDto updateDivision(UUID id, DivisionDto divisionDto) {
-        Division division = divisionDto.toEntity(divisionDto, id, Date.valueOf(LocalDate.now()), UUID.randomUUID());
-        divisionRepo.save(division);
-        return DivisionReqDto.fromEntity(divisionRepo.save(division));
+        Division division = divisionRepo.findById(id).orElseThrow(() -> new RuntimeException("Division not found"));
+        Division division1 = divisionDto.toEntity(divisionDto, division.getUpdatedBy(), Date.valueOf(LocalDate.now()), division.getCreatedBy());
+        division1.setId(id);
+        return DivisionReqDto.fromEntity(divisionRepo.save(division1));
     }
 
     @Override
