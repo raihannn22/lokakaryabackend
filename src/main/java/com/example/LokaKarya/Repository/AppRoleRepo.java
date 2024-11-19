@@ -1,12 +1,12 @@
 package com.example.LokaKarya.Repository;
 
-import java.util.UUID;
-
+import com.example.LokaKarya.Entity.AppRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.LokaKarya.Entity.User;
+import java.util.UUID;
 
 @Repository
-public interface UserRepo extends JpaRepository<User, UUID> {
+public interface AppRoleRepo extends JpaRepository<AppRole, UUID> {
+
 }

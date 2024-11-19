@@ -5,8 +5,8 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.LokaKarya.Entity.User;
+import com.example.LokaKarya.Entity.Division;
 
 @Repository
-public interface UserRepo extends JpaRepository<User, UUID> {
+public interface DivisionRepo extends JpaRepository <Division, UUID> {
 }
