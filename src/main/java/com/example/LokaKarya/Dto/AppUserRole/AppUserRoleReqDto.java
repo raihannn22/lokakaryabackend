@@ -3,6 +3,7 @@ package com.example.LokaKarya.Dto.AppUserRole;
 import com.example.LokaKarya.Entity.AppRole;
 import com.example.LokaKarya.Entity.AppUserRole;
 import com.example.LokaKarya.Entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;

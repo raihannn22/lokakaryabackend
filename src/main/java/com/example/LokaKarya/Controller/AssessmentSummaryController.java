@@ -79,6 +79,23 @@ public class AssessmentSummaryController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<ManagerDto<AssessmentSummaryReqDto>> updateAssessmentSummary(@PathVariable("id") UUID id, @RequestBody AssessmentSummaryDto assessmentSummaryDto) {
+        Log.info("Start updateAssessmentSummary in AssessmentSummaryController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<AssessmentSummaryReqDto> response = new ManagerDto<>();
+        AssessmentSummaryReqDto content = assessmentSummaryServ.updateAssessmentSummary(id, assessmentSummaryDto);
+        response.setContent(content);
+        response.setTotalRows(1);
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success update data", executionTime));
+        Log.info("End updateAssessmentSummary in AssessmentSummaryController");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @DeleteMapping
     public ResponseEntity<ManagerDto<Boolean>> deleteAssessmentSummary(@RequestParam("id") UUID id) {
         Log.info("Start deleteAssessmentSummary in AssessmentSummaryController");

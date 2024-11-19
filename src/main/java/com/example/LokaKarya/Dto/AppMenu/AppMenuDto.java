@@ -21,13 +21,14 @@ public class AppMenuDto {
     @JsonProperty("MENU_NAME")
     private String menuName;
 
-    public static AppMenu toEntity(AppMenuDto dto, UUID updatedBy, Date updatedAt, UUID createdBy) {
+    public static AppMenu toEntity(AppMenuDto dto, UUID updatedBy, java.util.Date updatedAt, UUID createdBy, java.util.Date createdAt) {
         AppMenu appMenu = new AppMenu();
         appMenu.setId(dto.getId());
         appMenu.setMenuName(dto.getMenuName());
         appMenu.setCreatedBy(updatedBy);
         appMenu.setUpdatedAt(updatedAt);
         appMenu.setUpdatedBy(createdBy);
+        appMenu.setCreatedAt(createdAt);
         return appMenu;
     }
 }

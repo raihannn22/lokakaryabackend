@@ -61,6 +61,19 @@ public class AppMenuController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<ManagerDto<AppMenuReqDto>> updateAppMenu(@PathVariable("id") UUID id, @RequestBody AppMenuDto appMenuDto) {
+        Log.info("Start updateAppMenu in AppMenuController");
+        long startTime = System.currentTimeMillis();
+        ManagerDto<AppMenuReqDto> response = new ManagerDto<>();
+        AppMenuReqDto content = appMenuServ.updateAppMenu(id, appMenuDto);
+        response.setContent(content);
+        long endTime = System.currentTimeMillis();
+        response.setInfo(getInfoOk("Success Update data", endTime - startTime));
+        Log.info("End updateAppMenu in AppMenuController, time: " + (endTime - startTime) + "ms");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ManagerDto<Boolean>> deleteAppRole(@PathVariable("id") UUID id) {
         Log.info("Start deleteAppRole in AppRoleController");

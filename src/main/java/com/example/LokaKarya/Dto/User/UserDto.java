@@ -36,7 +36,7 @@ public class UserDto {
     @JsonProperty("password")
     private String password;
     @JsonProperty("division_id")
-    private Division division;
+    private UUID division;
 
 
     public static UserDto fromEntity(User user) {
@@ -50,7 +50,11 @@ public class UserDto {
         userDto.setJoinDate(Date.valueOf(user.getJoinDate().toLocalDate()));
         userDto.setEnabled(user.getEnabled());
         userDto.setPassword(user.getPassword());
-        userDto.setDivision(user.getDivision());
+        if (user.getDivision() != null) {
+            userDto.setDivision(user.getDivision().getId());
+        } else {
+            userDto.setDivision(null); // or handle it in another way if needed
+        }
         return userDto;
     }
 
@@ -65,7 +69,6 @@ public class UserDto {
         user.setJoinDate(userDto.getJoinDate() != null ? Date.valueOf((userDto.getJoinDate().toLocalDate())) : null);
         user.setEnabled(userDto.getEnabled());
         user.setPassword(userDto.getPassword());
-        user.setDivision(userDto.getDivision());
         return user;
     }
 }

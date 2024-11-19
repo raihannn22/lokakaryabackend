@@ -71,6 +71,21 @@ public class AppRoleController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<ManagerDto<AppRoleReqDto>> updateAppRole(@PathVariable("id") UUID id, @RequestBody AppRoleDto appRoleDto) {
+        Log.info("Start updateAppRole in AppRoleController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<AppRoleReqDto> response = new ManagerDto<>();
+        AppRoleReqDto content = appRoleServ.updateAppRole(id, appRoleDto);
+        response.setContent(content);
+
+        long endTime = System.currentTimeMillis();
+        response.setInfo(getInfoOk("Success Update data", endTime - startTime));
+        Log.info("End updateAppRole in AppRoleController, time: " + (endTime - startTime) + "ms");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ManagerDto<Boolean>> deleteAppRole(@PathVariable("id") UUID id) {
         Log.info("Start deleteAppRole in AppRoleController");

@@ -70,6 +70,21 @@ public class DivisionController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<ManagerDto<DivisionReqDto>> updateDivision(@PathVariable("id") UUID id, @RequestBody DivisionDto divisionDto) {
+        Log.info("Start updateDivision in DivisionController");
+        long startTime = System.currentTimeMillis();
+        ManagerDto<DivisionReqDto> response = new ManagerDto<>();
+        DivisionReqDto content = divisionServ.updateDivision(id, divisionDto);
+        response.setContent(content);
+        response.setTotalRows(1);
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success update data", executionTime));
+        Log.info("End updateDivision in DivisionController");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @DeleteMapping
     public ResponseEntity<ManagerDto<Boolean>> deleteDivision(@RequestParam("id") UUID id) {
         Log.info("Start deleteDivision in DivisionController");

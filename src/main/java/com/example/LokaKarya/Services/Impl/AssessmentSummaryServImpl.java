@@ -52,7 +52,7 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
     public AssessmentSummaryReqDto createAssessmentSummary(AssessmentSummaryDto assessmentSummaryDto) {
         Optional<User> user = userRepo.findById(assessmentSummaryDto.getUserId());
         if (user.isPresent()) {
-            AssessmentSummary assessmentSummary = assessmentSummaryDto.toEntity(assessmentSummaryDto, user.get(), UUID.randomUUID(), Date.valueOf(LocalDate.now()), user.get().getId(), Date.valueOf(LocalDate.now()));
+            AssessmentSummary assessmentSummary = assessmentSummaryDto.toEntity(assessmentSummaryDto, user.get(), UUID.randomUUID(), Date.valueOf(LocalDate.now()), user.get().getId());
             assessmentSummaryRepo.save(assessmentSummary);
             return AssessmentSummaryReqDto.fromEntity(assessmentSummaryRepo.save(assessmentSummary));
         }else {
@@ -66,15 +66,9 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
 
         AssessmentSummary assessmentSummary = assessmentSummaryRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("AssessmentSummary not found"));
-        assessmentSummary.setUser(userRepo.findById(assessmentSummaryDto.getUserId()).orElseThrow(() -> new RuntimeException("User not found")));
-        assessmentSummary.setYear(assessmentSummaryDto.getYear());
-        assessmentSummary.setScore(assessmentSummaryDto.getScore());
-        assessmentSummary.setStatus(assessmentSummaryDto.getStatus());
-        assessmentSummary.setUpdatedBy(UUID.randomUUID());
-        assessmentSummary.setUpdatedAt(Date.valueOf(LocalDate.now()));
-        assessmentSummaryRepo.save(assessmentSummary);
+        AssessmentSummary assessmentSummary1 = assessmentSummaryDto.toEntity(assessmentSummaryDto, assessmentSummary.getUser(), assessmentSummary.getUpdatedBy(), assessmentSummary.getUpdatedAt(), assessmentSummary.getCreatedBy());
         Log.info("End updateAssessmentSummary in AssessmentSummaryServImpl");
-        return AssessmentSummaryReqDto.fromEntity(assessmentSummaryRepo.save(assessmentSummary));
+        return AssessmentSummaryReqDto.fromEntity(assessmentSummaryRepo.save(assessmentSummary1));
     }
 
     @Override

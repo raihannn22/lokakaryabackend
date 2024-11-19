@@ -45,7 +45,11 @@ public class AppRoleServImpl implements AppRoleServ {
 
     @Override
     public AppRoleReqDto updateAppRole(UUID id, AppRoleDto appRoleDto) {
-        return null;
+        AppRole appRole = appRoleRepo.findById(id).orElseThrow(() -> new RuntimeException("AppRole not found"));
+        AppRole appRole1 = AppRoleDto.toEntity(appRoleDto, appRole.getUpdatedBy(), Date.valueOf(LocalDate.now()), appRole.getCreatedBy());
+        appRole1.setId(id);
+        appRoleRepo.save(appRole1);
+        return AppRoleReqDto.fromEntity(appRole1);
     }
 
     @Override

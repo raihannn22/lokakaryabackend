@@ -1,13 +1,13 @@
 package com.example.LokaKarya.Services.Impl;
 
-import com.example.LokaKarya.Dto.AppRole.AppRoleReqDto;
-import com.example.LokaKarya.Dto.AssessmentSummary.AssessmentSummaryReqDto;
+// import com.example.LokaKarya.Dto.AppRole.AppRoleReqDto;
+// import com.example.LokaKarya.Dto.AssessmentSummary.AssessmentSummaryReqDto;
 import com.example.LokaKarya.Dto.Division.DivisionDto;
 import com.example.LokaKarya.Dto.Division.DivisionReqDto;
-import com.example.LokaKarya.Entity.AppRole;
-import com.example.LokaKarya.Entity.AssessmentSummary;
+// import com.example.LokaKarya.Entity.AppRole;
+// import com.example.LokaKarya.Entity.AssessmentSummary;
 import com.example.LokaKarya.Entity.Division;
-import com.example.LokaKarya.Repository.AssessmentSummaryRepo;
+// import com.example.LokaKarya.Repository.AssessmentSummaryRepo;
 import com.example.LokaKarya.Repository.DivisionRepo;
 import com.example.LokaKarya.Services.DivisionServ;
 import org.slf4j.Logger;
@@ -53,9 +53,10 @@ public class DivisionServImpl implements DivisionServ {
 
     @Override
     public DivisionReqDto updateDivision(UUID id, DivisionDto divisionDto) {
-        Division division = divisionDto.toEntity(divisionDto, id, Date.valueOf(LocalDate.now()), UUID.randomUUID());
-        divisionRepo.save(division);
-        return DivisionReqDto.fromEntity(divisionRepo.save(division));
+        Division division = divisionRepo.findById(id).orElseThrow(() -> new RuntimeException("Division not found"));
+        Division division1 = divisionDto.toEntity(divisionDto, division.getUpdatedBy(), Date.valueOf(LocalDate.now()), division.getCreatedBy());
+        division1.setId(id);
+        return DivisionReqDto.fromEntity(divisionRepo.save(division1));
     }
 
     @Override

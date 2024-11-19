@@ -4,7 +4,7 @@ package com.example.LokaKarya.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -24,14 +24,12 @@ public class AppRole {
     private String roleName;
 
     @Column(name = "CREATED_AT", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date createdAt = new Date(System.currentTimeMillis());
+    private Date createdAt;
 
-    @Column(name = "CREATED_BY")
+    @Column(name = "CREATED_BY",  nullable = false)
     private UUID createdBy;
 
     @Column(name = "UPDATED_AT")
-    @Temporal(TemporalType.DATE)
     private Date updatedAt;
 
     @Column(name = "UPDATED_BY")
