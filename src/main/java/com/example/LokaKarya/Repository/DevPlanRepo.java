@@ -1,12 +1,12 @@
 package com.example.LokaKarya.Repository;
 
-import java.util.UUID;
-
+import com.example.LokaKarya.Entity.DevPlan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.LokaKarya.Entity.Division;
+import java.util.UUID;
 
 @Repository
-public interface DivisionRepo extends JpaRepository <Division, UUID> {
+public interface DevPlanRepo extends JpaRepository<DevPlan, UUID> {
 }
+

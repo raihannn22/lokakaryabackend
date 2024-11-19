@@ -1,6 +1,7 @@
 package com.example.LokaKarya.Dto.AppMenu;
 
 import com.example.LokaKarya.Entity.AppMenu;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import lombok.*;
@@ -14,11 +15,10 @@ import java.util.UUID;
 @Data
 @ToString
 public class AppMenuDto {
-    @Id
-    @Column(name = "ID", nullable = false)
+    @JsonProperty("ID")
     private UUID id;
 
-    @Column(name = "MENU_NAME", nullable = false)
+    @JsonProperty("MENU_NAME")
     private String menuName;
 
     public static AppMenu toEntity(AppMenuDto dto, UUID updatedBy, Date updatedAt, UUID createdBy) {

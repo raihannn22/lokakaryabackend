@@ -13,15 +13,18 @@ import java.util.UUID;
 @Data
 @Entity
 @ToString
-@Table(name = "TBL_DIVISION")
-public class Division {
+@Table(name = "TBL_DEV_PLAN")
+public class DevPlan {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "ID", nullable = false)
+    @GeneratedValue(strategy = GenerationType.UUID )
+    @Column(name = "ID",nullable = false)
     private UUID id;
 
-    @Column(name = "DIVISION_NAME", length = 100, nullable = false)
-    private String divisionName;
+    @Column(name = "PLAN", length = 100, nullable = false)
+    private String plan;
+
+    @Column(name = "ENABLED", nullable = false)
+    private Integer enabled = 1;
 
     @Column(name = "CREATED_BY", nullable = false)
     private UUID createdBy;
@@ -30,7 +33,7 @@ public class Division {
     @Temporal(TemporalType.DATE)
     private Date createdAt = new Date(System.currentTimeMillis());
 
-    @Column(name = "UPDATED_BY",nullable = false)
+    @Column(name = "UPDATED_BY", nullable = false)
     private UUID updatedBy;
 
     @Column(name = "UPDATED_AT", nullable = false)
