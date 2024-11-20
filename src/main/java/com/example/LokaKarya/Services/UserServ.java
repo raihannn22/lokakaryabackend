@@ -1,11 +1,11 @@
 package com.example.LokaKarya.Services;
 
+import java.util.List;
+import java.util.UUID;
+
 import com.example.LokaKarya.Dto.AppUserRole.AppUserRoleReqDto;
 import com.example.LokaKarya.Dto.User.UserDto;
 import com.example.LokaKarya.Dto.User.UserReqDto;
-
-import java.util.List;
-import java.util.UUID;
 
 public interface UserServ {
     List<UserDto> getAllUsers();
@@ -14,4 +14,3 @@ public interface UserServ {
     List<AppUserRoleReqDto> updateUser(UUID id, UserReqDto userDto);
     Boolean deleteUser(UUID id);
 }
-

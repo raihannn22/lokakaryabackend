@@ -17,7 +17,6 @@ import java.util.UUID;
 @Service
 public class AppRoleMenuServImpl implements AppRoleMenuServ {
     private final Logger Log = LoggerFactory.getLogger(AppRoleMenuServImpl.class);
-
     @Autowired
     private AppRoleMenuRepo appRoleMenuRepo;
 

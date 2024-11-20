@@ -3,12 +3,17 @@ package com.example.LokaKarya.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -21,7 +26,9 @@ import java.util.UUID;
 @Entity
 @ToString
 @Table(name = "TBL_APP_USER")
+
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "ID", nullable = false)
@@ -69,6 +76,20 @@ public class User implements UserDetails {
     @Column(name = "UPDATED_BY")
     private UUID updatedBy;
 
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<EmpAchievementSkill> empAchievementSkills;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<EmpAttitudeSkill> empAttitudeSkills;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<EmpTechnicalSkill> empTechnicalSkills;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<EmpSuggestion> empSuggestions;
+
+
     @OneToMany(mappedBy = "user" , fetch = FetchType.EAGER)
     private List<AppUserRole> appRoles;
 
@@ -90,46 +111,5 @@ public class User implements UserDetails {
         return username;
     }
 
-//    @PreUpdate
-//    private void fillUpdatedAt() {
-//        updatedAt = new java.util.Date();
-//    }
-//
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//       Collection<GrantedAuthority> roles = new ArrayList<>();
-//       appRoles.forEach(userRole ->
-//           roles.add(new SimpleGrantedAuthority(userRole.getRoleName())));
-//        return roles;
-//    }
-//
-//
-//    @Override
-//    public String getUsername() {
-//        return email;
-//    }
-//
-//    public String getEmailRil() {
-//        return username;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return true;
-//    }
+
 }
