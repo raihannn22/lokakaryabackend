@@ -57,14 +57,14 @@ public class User implements UserDetails {
 
     @Column(name = "CREATED_AT")
     @Temporal(TemporalType.DATE)
-    private Date createdAt = new Date(System.currentTimeMillis());
+    private java.util.Date createdAt;
 
     @Column(name = "CREATED_BY")
     private UUID createdBy;
 
     @Column(name = "UPDATED_AT")
     @Temporal(TemporalType.DATE)
-    private Date updatedAt;
+    private java.util.Date updatedAt;
 
     @Column(name = "UPDATED_BY")
     private UUID updatedBy;
@@ -83,7 +83,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return id.toString();
+        return username;
     }
 
     public String getUsernameRiilNoFake() {

@@ -1,5 +1,8 @@
 package com.example.LokaKarya.Dto.AppUserRole;
 
+import com.example.LokaKarya.Dto.AppRole.AppRoleReqDto;
+import com.example.LokaKarya.Dto.User.UserDto;
+import com.example.LokaKarya.Dto.User.UserReqDto;
 import com.example.LokaKarya.Entity.AppRole;
 import com.example.LokaKarya.Entity.AppUserRole;
 import com.example.LokaKarya.Entity.User;
@@ -20,16 +23,16 @@ public class AppUserRoleReqDto {
     private UUID id;
 
     @JsonProperty("ROLE_ID")
-    private AppRole appRole;
+    private AppRoleReqDto appRole;
 
     @JsonProperty("USER_ID")
-    private User user;
+    private UserDto user;
 
     public static AppUserRoleReqDto fromEntity(AppUserRole appUserRole) {
         AppUserRoleReqDto appUserRoleReqDto = new AppUserRoleReqDto();
         appUserRoleReqDto.setId(appUserRole.getId());
-        appUserRoleReqDto.setAppRole(appUserRole.getAppRole());
-        appUserRoleReqDto.setUser(appUserRole.getUser());
+        appUserRoleReqDto.setAppRole(AppRoleReqDto.fromEntity(appUserRole.getAppRole()));
+        appUserRoleReqDto.setUser(UserDto.fromEntity(appUserRole.getUser()));
         return appUserRoleReqDto;
     }
 }

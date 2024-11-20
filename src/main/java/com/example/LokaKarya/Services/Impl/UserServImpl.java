@@ -1,5 +1,6 @@
 package com.example.LokaKarya.Services.Impl;
 
+import com.example.LokaKarya.Config.GetUserUtil;
 import com.example.LokaKarya.Dto.AppUserRole.AppUserRoleReqDto;
 import com.example.LokaKarya.Dto.User.UserDto;
 import com.example.LokaKarya.Dto.User.UserReqDto;
@@ -37,7 +38,7 @@ public class UserServImpl implements UserServ {
     private DivisionRepo divisionRepo;
 
     @Autowired
-    private JwtUtil jwtUtil;
+    private GetUserUtil getUserUtil;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -47,6 +48,9 @@ public class UserServImpl implements UserServ {
     @Override
     public List<UserDto> getAllUsers() {
         Log.info("Start getAllUsers in UserServImpl");
+//        String currentUserEntity = getUserUtil.getCurrentUser().getFullName();
+//        System.out.println(currentUserEntity + "akunoin");
+
         List<User> response = userRepo.findAll();
         List<UserDto> userList = new ArrayList<>();
 
@@ -73,22 +77,11 @@ public class UserServImpl implements UserServ {
         Log.info("Start createUser in UserServImpl");
 //        idRole = appRoleRepo.findById()
         System.out.println(userDto.getAppRole());
-        if (userDto.getAppRole() !=null) {
-            for (UUID roleId: userDto.getAppRole()) {
-               Optional<AppRole> idRole =  appRoleRepo.findById(roleId);
-               if (idRole.isEmpty()) {
-                   throw new RuntimeException("Role not found");
-               }else {
-                   AppUserRole appUserRole = new AppUserRole();
-                   appUserRole.setAppRole(idRole.get());
-                   appUserRole.setUser(UserReqDto.toEntity(userDto));
-                   userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-                   appUserRoleRepo.save(appUserRole);
-               }
-            };
-        }
 
-        User user = UserReqDto.toEntity(userDto);
+        UUID currentUserEntity = getUserUtil.getCurrentUser().getId();
+        System.out.println(currentUserEntity+ "akunoin");
+
+        User user = UserReqDto.toEntity(userDto, UUID.randomUUID(), new Date(System.currentTimeMillis()), null, null);
 
         if (userDto.getDivision() !=null) {
             Optional<Division> idDivision =  divisionRepo.findById(userDto.getDivision());
@@ -98,9 +91,25 @@ public class UserServImpl implements UserServ {
                 user.setDivision(idDivision.get());
             }
         }
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user = userRepo.save(user);
+
+        if (userDto.getAppRole() !=null) {
+
+            for (UUID roleId: userDto.getAppRole()) {
+                Optional<AppRole> idRole =  appRoleRepo.findById(roleId);
+                if (idRole.isEmpty()) {
+                    throw new RuntimeException("Role not found");
+                }else {
+                    AppUserRole appUserRole = new AppUserRole();
+                    appUserRole.setAppRole(idRole.get());
+                    appUserRole.setUser(user);
+                    appUserRoleRepo.save(appUserRole);
+                }
+            };
+        }
 
 
-        userRepo.save(user);
         Log.info("End createUser in UserServImpl");
         return UserDto.fromEntity(user);
     }

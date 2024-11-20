@@ -52,8 +52,7 @@
     //                        .anyRequest().authenticated());
 
                     .authorizeHttpRequests(
-                            auth -> auth.requestMatchers("/users/**").hasRole("HR")
-                                    .anyRequest().permitAll())
+                            auth -> auth.requestMatchers("/user/**").authenticated().anyRequest().permitAll())
                     .csrf(csrf -> csrf.ignoringRequestMatchers("/**")
                             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                     .addFilterBefore(jwtValidationFilter, UsernamePasswordAuthenticationFilter.class);
