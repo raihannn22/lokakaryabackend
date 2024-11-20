@@ -8,9 +8,9 @@ import com.example.LokaKarya.Dto.EmpSuggestion.EmpSuggestionReqDto;
 
 public interface EmpSuggestionServ {
     
-    List<EmpSuggestionDto> getAllEmpSuggestion();
-    EmpSuggestionDto getEmpSuggestionById(UUID id);
-    EmpSuggestionDto createEmpSuggestion(EmpSuggestionReqDto empSuggestionDto);
-    EmpSuggestionDto updateEmpSuggestion(UUID id, EmpSuggestionReqDto empSuggestionReqDto);
+    List<EmpSuggestionReqDto> getAllEmpSuggestion();
+    EmpSuggestionReqDto getEmpSuggestionById(UUID id);
+    EmpSuggestionReqDto createEmpSuggestion(EmpSuggestionDto empSuggestionDto);
+    EmpSuggestionReqDto updateEmpSuggestion(UUID id, EmpSuggestionDto empSuggestionDto);
     Boolean deleteEmpSuggestion(UUID id);
 }

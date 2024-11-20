@@ -23,12 +23,12 @@ public class EmpSuggestionReqDto {
     private Integer assessmentYear;
 
 
-    public static EmpSuggestion toEntity(EmpSuggestionReqDto empSuggestionDto) {
-        EmpSuggestion empSuggestion = new EmpSuggestion();
-        empSuggestion.setUserId(empSuggestionDto.getUserId());
-        empSuggestion.setSuggestion(empSuggestionDto.getSuggestion());
-        empSuggestion.setAssessmentYear(empSuggestionDto.getAssessmentYear());
-        return empSuggestion;
+    public static EmpSuggestionReqDto fromEntity(EmpSuggestion empSuggestion) {
+        EmpSuggestionReqDto empSuggestionReqDto = new EmpSuggestionReqDto();
+        empSuggestionReqDto.setUserId(empSuggestion.getUser().getId());
+        empSuggestionReqDto.setSuggestion(empSuggestion.getSuggestion());
+        empSuggestionReqDto.setAssessmentYear(empSuggestion.getAssessmentYear());
+        return empSuggestionReqDto;
     }
 }
 

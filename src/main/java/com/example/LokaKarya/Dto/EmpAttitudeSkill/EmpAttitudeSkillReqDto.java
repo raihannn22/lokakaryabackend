@@ -29,7 +29,7 @@ public class EmpAttitudeSkillReqDto {
 
     public static EmpAttitudeSkillReqDto fromEntity(EmpAttitudeSkill empAttitudeSkill) {
             EmpAttitudeSkillReqDto empAttitudeSkillReqDto = new EmpAttitudeSkillReqDto();
-            empAttitudeSkillReqDto.setUserId(empAttitudeSkill.getUserId());
+            empAttitudeSkillReqDto.setUserId(empAttitudeSkill.getUser().getId());
             empAttitudeSkillReqDto.setAttitudeSkillId(empAttitudeSkill.getAttitudeSkill().getId());
             empAttitudeSkillReqDto.setScore(empAttitudeSkill.getScore());
             empAttitudeSkillReqDto.setAssessmentYear(empAttitudeSkill.getAssessmentYear());

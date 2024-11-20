@@ -29,7 +29,7 @@ public class EmpAchievementSkillReqDto {
 
     public static EmpAchievementSkillReqDto fromEntity(EmpAchievementSkill empAchievementSkill) {
             EmpAchievementSkillReqDto empAchievementSkillReqDto = new EmpAchievementSkillReqDto();
-            empAchievementSkillReqDto.setUserId(empAchievementSkill.getUserId());
+            empAchievementSkillReqDto.setUserId(empAchievementSkill.getUser().getId());
             empAchievementSkillReqDto.setNotes(empAchievementSkill.getNotes());
             empAchievementSkillReqDto.setAchievementId(empAchievementSkill.getAchievement().getId());
             empAchievementSkillReqDto.setScore(empAchievementSkill.getScore());

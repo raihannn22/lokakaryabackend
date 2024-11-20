@@ -68,6 +68,18 @@ public class User   {
     @Column(name = "UPDATED_BY")
     private UUID updatedBy;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<EmpAchievementSkill> empAchievementSkills;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<EmpAttitudeSkill> empAttitudeSkills;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<EmpTechnicalSkill> empTechnicalSkills;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<EmpSuggestion> empSuggestions;
+
 //    @OneToMany(mappedBy = "user" , fetch = FetchType.EAGER)
 //    private List<AppRole> appRoles;
 //

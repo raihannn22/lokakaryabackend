@@ -18,8 +18,12 @@ public class EmpSuggestion {
     @Column(name = "ID",nullable = false)
     private UUID id;
 
-    @Column(name = "USER_ID", length = 32, nullable = false)
-    private UUID userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private User user;
+    
+    // @Column(name = "USER_ID", length = 32, nullable = false)
+    // private UUID userId;
 
     @Column(name = "SUGGESTION", length = 200)
     private String suggestion;

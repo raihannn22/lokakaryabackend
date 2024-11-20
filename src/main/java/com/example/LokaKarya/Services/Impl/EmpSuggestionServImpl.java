@@ -1,9 +1,15 @@
 package com.example.LokaKarya.Services.Impl;
 
+import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillDto;
+import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillReqDto;
 import com.example.LokaKarya.Dto.EmpSuggestion.EmpSuggestionDto;
 import com.example.LokaKarya.Dto.EmpSuggestion.EmpSuggestionReqDto;
+import com.example.LokaKarya.Entity.Achievement;
+import com.example.LokaKarya.Entity.EmpAchievementSkill;
 import com.example.LokaKarya.Entity.EmpSuggestion;
+import com.example.LokaKarya.Entity.User;
 import com.example.LokaKarya.Repository.EmpSuggestionRepo;
+import com.example.LokaKarya.Repository.UserRepo;
 import com.example.LokaKarya.Services.EmpSuggestionServ;
 
 import org.slf4j.Logger;
@@ -12,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,72 +32,95 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
     @Autowired
     private EmpSuggestionRepo empSuggestionRepo;
 
+    @Autowired
+    private UserRepo userRepo;
+
     @Override
-    public List<EmpSuggestionDto> getAllEmpSuggestion() {
+    public List<EmpSuggestionReqDto> getAllEmpSuggestion() {
        Log.info("Start getAllEmpSuggestion in EmpSuggestionServImpl");
         List<EmpSuggestion> response = empSuggestionRepo.findAll();
-        List<EmpSuggestionDto> empSuggestionList = new ArrayList<>();
+        List<EmpSuggestionReqDto> empSuggestionReqDto = new ArrayList<>();
 
         for (EmpSuggestion empSuggestion : response) {
-            EmpSuggestionDto empSuggestionDto = EmpSuggestionDto.fromEntity(empSuggestion);
-            empSuggestionList.add(empSuggestionDto);
+            empSuggestionReqDto.add(EmpSuggestionReqDto.fromEntity(empSuggestion));
         }
        Log.info("End getAllEmpSuggestiont in EmpSuggestionServImpl");
-        return empSuggestionList;
+        return empSuggestionReqDto;
     }
 
     @Override
-    public EmpSuggestionDto getEmpSuggestionById(UUID id) {
-       Log.info("Start getEmpSuggestionById in EmpSuggestionServImpl");
-        Optional<EmpSuggestion> empSuggestion = empSuggestionRepo.findById(id);
-       Log.info("End getEmpSuggestionById in EmpSuggestionServImpl");
-        return empSuggestion.map(EmpSuggestionDto::fromEntity).orElse(null);
+    public EmpSuggestionReqDto getEmpSuggestionById(UUID id) {
+        Log.info("Start getEmpSuggestionById in EmpSuggestionServImpl");
+        EmpSuggestion empSuggestion = empSuggestionRepo.findById(id).orElseThrow(() -> new RuntimeException("Emp Achievement Skill not found"));
+        Log.info("End getEmpSuggestionById in EmpSuggestionServImpl");
+        return EmpSuggestionReqDto.fromEntity(empSuggestion);
     }
 
     @Override
-    public EmpSuggestionDto createEmpSuggestion (EmpSuggestionReqDto empSuggestiontDto) {
-       Log.info("Start createGroupAchievement in GroupAchievementServImpl");
+    public EmpSuggestionReqDto createEmpSuggestion (EmpSuggestionDto empSuggestionDto) {
+        // Cari user berdasarkan ID
+        Optional<User> userOpt = userRepo.findById(empSuggestionDto.getUserId());
 
-        EmpSuggestion empSuggestion = EmpSuggestionReqDto.toEntity(empSuggestiontDto);
+        // Validasi keberadaan dan user
+        if (userOpt.isEmpty()) {
+            throw new RuntimeException("User not found with ID: " + empSuggestionDto.getUserId());
+        }
 
+        // Konversi DTO ke entity
+        EmpSuggestion empSuggestion = empSuggestionDto.toEntity(
+            empSuggestionDto,
+            userOpt.get(),
+            UUID.randomUUID(),
+            Date.valueOf(LocalDate.now()),
+            userOpt.get().getId(), // ???
+            Date.valueOf(LocalDate.now()) // Last modified date
+        );
+
+        // Simpan ke repository
+        empSuggestion = empSuggestionRepo.save(empSuggestion);
+
+        // Return sebagai DTO
+        return EmpSuggestionReqDto.fromEntity(empSuggestion);
+    }
+
+    @Override
+    public EmpSuggestionReqDto updateEmpSuggestion(UUID id, EmpSuggestionDto empSuggestionDto) {
+        Log.info("Start updateEmpSuggestion in EmpSuggestionServImpl");
+
+        EmpSuggestion empSuggestion = empSuggestionRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Emp Achievement Skill not found"));
+        empSuggestion.setUser(userRepo.findById(empSuggestionDto.getUserId()).orElseThrow(() -> new RuntimeException("User not found")));   
+        empSuggestion.setSuggestion(empSuggestionDto.getSuggestion());     
+        empSuggestion.setAssessmentYear(empSuggestionDto.getAssessmentYear());
         empSuggestionRepo.save(empSuggestion);
-       Log.info("End createGroupAchievement in GroupAchievementServImpl");
-        return EmpSuggestionDto.fromEntity(empSuggestion);
+        Log.info("End updateEmpSuggestion in EmpSuggestionServImpl");
+        return EmpSuggestionReqDto.fromEntity(empSuggestionRepo.save(empSuggestion));
     }
 
     @Override
-    public EmpSuggestionDto updateEmpSuggestion (UUID id, EmpSuggestionReqDto empSuggestionDto) {
-       Log.info("Start updateEmpSuggestion in EmpSuggestionServImpl");
-        EmpSuggestion findEmpSuggestion  = empSuggestionRepo.findById(id).orElseThrow(() -> new RuntimeException("Emp Technical Skill"));
+        public Boolean deleteEmpSuggestion(UUID id) {
+            Log.info("Start deleteEmpSuggestion in EmpSuggestionServImpl");
 
-        updateEmpSuggestionFields(findEmpSuggestion , empSuggestionDto);
-
-        empSuggestionRepo.save(findEmpSuggestion);
-       Log.info("End updateEmpSuggestion in EmpSuggestionServImpl");
-        return EmpSuggestionDto.fromEntity(findEmpSuggestion);
-    }
-
-    @Override
-    public Boolean deleteEmpSuggestion(UUID id) {
-       Log.info("Start deleteEmpSuggestion in EmpSuggestionServImpl");
-        EmpSuggestion findEmpSuggestion = empSuggestionRepo.findById(id).orElseThrow(() -> new RuntimeException("Emp Achievement Skill Achievement not found"));
-        empSuggestionRepo.delete(findEmpSuggestion);
-       Log.info("End deleteEmpSuggestion in EmpSuggestionServImpl");
-        return true;
-    }
-
-    private void updateEmpSuggestionFields(EmpSuggestion existingEmpSuggestion, EmpSuggestionReqDto empSuggestionDto) {
-        if (empSuggestionDto.getUserId() != null) {
-            existingEmpSuggestion.setUserId(empSuggestionDto.getUserId());
+            if (empSuggestionRepo.existsById(id)) {
+                empSuggestionRepo.deleteById(id);  // hanya menghapus achievement berdasarkan id
+                Log.info("End deleteEmpSuggestion in EmpSuggestionServImpl");
+                return true;
+            }
+            throw new RuntimeException("EmpSuggestion not found");
         }
-        if (empSuggestionDto.getSuggestion() != null) {
-            existingEmpSuggestion.setSuggestion(empSuggestionDto.getSuggestion());
-        }
-        if (empSuggestionDto.getAssessmentYear() != null) {
-            existingEmpSuggestion.setAssessmentYear(empSuggestionDto.getAssessmentYear());
-        }
+
+    // private void updateEmpSuggestionFields(EmpSuggestion existingEmpSuggestion, EmpSuggestionReqDto empSuggestionDto) {
+    //     if (empSuggestionDto.getUserId() != null) {
+    //         existingEmpSuggestion.setUserId(empSuggestionDto.getUserId());
+    //     }
+    //     if (empSuggestionDto.getSuggestion() != null) {
+    //         existingEmpSuggestion.setSuggestion(empSuggestionDto.getSuggestion());
+    //     }
+    //     if (empSuggestionDto.getAssessmentYear() != null) {
+    //         existingEmpSuggestion.setAssessmentYear(empSuggestionDto.getAssessmentYear());
+    //     }
         
         
 
-    }
+    // }
 }

@@ -1,6 +1,8 @@
 package com.example.LokaKarya.Dto.EmpSuggestion;
 
+import com.example.LokaKarya.Entity.Achievement;
 import com.example.LokaKarya.Entity.EmpSuggestion;
+import com.example.LokaKarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -23,22 +25,24 @@ public class EmpSuggestionDto {
     private Integer assessmentYear;
 
 
-    public static EmpSuggestionDto fromEntity(EmpSuggestion empSuggestion) {
-        EmpSuggestionDto empSuggestionDto = new EmpSuggestionDto();
-        empSuggestionDto.setId(empSuggestion.getId());
-        empSuggestionDto.setUserId(empSuggestion.getUserId());
-        empSuggestionDto.setSuggestion(empSuggestion.getSuggestion());
-        empSuggestionDto.setAssessmentYear(empSuggestion.getAssessmentYear());
-        return empSuggestionDto;
-    }
-
-    public static EmpSuggestion toEntity(EmpSuggestionDto empSuggestionDto) {
+    
+    public static EmpSuggestion toEntity(EmpSuggestionDto empSuggestionDto, User user, UUID updateBy, Date updateAt, UUID createdBy, Date createdAt) {
         EmpSuggestion empSuggestion = new EmpSuggestion();
         empSuggestion.setId(empSuggestionDto.getId());
-        empSuggestion.setUserId(empSuggestionDto.getUserId());
+        empSuggestion.setUser(user);
         empSuggestion.setSuggestion(empSuggestionDto.getSuggestion());
         empSuggestion.setAssessmentYear(empSuggestionDto.getAssessmentYear());
         return empSuggestion;
     }
+
+
+    // public static EmpSuggestionDto fromEntity(EmpSuggestion empSuggestion) {
+    //     EmpSuggestionDto empSuggestionDto = new EmpSuggestionDto();
+    //     empSuggestionDto.setId(empSuggestion.getId());
+    //     empSuggestionDto.setUserId(empSuggestion.getUserId());
+    //     empSuggestionDto.setSuggestion(empSuggestion.getSuggestion());
+    //     empSuggestionDto.setAssessmentYear(empSuggestion.getAssessmentYear());
+    //     return empSuggestionDto;
+    // }
 }
 

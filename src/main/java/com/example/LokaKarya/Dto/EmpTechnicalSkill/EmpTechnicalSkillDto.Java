@@ -2,6 +2,7 @@ package com.example.LokaKarya.Dto.EmpTechnicalSkill;
 
 import com.example.LokaKarya.Entity.EmpTechnicalSkill;
 import com.example.LokaKarya.Entity.TechnicalSkill;
+import com.example.LokaKarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -27,10 +28,10 @@ public class EmpTechnicalSkillDto {
 
 
     
-    public static EmpTechnicalSkill toEntity(EmpTechnicalSkillDto empTechnicalSkillDto, TechnicalSkill technicalSkill, UUID updateBy, Date updateAt, UUID createdBy, Date createdAt) {
+    public static EmpTechnicalSkill toEntity(EmpTechnicalSkillDto empTechnicalSkillDto, TechnicalSkill technicalSkill, User user, UUID updateBy, Date updateAt, UUID createdBy, Date createdAt) {
         EmpTechnicalSkill empTechnicalSkill = new EmpTechnicalSkill();
         empTechnicalSkill.setId(empTechnicalSkillDto.getId());
-        empTechnicalSkill.setUserId(empTechnicalSkillDto.getUserId());
+        empTechnicalSkill.setUser(user);
         empTechnicalSkill.setTechnicalSkill(technicalSkill);
         empTechnicalSkill.setScore(empTechnicalSkillDto.getScore());
         empTechnicalSkill.setAssessmentYear(empTechnicalSkillDto.getAssessmentYear());

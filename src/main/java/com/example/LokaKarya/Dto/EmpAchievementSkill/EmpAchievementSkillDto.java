@@ -2,6 +2,7 @@ package com.example.LokaKarya.Dto.EmpAchievementSkill;
 
 import com.example.LokaKarya.Entity.Achievement;
 import com.example.LokaKarya.Entity.EmpAchievementSkill;
+import com.example.LokaKarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -28,10 +29,10 @@ public class EmpAchievementSkillDto {
     private Integer assessmentYear;
 
     
-    public static EmpAchievementSkill toEntity(EmpAchievementSkillDto empAchievementSkillDto, Achievement achievement, UUID updateBy, Date updateAt, UUID createdBy, Date createdAt) {
+    public static EmpAchievementSkill toEntity(EmpAchievementSkillDto empAchievementSkillDto, Achievement achievement, User user, UUID updateBy, Date updateAt, UUID createdBy, Date createdAt) {
         EmpAchievementSkill empAchievementSkill = new EmpAchievementSkill();
         empAchievementSkill.setId(empAchievementSkillDto.getId());
-        empAchievementSkill.setUserId(empAchievementSkillDto.getUserId());
+        empAchievementSkill.setUser(user);
         empAchievementSkill.setNotes(empAchievementSkillDto.getNotes());
         empAchievementSkill.setAchievement(achievement);
         empAchievementSkill.setScore(empAchievementSkillDto.getScore());

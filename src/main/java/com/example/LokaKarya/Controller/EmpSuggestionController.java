@@ -25,29 +25,29 @@ public class EmpSuggestionController extends ServerResponseList {
     EmpSuggestionServ empSuggestionServ;
 
     @GetMapping("/all")
-    public ResponseEntity<ManagerDto<List<EmpSuggestionDto>>>  getAllEmpSuggestion() {
+    public ResponseEntity<ManagerDto<List<EmpSuggestionReqDto>>>  getAllEmpSuggestion() {
         Log.info("Start getAllEmpSuggestion in EmpSuggestionController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<List<EmpSuggestionDto>> response = new ManagerDto<>();
-        List<EmpSuggestionDto> content = empSuggestionServ.getAllEmpSuggestion();
+        ManagerDto<List<EmpSuggestionReqDto>> response = new ManagerDto<>();
+        List<EmpSuggestionReqDto> content = empSuggestionServ.getAllEmpSuggestion();
 
         response.setContent(content);
         response.setTotalRows(content.size());
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAllEmpSuggestion in EmpSuggestionController");
+        Log.info("End getAllEmpAchievementSkill in EmpAchievementSkillController");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping("/save")
-    public ResponseEntity<ManagerDto<EmpSuggestionDto>> saveEmpSuggestion(@RequestBody EmpSuggestionReqDto empSuggestionDto) {
+    public ResponseEntity<ManagerDto<EmpSuggestionReqDto>> saveEmpSuggestion(@RequestBody EmpSuggestionDto empSuggestionDto) {
         Log.info("Start saveGroupAchievement in GroupAchievementController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<EmpSuggestionDto> response = new ManagerDto<>();
-        EmpSuggestionDto content = empSuggestionServ.createEmpSuggestion(empSuggestionDto);
+        ManagerDto<EmpSuggestionReqDto> response = new ManagerDto<>();
+        EmpSuggestionReqDto content = empSuggestionServ.createEmpSuggestion(empSuggestionDto);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -58,13 +58,13 @@ public class EmpSuggestionController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<ManagerDto<EmpSuggestionDto>>  getEmpSuggestionDetail(@PathVariable("id") UUID id) {
+    @GetMapping("/get/{id}")
+    public ResponseEntity<ManagerDto<EmpSuggestionReqDto>>  getEmpSuggestionDetail(@PathVariable("id") UUID id) {
         Log.info("Start getEmpSuggestionDetail in EmpSuggestionController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<EmpSuggestionDto> response = new ManagerDto<>();
-        EmpSuggestionDto content = empSuggestionServ.getEmpSuggestionById(id);
+        ManagerDto<EmpSuggestionReqDto> response = new ManagerDto<>();
+        EmpSuggestionReqDto content = empSuggestionServ.getEmpSuggestionById(id);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -76,19 +76,19 @@ public class EmpSuggestionController extends ServerResponseList {
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<ManagerDto<EmpSuggestionDto>>  updateEmpSuggestion(@PathVariable("id") UUID id, @RequestBody EmpSuggestionReqDto empSuggestionDto) {
+    public ResponseEntity<ManagerDto<EmpSuggestionReqDto>>  updateEmpSuggestion(@PathVariable("id") UUID id, @RequestBody EmpSuggestionDto empSuggestionDto) {
         Log.info("Start updateEmpSuggestion in EmpSuggestionController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<EmpSuggestionDto> response = new ManagerDto<>();
-        EmpSuggestionDto content = empSuggestionServ.updateEmpSuggestion(id, empSuggestionDto);
+        ManagerDto<EmpSuggestionReqDto> response = new ManagerDto<>();
+        EmpSuggestionReqDto content = empSuggestionServ.updateEmpSuggestion(id, empSuggestionDto);
 
         response.setContent(content);
         response.setTotalRows(1);
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success update data", executionTime));
-        Log.info("End updateEmpSuggestion in EmpSuggestionController");
+        Log.info("End updateEmpSuggestion in EmpAchievementSkillController");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 

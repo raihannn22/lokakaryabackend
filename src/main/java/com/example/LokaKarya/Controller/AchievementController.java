@@ -119,21 +119,4 @@ public class AchievementController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
-    // @DeleteMapping
-    // public ResponseEntity<ManagerDto<Boolean>> deleteAchievement(@RequestParam("id") UUID id) {
-    //     Log.info("Start deleteAchievement in AchievementController");
-    //     long startTime = System.currentTimeMillis();
-
-    //     ManagerDto<Boolean> response = new ManagerDto<>();
-    //     Boolean content = achievementServ.deleteAchievement(id);
-    //     response.setContent(content);
-    //     response.setTotalRows(1);
-
-    //     long endTime = System.currentTimeMillis();
-    //     long executionTime = endTime - startTime;
-    //     response.setInfo(getInfoOk("Success delete data", executionTime));
-    //     Log.info("End deleteAchievement in AchievementController");
-    //     return new ResponseEntity<>(response, HttpStatus.OK);
-    // }
 }

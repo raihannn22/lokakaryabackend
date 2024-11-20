@@ -30,7 +30,7 @@ public class EmpTechnicalSkillReqDto {
 
     public static EmpTechnicalSkillReqDto fromEntity(EmpTechnicalSkill empTechnicalSkill) {
         EmpTechnicalSkillReqDto empTechnicalSkillReqDto = new EmpTechnicalSkillReqDto();
-        empTechnicalSkillReqDto.setUserId(empTechnicalSkill.getUserId());
+        empTechnicalSkillReqDto.setUserId(empTechnicalSkill.getUser().getId());
         empTechnicalSkillReqDto.setTechnicalSkillId(empTechnicalSkill.getTechnicalSkill().getId());
         empTechnicalSkillReqDto.setScore(empTechnicalSkill.getScore());
         empTechnicalSkillReqDto.setAssessmentYear(empTechnicalSkill.getAssessmentYear());
