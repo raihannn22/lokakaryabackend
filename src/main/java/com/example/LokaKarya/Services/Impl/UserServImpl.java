@@ -1,13 +1,18 @@
 package com.example.LokaKarya.Services.Impl;
 
+import com.example.LokaKarya.Config.GetUserUtil;
+import com.example.LokaKarya.Dto.AppUserRole.AppUserRoleReqDto;
 import com.example.LokaKarya.Dto.User.UserDto;
 import com.example.LokaKarya.Dto.User.UserReqDto;
-import com.example.LokaKarya.Entity.User;
-import com.example.LokaKarya.Repository.UserRepo;
+import com.example.LokaKarya.Entity.*;
+import com.example.LokaKarya.Repository.*;
 import com.example.LokaKarya.Services.UserServ;
+import com.example.LokaKarya.util.JwtUtil;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -18,15 +23,34 @@ import java.util.UUID;
 
 @Service
 public class UserServImpl implements UserServ {
-
     private final Logger Log = LoggerFactory.getLogger(UserServImpl.class);
 
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private AppRoleRepo appRoleRepo;
+
+    @Autowired
+    private AppUserRoleRepo appUserRoleRepo;
+
+    @Autowired
+    private DivisionRepo divisionRepo;
+
+    @Autowired
+    private GetUserUtil getUserUtil;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
+
     @Override
     public List<UserDto> getAllUsers() {
-//        Log.info("Start getAllUsers in UserServImpl");
+        Log.info("Start getAllUsers in UserServImpl");
+//        String currentUserEntity = getUserUtil.getCurrentUser().getFullName();
+//        System.out.println(currentUserEntity + "akunoin");
+
         List<User> response = userRepo.findAll();
         List<UserDto> userList = new ArrayList<>();
 
@@ -34,7 +58,7 @@ public class UserServImpl implements UserServ {
             UserDto userDto = UserDto.fromEntity(user);
             userList.add(userDto);
         }
-//        Log.info("End getAllUsers in UserServImpl");
+        Log.info("End getAllUsers in UserServImpl");
         return userList;
     }
 
@@ -48,27 +72,89 @@ public class UserServImpl implements UserServ {
     }
 
     @Override
+    @Transactional
     public UserDto createUser(UserReqDto userDto) {
-//        Log.info("Start createUser in UserServImpl");
+        Log.info("Start createUser in UserServImpl");
+//        idRole = appRoleRepo.findById()
+        System.out.println(userDto.getAppRole());
 
-        User user = UserReqDto.toEntity(userDto);
+        UUID currentUserEntity = getUserUtil.getCurrentUser().getId();
+        System.out.println(currentUserEntity+ "akunoin");
 
-        userRepo.save(user);
-//        Log.info("End createUser in UserServImpl");
+        User user = UserReqDto.toEntity(userDto, UUID.randomUUID(), new Date(System.currentTimeMillis()), null, null);
+
+        if (userDto.getDivision() !=null) {
+            Optional<Division> idDivision =  divisionRepo.findById(userDto.getDivision());
+            if (idDivision.isEmpty()) {
+                throw new RuntimeException("Division not found");
+            }else {
+                user.setDivision(idDivision.get());
+            }
+        }
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user = userRepo.save(user);
+
+        if (userDto.getAppRole() !=null) {
+
+            for (UUID roleId: userDto.getAppRole()) {
+                Optional<AppRole> idRole =  appRoleRepo.findById(roleId);
+                if (idRole.isEmpty()) {
+                    throw new RuntimeException("Role not found");
+                }else {
+                    AppUserRole appUserRole = new AppUserRole();
+                    appUserRole.setAppRole(idRole.get());
+                    appUserRole.setUser(user);
+                    appUserRoleRepo.save(appUserRole);
+                }
+            };
+        }
+
+
+        Log.info("End createUser in UserServImpl");
         return UserDto.fromEntity(user);
     }
 
     @Override
-    public UserDto updateUser (UUID id, UserReqDto userDto) {
-//        Log.info("Start updateUser in UserServImpl");
+    public List<AppUserRoleReqDto> updateUser (UUID id, UserReqDto userDto) {
+        Log.info("Start updateUser in UserServImpl");
+        List<AppUserRole> appRole = appUserRoleRepo.findByUserId(id);
         User findUser  = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User  not found"));
+        List<AppUserRoleReqDto> appUserRoles = new ArrayList<>();
+        for (AppUserRole userRole : appRole) {
+            appUserRoleRepo.delete(userRole);
+            }
+        if (userDto.getDivision() != null) {
+            Division division = divisionRepo.findById(userDto.getDivision()).orElseThrow(() -> new RuntimeException("Division not found"));
+            findUser.setDivision(division);
+        }
 
-        // Update fields based on userDto, falling back to findUser  if userDto field is null
-        updateUserFields(findUser , userDto);
+        for (UUID roleId: userDto.getAppRole()) {
+            AppRole role = appRoleRepo.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found"));
+            AppUserRole appUserRole = new AppUserRole();
+            appUserRole.setAppRole(role);
+            appUserRole.setUser(findUser);
+            appUserRoleRepo.save(appUserRole);
+            appUserRoles.add(AppUserRoleReqDto.fromEntity(appUserRole));
+        }
 
-        userRepo.save(findUser);
-//        Log.info("End updateUser in UserServImpl");
-        return UserDto.fromEntity(findUser);
+        return appUserRoles;
+//        userDto.setAppRole(appUserRoles);
+//
+//        if (userDto.getDivision() !=null) {
+//            Optional<Division> idDivision =  divisionRepo.findById(userDto.getDivision());
+//            if (idDivision.isEmpty()) {
+//                throw new RuntimeException("Division not found");
+//            }else {
+//                findUser.setDivision(idDivision.get());
+//            }
+//        }
+//        // Update fields based on userDto, falling back to findUser  if userDto field is null
+//        updateUserFields(findUser , userDto);
+//
+//
+//        userRepo.save(findUser);
+////        Log.info("End updateUser in UserServImpl");
+//        return UserDto.fromEntity(findUser);
     }
 
     @Override
@@ -105,11 +191,7 @@ public class UserServImpl implements UserServ {
         if (userDto.getPassword() != null) {
             existingUser.setPassword(userDto.getPassword());
         }
-        if (userDto.getRoleId() != null) {
-            existingUser.setRoleId(userDto.getRoleId());
-        }
-        if (userDto.getDivisionId() != null) {
-            existingUser.setDivisionId(userDto.getDivisionId());
-        }
     }
+
+
 }

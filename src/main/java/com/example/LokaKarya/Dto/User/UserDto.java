@@ -1,10 +1,14 @@
 package com.example.LokaKarya.Dto.User;
 
+import com.example.LokaKarya.Entity.AppRole;
+import com.example.LokaKarya.Entity.Division;
 import com.example.LokaKarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.io.DataInput;
 import java.sql.Date;
+import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -31,10 +35,8 @@ public class UserDto {
     private Integer enabled;
     @JsonProperty("password")
     private String password;
-    @JsonProperty("role_id")
-    private UUID roleId;
     @JsonProperty("division_id")
-    private UUID divisionId;
+    private UUID division;
 
 
     public static UserDto fromEntity(User user) {
@@ -48,8 +50,11 @@ public class UserDto {
         userDto.setJoinDate(Date.valueOf(user.getJoinDate().toLocalDate()));
         userDto.setEnabled(user.getEnabled());
         userDto.setPassword(user.getPassword());
-        userDto.setRoleId(user.getRoleId());
-        userDto.setDivisionId(user.getDivisionId());
+        if (user.getDivision() != null) {
+            userDto.setDivision(user.getDivision().getId());
+        } else {
+            userDto.setDivision(null); // or handle it in another way if needed
+        }
         return userDto;
     }
 
@@ -64,8 +69,6 @@ public class UserDto {
         user.setJoinDate(userDto.getJoinDate() != null ? Date.valueOf((userDto.getJoinDate().toLocalDate())) : null);
         user.setEnabled(userDto.getEnabled());
         user.setPassword(userDto.getPassword());
-        user.setRoleId(userDto.getRoleId());
-        user.setDivisionId(userDto.getDivisionId());
         return user;
     }
 }

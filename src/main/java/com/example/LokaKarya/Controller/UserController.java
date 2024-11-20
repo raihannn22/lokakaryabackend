@@ -1,12 +1,12 @@
 package com.example.LokaKarya.Controller;
 
 
+import com.example.LokaKarya.Dto.AppUserRole.AppUserRoleReqDto;
 import com.example.LokaKarya.Dto.ManagerDto;
 import com.example.LokaKarya.Dto.User.UserDto;
 import com.example.LokaKarya.Dto.User.UserReqDto;
 import com.example.LokaKarya.Services.UserServ;
 import com.example.LokaKarya.util.ServerResponseList;
-import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class UserController extends ServerResponseList {
 @Autowired
     UserServ userServ;
 
-    @GetMapping("/all")
+    @GetMapping("/get/all")
     public ResponseEntity<ManagerDto<List<UserDto>>>  getAllUsers() {
         Log.info("Start getAllUsers in UserController");
         long startTime = System.currentTimeMillis();
@@ -58,7 +58,7 @@ public class UserController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
-    @GetMapping("/detail/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<ManagerDto<UserDto>>  getUserDetail(@PathVariable("id") UUID id) {
         Log.info("Start getUserDetail in UserController");
         long startTime = System.currentTimeMillis();
@@ -76,12 +76,12 @@ public class UserController extends ServerResponseList {
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<ManagerDto<UserDto>>  updateUser(@PathVariable("id") UUID id, @RequestBody UserReqDto userDto) {
+    public ResponseEntity<ManagerDto<List<AppUserRoleReqDto>>>  updateUser(@PathVariable("id") UUID id, @RequestBody UserReqDto userDto) {
         Log.info("Start updateUser in UserController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<UserDto> response = new ManagerDto<>();
-        UserDto content = userServ.updateUser(id, userDto);
+        ManagerDto<List<AppUserRoleReqDto>> response = new ManagerDto<>();
+        List<AppUserRoleReqDto> content = userServ.updateUser(id, userDto);
 
         response.setContent(content);
         response.setTotalRows(1);
