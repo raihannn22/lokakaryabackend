@@ -3,9 +3,10 @@ package com.example.LokaKarya.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.authority.SimpleGrantedAuthority;
-//import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import java.util.UUID;
 @Entity
 @ToString
 @Table(name = "TBL_APP_USER")
-public class User  {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "ID", nullable = false)
@@ -68,8 +69,31 @@ public class User  {
     @Column(name = "UPDATED_BY")
     private UUID updatedBy;
 
-//    @OneToMany(mappedBy = "user" , fetch = FetchType.EAGER)
-//    private List<AppRole> appRoles;
+    @OneToMany(mappedBy = "user" , fetch = FetchType.EAGER)
+    private List<AppUserRole> appRoles;
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Collection<SimpleGrantedAuthority> roles = new ArrayList<>();
+        appRoles.forEach(userRole -> roles
+                .add(new SimpleGrantedAuthority(userRole.getAppRole().getRoleName())));
+        return roles;
+    }
+
+    @Override
+    public String getUsername() {
+        return id.toString();
+    }
+
+    public String getUsernameRiilNoFake() {
+        return username;
+    }
+
+//    @PreUpdate
+//    private void fillUpdatedAt() {
+//        updatedAt = new java.util.Date();
+//    }
 //
 //    @Override
 //    public Collection<? extends GrantedAuthority> getAuthorities() {

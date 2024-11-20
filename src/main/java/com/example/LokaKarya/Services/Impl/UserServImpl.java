@@ -6,9 +6,12 @@ import com.example.LokaKarya.Dto.User.UserReqDto;
 import com.example.LokaKarya.Entity.*;
 import com.example.LokaKarya.Repository.*;
 import com.example.LokaKarya.Services.UserServ;
+import com.example.LokaKarya.util.JwtUtil;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -18,11 +21,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class
-
-
-UserServImpl implements UserServ {
-
+public class UserServImpl implements UserServ {
     private final Logger Log = LoggerFactory.getLogger(UserServImpl.class);
 
     @Autowired
@@ -36,6 +35,12 @@ UserServImpl implements UserServ {
 
     @Autowired
     private DivisionRepo divisionRepo;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
 
@@ -63,6 +68,7 @@ UserServImpl implements UserServ {
     }
 
     @Override
+    @Transactional
     public UserDto createUser(UserReqDto userDto) {
 //        Log.info("Start createUser in UserServImpl");
 //        idRole = appRoleRepo.findById()
@@ -76,6 +82,7 @@ UserServImpl implements UserServ {
                    AppUserRole appUserRole = new AppUserRole();
                    appUserRole.setAppRole(idRole.get());
                    appUserRole.setUser(UserReqDto.toEntity(userDto));
+                   userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
                    appUserRoleRepo.save(appUserRole);
                }
             };
@@ -175,6 +182,7 @@ UserServImpl implements UserServ {
         if (userDto.getPassword() != null) {
             existingUser.setPassword(userDto.getPassword());
         }
-
     }
+
+
 }

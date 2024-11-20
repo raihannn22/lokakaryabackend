@@ -38,7 +38,7 @@ public class AppRoleServImpl implements AppRoleServ {
 
     @Override
     public AppRoleReqDto createAppRole(AppRoleDto appRoleDto) {
-        AppRole appRole = AppRoleDto.toEntity(appRoleDto, UUID.randomUUID(), Date.valueOf(LocalDate.now()), UUID.randomUUID());
+        AppRole appRole = AppRoleDto.toEntity(appRoleDto, UUID.randomUUID(), Date.valueOf(LocalDate.now()), UUID.randomUUID(), new Date(System.currentTimeMillis()));
         appRoleRepo.save(appRole);
         return AppRoleReqDto.fromEntity(appRole);
     }
@@ -46,7 +46,7 @@ public class AppRoleServImpl implements AppRoleServ {
     @Override
     public AppRoleReqDto updateAppRole(UUID id, AppRoleDto appRoleDto) {
         AppRole appRole = appRoleRepo.findById(id).orElseThrow(() -> new RuntimeException("AppRole not found"));
-        AppRole appRole1 = AppRoleDto.toEntity(appRoleDto, appRole.getUpdatedBy(), Date.valueOf(LocalDate.now()), appRole.getCreatedBy());
+        AppRole appRole1 = AppRoleDto.toEntity(appRoleDto, appRole.getUpdatedBy(), Date.valueOf(LocalDate.now()), appRole.getCreatedBy(), new Date(System.currentTimeMillis()));
         appRole1.setId(id);
         appRoleRepo.save(appRole1);
         return AppRoleReqDto.fromEntity(appRole1);

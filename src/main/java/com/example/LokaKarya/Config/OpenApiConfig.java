@@ -23,10 +23,10 @@ public class OpenApiConfig implements WebMvcConfigurer {
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI()
-//                .components(new Components().addSecuritySchemes("bearerAuth",
-//                                new SecurityScheme()
-//                                        .type(SecurityScheme.Type.HTTP)
-//                                        .scheme("bearer")))
+                .components(new Components().addSecuritySchemes("bearerAuth",
+                                new SecurityScheme()
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")))
                 .info(new Info()
                         .title("Loka Karya API")
                         .description("Kelompok 4 API")
