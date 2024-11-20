@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AttitudeSkillServ {
-    List<AttitudeSkillDto> getAllAttitudeSkill();
-    AttitudeSkillDto getAttitudeSkillById(UUID id);
-    AttitudeSkillDto createAttitudeSkill(AttitudeSkillReqDto attitudeSkillDto);
-    AttitudeSkillDto updateAttitudeSkill(UUID id, AttitudeSkillReqDto attitudeSkillDto);
+    List<AttitudeSkillReqDto> getAllAttitudeSkill();
+    AttitudeSkillReqDto getAttitudeSkillById(UUID id);
+    AttitudeSkillReqDto createAttitudeSkill(AttitudeSkillDto attitudeSkillDto);
+    AttitudeSkillReqDto updateAttitudeSkill(UUID id, AttitudeSkillDto attitudeSkillDto);
     Boolean deleteAttitudeSkill(UUID id);
 }
 

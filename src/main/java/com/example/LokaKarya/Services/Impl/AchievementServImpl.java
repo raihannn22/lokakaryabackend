@@ -50,13 +50,13 @@ public class AchievementServImpl implements AchievementServ {
 
     @Override
     public AchievementReqDto createAchievement(AchievementDto achievementDto) {
-        Optional<GroupAchievement> user = groupAchievementRepo.findById(achievementDto.getGroupId());
-        if (user.isPresent()) {
-            Achievement achievement = achievementDto.toEntity(achievementDto, user.get(), UUID.randomUUID(), Date.valueOf(LocalDate.now()), user.get().getId(), Date.valueOf(LocalDate.now()));
+        Optional<GroupAchievement> groupAchievement = groupAchievementRepo.findById(achievementDto.getGroupId());
+        if (groupAchievement.isPresent()) {
+            Achievement achievement = achievementDto.toEntity(achievementDto, groupAchievement.get(), UUID.randomUUID(), Date.valueOf(LocalDate.now()), groupAchievement.get().getId(), Date.valueOf(LocalDate.now()));
             achievementRepo.save(achievement);
             return AchievementReqDto.fromEntity(achievementRepo.save(achievement));
         }else {
-            throw new RuntimeException("User not found");
+            throw new RuntimeException("Achievement not found");
         }
     }
 
@@ -77,13 +77,28 @@ public class AchievementServImpl implements AchievementServ {
     }
 
     @Override
-    public Boolean deleteAchievement(UUID id) {
-        Log.info("Start deleteAchievement in AchievementServImpl");
-        if (achievementRepo.existsById(id)) {
-            achievementRepo.deleteById(id);
-            Log.info("End deleteAchievement in AchievementServImpl");
-            return true;
-        }
-        throw new RuntimeException("Achievement not found");
+public Boolean deleteAchievement(UUID id) {
+    Log.info("Start deleteAchievement in AchievementServImpl");
+
+    if (achievementRepo.existsById(id)) {
+        achievementRepo.deleteById(id);  // hanya menghapus achievement berdasarkan id
+        Log.info("End deleteAchievement in AchievementServImpl");
+        return true;
     }
+    throw new RuntimeException("Achievement not found");
+}
+
+
+    // @Override
+    // public Boolean deleteAchievement(UUID id) {
+    //     Log.info("Start deleteAchievement in AchievementServImpl");
+    //     if (achievementRepo.existsById(id)) {
+    //         achievementRepo.deleteById(id);
+    //         Log.info("End deleteAchievement in AchievementServImpl");
+    //         return true;
+    //     }
+    //     throw new RuntimeException("Achievement not found");
+    // }
+
+    
 }

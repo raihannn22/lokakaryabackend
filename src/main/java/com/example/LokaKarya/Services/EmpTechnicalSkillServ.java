@@ -8,9 +8,9 @@ import com.example.LokaKarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillReqDto;
 
 public interface EmpTechnicalSkillServ {
     
-    List<EmpTechnicalSkillDto> getAllEmpTechnicalSkill();
-    EmpTechnicalSkillDto getEmpTechnicalSkillById(UUID id);
-    EmpTechnicalSkillDto createEmpTechnicalSkill(EmpTechnicalSkillReqDto empTechnicalSkillDto);
-    EmpTechnicalSkillDto updateEmpTechnicalSkill(UUID id, EmpTechnicalSkillReqDto empTechnicalSkillReqDto);
+    List<EmpTechnicalSkillReqDto> getAllEmpTechnicalSkill();
+    EmpTechnicalSkillReqDto getEmpTechnicalSkillById(UUID id);
+    EmpTechnicalSkillReqDto createEmpTechnicalSkill(EmpTechnicalSkillDto empTechnicalSkillDto);
+    EmpTechnicalSkillReqDto updateEmpTechnicalSkill(UUID id, EmpTechnicalSkillDto empTechnicalSkillDto);
     Boolean deleteEmpTechnicalSkill(UUID id);
 }

@@ -3,6 +3,7 @@ package com.example.LokaKarya.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -28,18 +29,21 @@ public class GroupAttitudeSkill {
     @Column(name = "ENABLED", length = 1)
     private Integer enabled = 1;
 
+    @Column(name = "CREATED_BY", length = 32)
+    private UUID createdBy;
+
     @Column(name = "CREATED_AT")
     @Temporal(TemporalType.DATE)
-    private Date createdAt;
+    private Date createdAt = new Date(System.currentTimeMillis());
 
-    @Column(name = "CREATED_BY")
-    private UUID createdBy;
+    @Column(name = "UPDATED_BY", length = 32)
+    private UUID updatedBy;
 
     @Column(name = "UPDATED_AT")
     @Temporal(TemporalType.DATE)
     private Date updatedAt;
 
-    @Column(name = "UPDATED_BY")
-    private UUID updatedBy;
+    @OneToMany(mappedBy = "groupAttitudeSkill", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<AttitudeSkill> attitudeSkill;
     
 }

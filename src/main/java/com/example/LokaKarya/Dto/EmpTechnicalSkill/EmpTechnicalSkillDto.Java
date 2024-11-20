@@ -1,6 +1,7 @@
 package com.example.LokaKarya.Dto.EmpTechnicalSkill;
 
 import com.example.LokaKarya.Entity.EmpTechnicalSkill;
+import com.example.LokaKarya.Entity.TechnicalSkill;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -25,24 +26,26 @@ public class EmpTechnicalSkillDto {
     private Integer assessmentYear;
 
 
-    public static EmpTechnicalSkillDto fromEntity(EmpTechnicalSkill empTechnicalSkill) {
-        EmpTechnicalSkillDto empTechnicalSkillDto = new EmpTechnicalSkillDto();
-        empTechnicalSkillDto.setId(empTechnicalSkill.getId());
-        empTechnicalSkillDto.setUserId(empTechnicalSkill.getUserId());
-        empTechnicalSkillDto.setTechnicalSkillId(empTechnicalSkill.getTechnicalSkillId());
-        empTechnicalSkillDto.setScore(empTechnicalSkill.getScore());
-        empTechnicalSkillDto.setAssessmentYear(empTechnicalSkill.getAssessmentYear());
-        return empTechnicalSkillDto;
-    }
-
-    public static EmpTechnicalSkill toEntity(EmpTechnicalSkillDto empTechnicalSkillDto) {
+    
+    public static EmpTechnicalSkill toEntity(EmpTechnicalSkillDto empTechnicalSkillDto, TechnicalSkill technicalSkill, UUID updateBy, Date updateAt, UUID createdBy, Date createdAt) {
         EmpTechnicalSkill empTechnicalSkill = new EmpTechnicalSkill();
         empTechnicalSkill.setId(empTechnicalSkillDto.getId());
         empTechnicalSkill.setUserId(empTechnicalSkillDto.getUserId());
-        empTechnicalSkill.setTechnicalSkillId(empTechnicalSkillDto.getTechnicalSkillId());
+        empTechnicalSkill.setTechnicalSkill(technicalSkill);
         empTechnicalSkill.setScore(empTechnicalSkillDto.getScore());
         empTechnicalSkill.setAssessmentYear(empTechnicalSkillDto.getAssessmentYear());
         return empTechnicalSkill;
     }
+
+
+    // public static EmpTechnicalSkillDto fromEntity(EmpTechnicalSkill empTechnicalSkill) {
+    //     EmpTechnicalSkillDto empTechnicalSkillDto = new EmpTechnicalSkillDto();
+    //     empTechnicalSkillDto.setId(empTechnicalSkill.getId());
+    //     empTechnicalSkillDto.setUserId(empTechnicalSkill.getUserId());
+    //     empTechnicalSkillDto.setTechnicalSkillId(empTechnicalSkill.getTechnicalSkillId());
+    //     empTechnicalSkillDto.setScore(empTechnicalSkill.getScore());
+    //     empTechnicalSkillDto.setAssessmentYear(empTechnicalSkill.getAssessmentYear());
+    //     return empTechnicalSkillDto;
+    // }
 }
 

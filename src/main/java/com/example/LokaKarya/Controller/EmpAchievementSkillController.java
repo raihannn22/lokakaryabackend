@@ -25,12 +25,12 @@ public class EmpAchievementSkillController extends ServerResponseList {
     EmpAchievementSkillServ empAchievementSkillServ;
 
     @GetMapping("/all")
-    public ResponseEntity<ManagerDto<List<EmpAchievementSkillDto>>>  getAllEmpAchievementSkill() {
+    public ResponseEntity<ManagerDto<List<EmpAchievementSkillReqDto>>>  getAllEmpAchievementSkill() {
         Log.info("Start getAllEmpAchievementSkill in EmpAchievementSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<List<EmpAchievementSkillDto>> response = new ManagerDto<>();
-        List<EmpAchievementSkillDto> content = empAchievementSkillServ.getAllEmpAchievementSkill();
+        ManagerDto<List<EmpAchievementSkillReqDto>> response = new ManagerDto<>();
+        List<EmpAchievementSkillReqDto> content = empAchievementSkillServ.getAllEmpAchievementSkill();
 
         response.setContent(content);
         response.setTotalRows(content.size());
@@ -42,12 +42,12 @@ public class EmpAchievementSkillController extends ServerResponseList {
     }
 
     @PutMapping("/save")
-    public ResponseEntity<ManagerDto<EmpAchievementSkillDto>> saveEmpAchievementSkill(@RequestBody EmpAchievementSkillReqDto empAchievementSkillDto) {
+    public ResponseEntity<ManagerDto<EmpAchievementSkillReqDto>> saveEmpAchievementSkill(@RequestBody EmpAchievementSkillDto empAchievementSkillDto) {
         Log.info("Start saveGroupAchievement in GroupAchievementController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<EmpAchievementSkillDto> response = new ManagerDto<>();
-        EmpAchievementSkillDto content = empAchievementSkillServ.createEmpAchievementSkill(empAchievementSkillDto);
+        ManagerDto<EmpAchievementSkillReqDto> response = new ManagerDto<>();
+        EmpAchievementSkillReqDto content = empAchievementSkillServ.createEmpAchievementSkill(empAchievementSkillDto);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -58,13 +58,13 @@ public class EmpAchievementSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<ManagerDto<EmpAchievementSkillDto>>  getEmpAchievementSkillDetail(@PathVariable("id") UUID id) {
+    @GetMapping("/get/{id}")
+    public ResponseEntity<ManagerDto<EmpAchievementSkillReqDto>>  getEmpAchievementSkillDetail(@PathVariable("id") UUID id) {
         Log.info("Start getEmpAchievementSkillDetail in EmpAchievementSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<EmpAchievementSkillDto> response = new ManagerDto<>();
-        EmpAchievementSkillDto content = empAchievementSkillServ.getEmpAchievementSkillById(id);
+        ManagerDto<EmpAchievementSkillReqDto> response = new ManagerDto<>();
+        EmpAchievementSkillReqDto content = empAchievementSkillServ.getEmpAchievementSkillById(id);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -76,12 +76,12 @@ public class EmpAchievementSkillController extends ServerResponseList {
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<ManagerDto<EmpAchievementSkillDto>>  updateEmpAchievementSkill(@PathVariable("id") UUID id, @RequestBody EmpAchievementSkillReqDto empAchievementSkillDto) {
+    public ResponseEntity<ManagerDto<EmpAchievementSkillReqDto>>  updateEmpAchievementSkill(@PathVariable("id") UUID id, @RequestBody EmpAchievementSkillDto empAchievementSkillDto) {
         Log.info("Start updateEmpAchievementSkill in EmpAchievementSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<EmpAchievementSkillDto> response = new ManagerDto<>();
-        EmpAchievementSkillDto content = empAchievementSkillServ.updateEmpAchievementSkill(id, empAchievementSkillDto);
+        ManagerDto<EmpAchievementSkillReqDto> response = new ManagerDto<>();
+        EmpAchievementSkillReqDto content = empAchievementSkillServ.updateEmpAchievementSkill(id, empAchievementSkillDto);
 
         response.setContent(content);
         response.setTotalRows(1);

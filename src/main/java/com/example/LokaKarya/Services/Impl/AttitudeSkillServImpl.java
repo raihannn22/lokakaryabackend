@@ -1,5 +1,7 @@
 package com.example.LokaKarya.Services.Impl;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -10,86 +12,82 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.LokaKarya.Dto.Achievement.AchievementReqDto;
 import com.example.LokaKarya.Dto.AttitudeSkill.AttitudeSkillDto;
 import com.example.LokaKarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
+import com.example.LokaKarya.Entity.Achievement;
 import com.example.LokaKarya.Entity.AttitudeSkill;
+import com.example.LokaKarya.Entity.GroupAttitudeSkill;
 import com.example.LokaKarya.Repository.AttitudeSkillRepo;
+import com.example.LokaKarya.Repository.GroupAttitudeSkillRepo;
 import com.example.LokaKarya.Services.AttitudeSkillServ;
 
 @Service
 public class AttitudeSkillServImpl implements AttitudeSkillServ {
-
-    private final Logger Log = LoggerFactory.getLogger(GroupAttitudeSkillServImpl.class);
+    private final Logger Log = LoggerFactory.getLogger(AssessmentSummaryServImpl.class);
 
     @Autowired
-    private AttitudeSkillRepo attitudeSkillRepo;
+    AttitudeSkillRepo attitudeSkillRepo;
+
+    @Autowired
+    GroupAttitudeSkillRepo groupAttitudeSkillRepo;
 
     @Override
-    public List<AttitudeSkillDto> getAllAttitudeSkill() {
-       Log.info("Start getAllpAttitudeSkill in AttitudeSkillServImpl");
+    public List<AttitudeSkillReqDto> getAllAttitudeSkill() {
         List<AttitudeSkill> response = attitudeSkillRepo.findAll();
-        List<AttitudeSkillDto> attitudeSkillList = new ArrayList<>();
-
+        List<AttitudeSkillReqDto> attitudeSkillReqDto = new ArrayList<>();
         for (AttitudeSkill attitudeSkill : response) {
-            AttitudeSkillDto attitudeSkillDto = AttitudeSkillDto.fromEntity(attitudeSkill);
-            attitudeSkillList.add(attitudeSkillDto);
+            attitudeSkillReqDto.add(AttitudeSkillReqDto.fromEntity(attitudeSkill));
         }
-       Log.info("End getAllAttitudeSkill in AttitudeSkillServImpl");
-        return attitudeSkillList;
+        return attitudeSkillReqDto;
     }
 
     @Override
-    public AttitudeSkillDto getAttitudeSkillById(UUID id) {
-       Log.info("Start getAttitudeSkillById in AttitudeSkillServImpl");
-        Optional<AttitudeSkill> attitudeSkill = attitudeSkillRepo.findById(id);
-       Log.info("End getAchievementById in AchievementServImpl");
-        return attitudeSkill.map(AttitudeSkillDto::fromEntity).orElse(null);
+    public AttitudeSkillReqDto getAttitudeSkillById(UUID id) {
+        Log.info("Start getAttitudeSkillById in AttitudeSkillServImpl");
+        AttitudeSkill attitudeSkill = attitudeSkillRepo.findById(id).orElseThrow(() -> new RuntimeException("AttitudeSkill not found"));
+        Log.info("End getAttitudeSkillById in AttitudeSkillServImpl");
+        return AttitudeSkillReqDto.fromEntity(attitudeSkill);
     }
 
     @Override
-    public AttitudeSkillDto createAttitudeSkill(AttitudeSkillReqDto attitudeSkillDto) {
-       Log.info("Start createAttitudeSkill in AttitudeSkillServImpl");
+    public AttitudeSkillReqDto createAttitudeSkill(AttitudeSkillDto attitudeSkillDto) {
+        Optional<GroupAttitudeSkill> user = groupAttitudeSkillRepo.findById(attitudeSkillDto.getGroupId());
+        if (user.isPresent()) {
+            AttitudeSkill attitudeSkill = attitudeSkillDto.toEntity(attitudeSkillDto, user.get(), UUID.randomUUID(), Date.valueOf(LocalDate.now()), user.get().getId(), Date.valueOf(LocalDate.now()));
+            attitudeSkillRepo.save(attitudeSkill);
+            return AttitudeSkillReqDto.fromEntity(attitudeSkillRepo.save(attitudeSkill));
+        }else {
+            throw new RuntimeException("Attitude Skill not found");
+        }
+    }
 
-        AttitudeSkill attitudeSkill = AttitudeSkillReqDto.toEntity(attitudeSkillDto);
+    @Override
+    public AttitudeSkillReqDto updateAttitudeSkill(UUID id, AttitudeSkillDto attitudeSkillDto) {
+        Log.info("Start updateAttitudeSkill in AttitudeSkillServImpl");
 
+        AttitudeSkill attitudeSkill = attitudeSkillRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("AttitudeSkill not found"));
+        attitudeSkill.setAttitudeSkill(attitudeSkillDto.getAttitudeSkill());     
+        attitudeSkill.setGroupAttitudeSkill(groupAttitudeSkillRepo.findById(attitudeSkillDto.getGroupId()).orElseThrow(() -> new RuntimeException("Group AttitudeSkill not found")));
+        attitudeSkill.setEnabled(attitudeSkillDto.getEnabled());
+        attitudeSkill.setUpdatedBy(UUID.randomUUID());
+        attitudeSkill.setUpdatedAt(Date.valueOf(LocalDate.now()));
         attitudeSkillRepo.save(attitudeSkill);
-       Log.info("End createAttitudeSkill in AttitudeSkillServImpl");
-        return AttitudeSkillDto.fromEntity(attitudeSkill);
+        Log.info("End updateAttitudeSkill in AttitudeSkillServImpl");
+        return AttitudeSkillReqDto.fromEntity(attitudeSkillRepo.save(attitudeSkill));
     }
 
     @Override
-    public AttitudeSkillDto updateAttitudeSkill (UUID id, AttitudeSkillReqDto attitudeSkillDto) {
-       Log.info("Start updateAttitudeSkill in AttitudeSkillServImpl");
-        AttitudeSkill findAttitudeSkill  = attitudeSkillRepo.findById(id).orElseThrow(() -> new RuntimeException("Attitude Skill not found"));
+public Boolean deleteAttitudeSkill(UUID id) {
+    Log.info("Start deleteAttitudeSkill in AttitudeSkillServImpl");
 
-        updateAttitudeSkillFields(findAttitudeSkill , attitudeSkillDto);
-
-        attitudeSkillRepo.save(findAttitudeSkill);
-       Log.info("End updateAttitudeSkill in AttitudeSkillServImpl");
-        return AttitudeSkillDto.fromEntity(findAttitudeSkill);
-    }
-
-    @Override
-    public Boolean deleteAttitudeSkill(UUID id) {
-       Log.info("Start deleteAttitudeSkill in AttitudeSkillServImpl");
-        AttitudeSkill findAttitudeSkill = attitudeSkillRepo.findById(id).orElseThrow(() -> new RuntimeException("Attitude Skill not found"));
-        attitudeSkillRepo.delete(findAttitudeSkill);
-       Log.info("End deleteAttitudeSkill in AttitudeSkillServImpl");
+    if (attitudeSkillRepo.existsById(id)) {
+        attitudeSkillRepo.deleteById(id);  // hanya menghapus AttitudeSkill berdasarkan id
+        Log.info("End deleteAttitudeSkill in AttitudeSkillServImpl");
         return true;
     }
-
-
-    private void updateAttitudeSkillFields(AttitudeSkill existingAttitudeSkill, AttitudeSkillReqDto attitudeSkillDto) {
-        if (attitudeSkillDto.getAttitudeSkill() != null) {
-            existingAttitudeSkill.setAttitudeSkill(attitudeSkillDto.getAttitudeSkill());
-        }
-        if (attitudeSkillDto.getGroupId() != null) {
-            existingAttitudeSkill.setGroupId(attitudeSkillDto.getGroupId());
-        }
-        if (attitudeSkillDto.getEnabled() != null) {
-            existingAttitudeSkill.setEnabled(attitudeSkillDto.getEnabled());
-        }
-        
-
-    }
+    throw new RuntimeException("AttitudeSkill not found");
+}
+    
 }

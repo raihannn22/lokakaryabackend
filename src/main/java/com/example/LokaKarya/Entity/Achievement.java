@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -22,7 +23,8 @@ public class Achievement {
     @Column(name = "ACHIEVEMENT", length = 100, nullable = false)
     private String achievement;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    // @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "GROUP_ID", nullable = false)
     private GroupAchievement groupAchievement;
 
@@ -45,19 +47,9 @@ public class Achievement {
     @Column(name = "UPDATED_AT")
     @Temporal(TemporalType.DATE)
     private Date updatedAt;
-    // @Column(name = "CREATED_AT")
-    // @Temporal(TemporalType.DATE)
-    // private Date createdAt;
-
-    // @Column(name = "CREATED_BY")
-    // private UUID createdBy;
-
-    // @Column(name = "UPDATED_AT")
-    // @Temporal(TemporalType.DATE)
-    // private Date updatedAt;
-
-    // @Column(name = "UPDATED_BY")
-    // private UUID updatedBy;
+    
+    @OneToMany(mappedBy = "achievement", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<EmpAchievementSkill> empAchievementSkills;
 
     
 }

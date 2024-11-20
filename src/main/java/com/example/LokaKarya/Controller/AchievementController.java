@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +33,7 @@ public class AchievementController extends ServerResponseList {
     @Autowired
     AchievementServ achievementServ;
 
-    @GetMapping("/get/all")
+    @GetMapping("/all")
     public ResponseEntity<ManagerDto<List<AchievementReqDto>>> getAllAchievement() {
         Log.info("Start getAllAchievement in AchievementController");
         long startTime = System.currentTimeMillis();
@@ -84,7 +85,24 @@ public class AchievementController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<ManagerDto<AchievementReqDto>> updateAchievement(@PathVariable("id") UUID id, @RequestBody AchievementDto achievementDto) {
+        Log.info("Start updateAchievement in AchievementController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<AchievementReqDto> response = new ManagerDto<>();
+        AchievementReqDto content = achievementServ.updateAchievement(id, achievementDto);
+        response.setContent(content);
+        response.setTotalRows(1);
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success update data", executionTime));
+        Log.info("End updateAchievementSummary in AchievementSummaryController");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping
     public ResponseEntity<ManagerDto<Boolean>> deleteAchievement(@RequestParam("id") UUID id) {
         Log.info("Start deleteAchievement in AchievementController");
         long startTime = System.currentTimeMillis();
@@ -100,4 +118,22 @@ public class AchievementController extends ServerResponseList {
         Log.info("End deleteAchievement in AchievementController");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+
+    // @DeleteMapping
+    // public ResponseEntity<ManagerDto<Boolean>> deleteAchievement(@RequestParam("id") UUID id) {
+    //     Log.info("Start deleteAchievement in AchievementController");
+    //     long startTime = System.currentTimeMillis();
+
+    //     ManagerDto<Boolean> response = new ManagerDto<>();
+    //     Boolean content = achievementServ.deleteAchievement(id);
+    //     response.setContent(content);
+    //     response.setTotalRows(1);
+
+    //     long endTime = System.currentTimeMillis();
+    //     long executionTime = endTime - startTime;
+    //     response.setInfo(getInfoOk("Success delete data", executionTime));
+    //     Log.info("End deleteAchievement in AchievementController");
+    //     return new ResponseEntity<>(response, HttpStatus.OK);
+    // }
 }

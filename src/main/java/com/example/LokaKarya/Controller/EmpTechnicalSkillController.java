@@ -25,12 +25,12 @@ public class EmpTechnicalSkillController extends ServerResponseList {
     EmpTechnicalSkillServ empTechnicalSkillServ;
 
     @GetMapping("/all")
-    public ResponseEntity<ManagerDto<List<EmpTechnicalSkillDto>>>  getAllEmpTechnicalSkill() {
+    public ResponseEntity<ManagerDto<List<EmpTechnicalSkillReqDto>>>  getAllEmpTechnicalSkill() {
         Log.info("Start getAllEmpTechnicalSkill in EmpTechnicalSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<List<EmpTechnicalSkillDto>> response = new ManagerDto<>();
-        List<EmpTechnicalSkillDto> content = empTechnicalSkillServ.getAllEmpTechnicalSkill();
+        ManagerDto<List<EmpTechnicalSkillReqDto>> response = new ManagerDto<>();
+        List<EmpTechnicalSkillReqDto> content = empTechnicalSkillServ.getAllEmpTechnicalSkill();
 
         response.setContent(content);
         response.setTotalRows(content.size());
@@ -42,12 +42,12 @@ public class EmpTechnicalSkillController extends ServerResponseList {
     }
 
     @PutMapping("/save")
-    public ResponseEntity<ManagerDto<EmpTechnicalSkillDto>> saveEmpTechnicalSkill(@RequestBody EmpTechnicalSkillReqDto empTechnicalSkillDto) {
-        Log.info("Start saveGroupAchievement in GroupAchievementController");
+    public ResponseEntity<ManagerDto<EmpTechnicalSkillReqDto>> saveEmpTechnicalSkill(@RequestBody EmpTechnicalSkillDto empTechnicalSkillDto) {
+        Log.info("Start saveEmpTechnicalSkill in EmpTechnicalSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<EmpTechnicalSkillDto> response = new ManagerDto<>();
-        EmpTechnicalSkillDto content = empTechnicalSkillServ.createEmpTechnicalSkill(empTechnicalSkillDto);
+        ManagerDto<EmpTechnicalSkillReqDto> response = new ManagerDto<>();
+        EmpTechnicalSkillReqDto content = empTechnicalSkillServ.createEmpTechnicalSkill(empTechnicalSkillDto);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -58,13 +58,13 @@ public class EmpTechnicalSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<ManagerDto<EmpTechnicalSkillDto>>  getEmpTechnicalSkillDetail(@PathVariable("id") UUID id) {
+    @GetMapping("/get/{id}")
+    public ResponseEntity<ManagerDto<EmpTechnicalSkillReqDto>>  getEmpTechnicalSkillDetail(@PathVariable("id") UUID id) {
         Log.info("Start getEmpTechnicalSkillDetail in EmpTechnicalSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<EmpTechnicalSkillDto> response = new ManagerDto<>();
-        EmpTechnicalSkillDto content = empTechnicalSkillServ.getEmpTechnicalSkillById(id);
+        ManagerDto<EmpTechnicalSkillReqDto> response = new ManagerDto<>();
+        EmpTechnicalSkillReqDto content = empTechnicalSkillServ.getEmpTechnicalSkillById(id);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -76,12 +76,12 @@ public class EmpTechnicalSkillController extends ServerResponseList {
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<ManagerDto<EmpTechnicalSkillDto>>  updateEmpTechnicalSkill(@PathVariable("id") UUID id, @RequestBody EmpTechnicalSkillReqDto empTechnicalSkillDto) {
+    public ResponseEntity<ManagerDto<EmpTechnicalSkillReqDto>>  updateEmpTechnicalSkill(@PathVariable("id") UUID id, @RequestBody EmpTechnicalSkillDto empTechnicalSkillDto) {
         Log.info("Start updateEmpTechnicalSkill in EmpTechnicalSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<EmpTechnicalSkillDto> response = new ManagerDto<>();
-        EmpTechnicalSkillDto content = empTechnicalSkillServ.updateEmpTechnicalSkill(id, empTechnicalSkillDto);
+        ManagerDto<EmpTechnicalSkillReqDto> response = new ManagerDto<>();
+        EmpTechnicalSkillReqDto content = empTechnicalSkillServ.updateEmpTechnicalSkill(id, empTechnicalSkillDto);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -92,7 +92,7 @@ public class EmpTechnicalSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping
     public ResponseEntity<ManagerDto<Boolean>> deleteEmpTechnicalSkill(@PathVariable("id") UUID id) {
         Log.info("Start deleteEmpTechnicalSkill in EmpTechnicalSkillController");
         long startTime = System.currentTimeMillis();

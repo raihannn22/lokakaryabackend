@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.LokaKarya.Dto.AttitudeSkill.AttitudeSkillDto;
@@ -31,13 +32,13 @@ public class AttitudeSkillController extends ServerResponseList {
 @Autowired
     AttitudeSkillServ attitudeSkillServ;
 
-    @GetMapping("/all")
-    public ResponseEntity<ManagerDto<List<AttitudeSkillDto>>>  getAllAttitudeSkill() {
+    @GetMapping("/get-all")
+    public ResponseEntity<ManagerDto<List<AttitudeSkillReqDto>>>  getAllAttitudeSkill() {
         Log.info("Start getAllAttitudeSkill in AttitudeSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<List<AttitudeSkillDto>> response = new ManagerDto<>();
-        List<AttitudeSkillDto> content = attitudeSkillServ.getAllAttitudeSkill();
+        ManagerDto<List<AttitudeSkillReqDto>> response = new ManagerDto<>();
+        List<AttitudeSkillReqDto> content = attitudeSkillServ.getAllAttitudeSkill();
 
         response.setContent(content);
         response.setTotalRows(content.size());
@@ -49,12 +50,12 @@ public class AttitudeSkillController extends ServerResponseList {
     }
 
     @PutMapping("/save")
-    public ResponseEntity<ManagerDto<AttitudeSkillDto>>  saveAttitudeSkill(@RequestBody AttitudeSkillReqDto attitudeSkillDto) {
+    public ResponseEntity<ManagerDto<AttitudeSkillReqDto>>  saveAttitudeSkill(@RequestBody AttitudeSkillDto attitudeSkillDto) {
         Log.info("Start saveAttitudeSkill in AttitudeSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<AttitudeSkillDto> response = new ManagerDto<>();
-        AttitudeSkillDto content = attitudeSkillServ.createAttitudeSkill(attitudeSkillDto);
+        ManagerDto<AttitudeSkillReqDto> response = new ManagerDto<>();
+        AttitudeSkillReqDto content = attitudeSkillServ.createAttitudeSkill(attitudeSkillDto);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -65,13 +66,13 @@ public class AttitudeSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<ManagerDto<AttitudeSkillDto>>  getAttitudeSkillDetail(@PathVariable("id") UUID id) {
+    @GetMapping("/get/{id}")
+    public ResponseEntity<ManagerDto<AttitudeSkillReqDto>>  getAttitudeSkillDetail(@PathVariable("id") UUID id) {
         Log.info("Start getAttitudeSkillDetail in AttitudeSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<AttitudeSkillDto> response = new ManagerDto<>();
-        AttitudeSkillDto content = attitudeSkillServ.getAttitudeSkillById(id);
+        ManagerDto<AttitudeSkillReqDto> response = new ManagerDto<>();
+        AttitudeSkillReqDto content = attitudeSkillServ.getAttitudeSkillById(id);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -83,12 +84,12 @@ public class AttitudeSkillController extends ServerResponseList {
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<ManagerDto<AttitudeSkillDto>>  updateAttitudeSkill(@PathVariable("id") UUID id, @RequestBody AttitudeSkillReqDto attitudeSkillDto) {
+    public ResponseEntity<ManagerDto<AttitudeSkillReqDto>>  updateAttitudeSkill(@PathVariable("id") UUID id, @RequestBody AttitudeSkillDto attitudeSkillDto) {
         Log.info("Start updateAttitudeSkill in AttitudeSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<AttitudeSkillDto> response = new ManagerDto<>();
-        AttitudeSkillDto content = attitudeSkillServ.updateAttitudeSkill(id, attitudeSkillDto);
+        ManagerDto<AttitudeSkillReqDto> response = new ManagerDto<>();
+        AttitudeSkillReqDto content = attitudeSkillServ.updateAttitudeSkill(id, attitudeSkillDto);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -99,8 +100,8 @@ public class AttitudeSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ManagerDto<Boolean>> deleteAttitudeSkill(@PathVariable("id") UUID id) {
+    @DeleteMapping
+    public ResponseEntity<ManagerDto<Boolean>> deleteAttitudeSkill(@RequestParam("id") UUID id) {
         Log.info("Start deleteAttitudeSkill in AttitudeSkillController");
         long startTime = System.currentTimeMillis();
 

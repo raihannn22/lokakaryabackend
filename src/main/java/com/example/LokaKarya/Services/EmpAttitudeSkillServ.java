@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.UUID;
 
 public interface EmpAttitudeSkillServ {
-    List<EmpAttitudeSkillDto> getAllEmpAttitudeSkill();
-    EmpAttitudeSkillDto getEmpAttitudeSkillById(UUID id);
-    EmpAttitudeSkillDto createEmpAttitudeSkill(EmpAttitudeSkillReqDto empAttitudeSkillDto);
-    EmpAttitudeSkillDto updateEmpAttitudeSkill(UUID id, EmpAttitudeSkillReqDto empAttitudeSkillReqDto);
+    List<EmpAttitudeSkillReqDto> getAllEmpAttitudeSkill();
+    EmpAttitudeSkillReqDto getEmpAttitudeSkillById(UUID id);
+    EmpAttitudeSkillReqDto createEmpAttitudeSkill(EmpAttitudeSkillDto empAttitudeSkillDto);
+    EmpAttitudeSkillReqDto updateEmpAttitudeSkill(UUID id, EmpAttitudeSkillDto empAttitudeSkillReqDto);
     Boolean deleteEmpAttitudeSkill(UUID id);
 }
 

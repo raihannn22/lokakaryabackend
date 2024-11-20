@@ -40,20 +40,6 @@ public class AchievementDto {
         return achievement;
     }
 
-    // public static AssessmentSummary toEntity(AssessmentSummaryDto assessmentSummaryDto, User user, UUID updatedBy
-    // , Date updatedAt, UUID createdBy, Date createdAt) {
-    //     AssessmentSummary assessmentSummary = new AssessmentSummary();
-    //     assessmentSummary.setId(assessmentSummaryDto.getId());
-    //     assessmentSummary.setUser(user);
-    //     assessmentSummary.setYear(assessmentSummaryDto.getYear());
-    //     assessmentSummary.setScore(assessmentSummaryDto.getScore());
-    //     assessmentSummary.setStatus(assessmentSummaryDto.getStatus());
-    //     assessmentSummary.setUpdatedBy(updatedBy);
-    //     assessmentSummary.setUpdatedAt(updatedAt);
-    //     assessmentSummary.setCreatedBy(createdBy);
-    //     assessmentSummary.setCreatedAt(createdAt);
-    //     return assessmentSummary;
-    // }
 
     //     public static AchievementDto fromEntity(Achievement achievement) {
     //     AchievementDto achievementDto = new AchievementDto();

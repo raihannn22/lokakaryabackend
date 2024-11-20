@@ -2,6 +2,8 @@ package com.example.LokaKarya.Controller;
 
 
 import com.example.LokaKarya.Dto.ManagerDto;
+import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillDto;
+import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillReqDto;
 import com.example.LokaKarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillDto;
 import com.example.LokaKarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillReqDto;
 import com.example.LokaKarya.Services.EmpAttitudeSkillServ;
@@ -25,12 +27,12 @@ public class EmpAttitudeSkillController extends ServerResponseList {
     EmpAttitudeSkillServ empAttitudeSkillServ;
 
     @GetMapping("/all")
-    public ResponseEntity<ManagerDto<List<EmpAttitudeSkillDto>>>  getAllEmpAttitudeSkill() {
+    public ResponseEntity<ManagerDto<List<EmpAttitudeSkillReqDto>>>  getAllEmpAttitudeSkill() {
         Log.info("Start getAllEmpAttitudeSkill in EmpAttitudeSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<List<EmpAttitudeSkillDto>> response = new ManagerDto<>();
-        List<EmpAttitudeSkillDto> content = empAttitudeSkillServ.getAllEmpAttitudeSkill();
+        ManagerDto<List<EmpAttitudeSkillReqDto>> response = new ManagerDto<>();
+        List<EmpAttitudeSkillReqDto> content = empAttitudeSkillServ.getAllEmpAttitudeSkill();
 
         response.setContent(content);
         response.setTotalRows(content.size());
@@ -42,12 +44,12 @@ public class EmpAttitudeSkillController extends ServerResponseList {
     }
 
     @PutMapping("/save")
-    public ResponseEntity<ManagerDto<EmpAttitudeSkillDto>> saveEmpAttitudeSkill(@RequestBody EmpAttitudeSkillReqDto empAttitudeSkillDto) {
+    public ResponseEntity<ManagerDto<EmpAttitudeSkillReqDto>> saveEmpAttitudeSkill(@RequestBody EmpAttitudeSkillDto empAttitudeSkillDto) {
         Log.info("Start saveGroupAchievement in GroupAchievementController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<EmpAttitudeSkillDto> response = new ManagerDto<>();
-        EmpAttitudeSkillDto content = empAttitudeSkillServ.createEmpAttitudeSkill(empAttitudeSkillDto);
+        ManagerDto<EmpAttitudeSkillReqDto> response = new ManagerDto<>();
+        EmpAttitudeSkillReqDto content = empAttitudeSkillServ.createEmpAttitudeSkill(empAttitudeSkillDto);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -58,13 +60,13 @@ public class EmpAttitudeSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<ManagerDto<EmpAttitudeSkillDto>>  getEmpAttitudeSkillDetail(@PathVariable("id") UUID id) {
+    @GetMapping("/get/{id}")
+    public ResponseEntity<ManagerDto<EmpAttitudeSkillReqDto>>  getEmpAttitudeSkillDetail(@PathVariable("id") UUID id) {
         Log.info("Start getEmpAttitudeSkillDetail in EmpAttitudeSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<EmpAttitudeSkillDto> response = new ManagerDto<>();
-        EmpAttitudeSkillDto content = empAttitudeSkillServ.getEmpAttitudeSkillById(id);
+        ManagerDto<EmpAttitudeSkillReqDto> response = new ManagerDto<>();
+        EmpAttitudeSkillReqDto content = empAttitudeSkillServ.getEmpAttitudeSkillById(id);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -76,12 +78,12 @@ public class EmpAttitudeSkillController extends ServerResponseList {
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<ManagerDto<EmpAttitudeSkillDto>>  updateEmpAttitudeSkill(@PathVariable("id") UUID id, @RequestBody EmpAttitudeSkillReqDto empAttitudeSkillDto) {
+    public ResponseEntity<ManagerDto<EmpAttitudeSkillReqDto>>  updateEmpAttitudeSkill(@PathVariable("id") UUID id, @RequestBody EmpAttitudeSkillDto empAttitudeSkillDto) {
         Log.info("Start updateEmpAttitudeSkill in EmpAttitudeSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<EmpAttitudeSkillDto> response = new ManagerDto<>();
-        EmpAttitudeSkillDto content = empAttitudeSkillServ.updateEmpAttitudeSkill(id, empAttitudeSkillDto);
+        ManagerDto<EmpAttitudeSkillReqDto> response = new ManagerDto<>();
+        EmpAttitudeSkillReqDto content = empAttitudeSkillServ.updateEmpAttitudeSkill(id, empAttitudeSkillDto);
 
         response.setContent(content);
         response.setTotalRows(1);

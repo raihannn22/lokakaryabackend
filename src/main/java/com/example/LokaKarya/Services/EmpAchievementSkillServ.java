@@ -7,10 +7,10 @@ import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillDto;
 import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillReqDto;
 
 public interface EmpAchievementSkillServ {
-    List<EmpAchievementSkillDto> getAllEmpAchievementSkill();
-    EmpAchievementSkillDto getEmpAchievementSkillById(UUID id);
-    EmpAchievementSkillDto createEmpAchievementSkill(EmpAchievementSkillReqDto empAchievementSkillDto);
-    EmpAchievementSkillDto updateEmpAchievementSkill(UUID id, EmpAchievementSkillReqDto empAchievementSkillReqDto);
+    List<EmpAchievementSkillReqDto> getAllEmpAchievementSkill();
+    EmpAchievementSkillReqDto getEmpAchievementSkillById(UUID id);
+    EmpAchievementSkillReqDto createEmpAchievementSkill(EmpAchievementSkillDto empAchievementSkillDto);
+    EmpAchievementSkillReqDto updateEmpAchievementSkill(UUID id, EmpAchievementSkillDto empAchievementSkillDto);
     Boolean deleteEmpAchievementSkill(UUID id);
 }
 

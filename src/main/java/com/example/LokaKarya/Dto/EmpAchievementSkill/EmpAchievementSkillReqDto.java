@@ -2,6 +2,7 @@ package com.example.LokaKarya.Dto.EmpAchievementSkill;
 
 import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillReqDto;
 import com.example.LokaKarya.Entity.EmpAchievementSkill;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Data
 @ToString
 public class EmpAchievementSkillReqDto {
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonProperty("user_id")
     private UUID userId;
     @JsonProperty("notes")
@@ -25,14 +27,14 @@ public class EmpAchievementSkillReqDto {
     @JsonProperty("assessment_year")
     private Integer assessmentYear;
 
-    public static EmpAchievementSkill toEntity(EmpAchievementSkillReqDto empAchievementSkillDto) {
-        EmpAchievementSkill empAchievementSkill = new EmpAchievementSkill();
-        empAchievementSkill.setUserId(empAchievementSkillDto.getUserId());
-        empAchievementSkill.setNotes(empAchievementSkillDto.getNotes());
-        empAchievementSkill.setAchievementId(empAchievementSkillDto.getAchievementId());
-        empAchievementSkill.setScore(empAchievementSkillDto.getScore());
-        empAchievementSkill.setAssessmentYear(empAchievementSkillDto.getAssessmentYear());
-        return empAchievementSkill;
-    }
+    public static EmpAchievementSkillReqDto fromEntity(EmpAchievementSkill empAchievementSkill) {
+            EmpAchievementSkillReqDto empAchievementSkillReqDto = new EmpAchievementSkillReqDto();
+            empAchievementSkillReqDto.setUserId(empAchievementSkill.getUserId());
+            empAchievementSkillReqDto.setNotes(empAchievementSkill.getNotes());
+            empAchievementSkillReqDto.setAchievementId(empAchievementSkill.getAchievement().getId());
+            empAchievementSkillReqDto.setScore(empAchievementSkill.getScore());
+            empAchievementSkillReqDto.setAssessmentYear(empAchievementSkill.getAssessmentYear());
+            return empAchievementSkillReqDto;
+        }
 }
 

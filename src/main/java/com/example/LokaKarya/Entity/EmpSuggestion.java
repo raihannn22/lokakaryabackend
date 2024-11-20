@@ -27,19 +27,19 @@ public class EmpSuggestion {
     @Column(name = "ASSESSMENT_YEAR", length = 4)
     private Integer assessmentYear;
 
+    @Column(name = "CREATED_BY", length = 32)
+    private UUID createdBy;
+    
     @Column(name = "CREATED_AT")
     @Temporal(TemporalType.DATE)
-    private Date createdAt;
+    private Date createdAt = new Date(System.currentTimeMillis());
 
-    @Column(name = "CREATED_BY")
-    private UUID createdBy;
+    @Column(name = "UPDATED_BY", length = 32)
+    private UUID updatedBy;
 
     @Column(name = "UPDATED_AT")
     @Temporal(TemporalType.DATE)
     private Date updatedAt;
-
-    @Column(name = "UPDATED_BY")
-    private UUID updatedBy;
 
     
 }

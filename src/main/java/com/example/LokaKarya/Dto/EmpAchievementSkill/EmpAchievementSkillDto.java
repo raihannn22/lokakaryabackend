@@ -1,5 +1,6 @@
 package com.example.LokaKarya.Dto.EmpAchievementSkill;
 
+import com.example.LokaKarya.Entity.Achievement;
 import com.example.LokaKarya.Entity.EmpAchievementSkill;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -26,26 +27,28 @@ public class EmpAchievementSkillDto {
     @JsonProperty("assessment_year")
     private Integer assessmentYear;
 
-    public static EmpAchievementSkillDto fromEntity(EmpAchievementSkill empAchievementSkill) {
-        EmpAchievementSkillDto empAchievementSkillDto = new EmpAchievementSkillDto();
-        empAchievementSkillDto.setId(empAchievementSkill.getId());
-        empAchievementSkillDto.setUserId(empAchievementSkill.getUserId());
-        empAchievementSkillDto.setNotes(empAchievementSkill.getNotes());
-        empAchievementSkillDto.setAchievementId(empAchievementSkill.getAchievementId());
-        empAchievementSkillDto.setScore(empAchievementSkill.getScore());
-        empAchievementSkillDto.setAssessmentYear(empAchievementSkill.getAssessmentYear());
-        return empAchievementSkillDto;
-    }
-
-    public static EmpAchievementSkill toEntity(EmpAchievementSkillDto empAchievementSkillDto) {
+    
+    public static EmpAchievementSkill toEntity(EmpAchievementSkillDto empAchievementSkillDto, Achievement achievement, UUID updateBy, Date updateAt, UUID createdBy, Date createdAt) {
         EmpAchievementSkill empAchievementSkill = new EmpAchievementSkill();
         empAchievementSkill.setId(empAchievementSkillDto.getId());
         empAchievementSkill.setUserId(empAchievementSkillDto.getUserId());
         empAchievementSkill.setNotes(empAchievementSkillDto.getNotes());
-        empAchievementSkill.setAchievementId(empAchievementSkillDto.getAchievementId());
+        empAchievementSkill.setAchievement(achievement);
         empAchievementSkill.setScore(empAchievementSkillDto.getScore());
         empAchievementSkill.setAssessmentYear(empAchievementSkillDto.getAssessmentYear());
         return empAchievementSkill;
+
+
+        // public static EmpAchievementSkillDto fromEntity(EmpAchievementSkill empAchievementSkill) {
+        //     EmpAchievementSkillDto empAchievementSkillDto = new EmpAchievementSkillDto();
+        //     empAchievementSkillDto.setId(empAchievementSkill.getId());
+        //     empAchievementSkillDto.setUserId(empAchievementSkill.getUserId());
+        //     empAchievementSkillDto.setNotes(empAchievementSkill.getNotes());
+        //     empAchievementSkillDto.setAchievementId(empAchievementSkill.getAchievementId());
+        //     empAchievementSkillDto.setScore(empAchievementSkill.getScore());
+        //     empAchievementSkillDto.setAssessmentYear(empAchievementSkill.getAssessmentYear());
+        //     return empAchievementSkillDto;
+        // }
     }
 }
 

@@ -24,8 +24,12 @@ public class EmpAchievementSkill {
     @Column(name = "NOTES", length = 100, nullable = false)
     private String notes;
 
-    @Column(name = "ACHIEVEMENT_ID", length = 32, nullable = false)
-    private UUID achievementId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ACHIEVEMENT_ID", nullable = false)
+    private Achievement achievement;
+
+    // @Column(name = "ACHIEVEMENT_ID", length = 32, nullable = false)
+    // private UUID achievementId;
 
     @Column(name = "SCORE", length = 3, nullable = false)
     private Integer score;
@@ -33,19 +37,19 @@ public class EmpAchievementSkill {
     @Column(name = "ASSESSMENT_YEAR", length = 4, nullable = false)
     private Integer assessmentYear;
 
+    @Column(name = "CREATED_BY", length = 32)
+    private UUID createdBy;
+    
     @Column(name = "CREATED_AT")
     @Temporal(TemporalType.DATE)
-    private Date createdAt;
+    private Date createdAt = new Date(System.currentTimeMillis());
 
-    @Column(name = "CREATED_BY")
-    private UUID createdBy;
+    @Column(name = "UPDATED_BY", length = 32)
+    private UUID updatedBy;
 
     @Column(name = "UPDATED_AT")
     @Temporal(TemporalType.DATE)
     private Date updatedAt;
-
-    @Column(name = "UPDATED_BY")
-    private UUID updatedBy;
 
 }
     

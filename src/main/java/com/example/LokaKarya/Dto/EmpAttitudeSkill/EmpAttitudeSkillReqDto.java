@@ -2,6 +2,7 @@ package com.example.LokaKarya.Dto.EmpAttitudeSkill;
 
 import com.example.LokaKarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillReqDto;
 import com.example.LokaKarya.Entity.EmpAttitudeSkill;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Data
 @ToString
 public class EmpAttitudeSkillReqDto {
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonProperty("user_id")
     private UUID userId;
     @JsonProperty("notes")
@@ -25,13 +27,13 @@ public class EmpAttitudeSkillReqDto {
     @JsonProperty("assessment_year")
     private Integer assessmentYear;
 
-    public static EmpAttitudeSkill toEntity(EmpAttitudeSkillReqDto empAttitudeSkillDto) {
-        EmpAttitudeSkill empAttitudeSkill = new EmpAttitudeSkill();
-        empAttitudeSkill.setUserId(empAttitudeSkillDto.getUserId());
-        empAttitudeSkill.setAttitudeSkillId(empAttitudeSkillDto.getAttitudeSkillId());
-        empAttitudeSkill.setScore(empAttitudeSkillDto.getScore());
-        empAttitudeSkill.setAssessmentYear(empAttitudeSkillDto.getAssessmentYear());
-        return empAttitudeSkill;
-    }
+    public static EmpAttitudeSkillReqDto fromEntity(EmpAttitudeSkill empAttitudeSkill) {
+            EmpAttitudeSkillReqDto empAttitudeSkillReqDto = new EmpAttitudeSkillReqDto();
+            empAttitudeSkillReqDto.setUserId(empAttitudeSkill.getUserId());
+            empAttitudeSkillReqDto.setAttitudeSkillId(empAttitudeSkill.getAttitudeSkill().getId());
+            empAttitudeSkillReqDto.setScore(empAttitudeSkill.getScore());
+            empAttitudeSkillReqDto.setAssessmentYear(empAttitudeSkill.getAssessmentYear());
+            return empAttitudeSkillReqDto;
+        }
 }
 

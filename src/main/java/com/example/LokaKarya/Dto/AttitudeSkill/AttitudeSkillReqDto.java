@@ -2,6 +2,7 @@ package com.example.LokaKarya.Dto.AttitudeSkill;
 
 import com.example.LokaKarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
 import com.example.LokaKarya.Entity.AttitudeSkill;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -14,6 +15,9 @@ import java.util.UUID;
 @Data
 @ToString
 public class AttitudeSkillReqDto {
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonProperty("id")
+    private UUID id;
     @JsonProperty("attitude_skill")
     private String attitudeSkill;
     @JsonProperty("group_id")
@@ -21,12 +25,13 @@ public class AttitudeSkillReqDto {
     @JsonProperty("enabled")
     private Integer enabled;
 
-    public static AttitudeSkill toEntity(AttitudeSkillReqDto attitudeSkillDto) {
-        AttitudeSkill attitudeSkill = new AttitudeSkill();
-        attitudeSkill.setAttitudeSkill(attitudeSkillDto.getAttitudeSkill());
-        attitudeSkill.setGroupId(attitudeSkillDto.getGroupId());
-        attitudeSkill.setEnabled(attitudeSkillDto.getEnabled());
-        return attitudeSkill;
+    public static AttitudeSkillReqDto fromEntity(AttitudeSkill attitudeSkill) {
+        AttitudeSkillReqDto attitudeSkillReqDto = new AttitudeSkillReqDto();
+        attitudeSkillReqDto.setId(attitudeSkill.getId());
+        attitudeSkillReqDto.setAttitudeSkill(attitudeSkill.getAttitudeSkill());
+        attitudeSkillReqDto.setGroupId(attitudeSkill.getGroupAttitudeSkill().getId());
+        attitudeSkillReqDto.setEnabled(attitudeSkill.getEnabled());
+        return attitudeSkillReqDto;
     }
 }
 

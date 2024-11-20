@@ -35,18 +35,6 @@ public class AchievementReqDto {
         return achievementReqDto;
     }
 
-    // public static AssessmentSummaryReqDto fromEntity(AssessmentSummary assessmentSummary) {
-    //     AssessmentSummaryReqDto assessmentSummaryReqDto = new AssessmentSummaryReqDto();
-    //     assessmentSummaryReqDto.setId(assessmentSummary.getId());
-    //     assessmentSummaryReqDto.setUserId(assessmentSummary.getUser().getId());
-    //     assessmentSummaryReqDto.setYear(assessmentSummary.getYear());
-    //     assessmentSummaryReqDto.setScore(assessmentSummary.getScore());
-    //     assessmentSummaryReqDto.setStatus(assessmentSummary.getStatus());
-    //     assessmentSummaryReqDto.setCreatedBy(assessmentSummary.getCreatedBy());
-    //     assessmentSummaryReqDto.setCreatedAt(assessmentSummary.getCreatedAt());
-    //     assessmentSummaryReqDto.setUpdatedBy(assessmentSummary.getUpdatedBy());
-    //     assessmentSummaryReqDto.setUpdatedAt(assessmentSummary.getUpdatedAt());
-    //     return assessmentSummaryReqDto;
-    // }
+
 }
 
