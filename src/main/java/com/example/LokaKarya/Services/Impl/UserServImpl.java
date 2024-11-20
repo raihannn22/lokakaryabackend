@@ -70,7 +70,7 @@ public class UserServImpl implements UserServ {
     @Override
     @Transactional
     public UserDto createUser(UserReqDto userDto) {
-//        Log.info("Start createUser in UserServImpl");
+        Log.info("Start createUser in UserServImpl");
 //        idRole = appRoleRepo.findById()
         System.out.println(userDto.getAppRole());
         if (userDto.getAppRole() !=null) {
@@ -101,7 +101,7 @@ public class UserServImpl implements UserServ {
 
 
         userRepo.save(user);
-//        Log.info("End createUser in UserServImpl");
+        Log.info("End createUser in UserServImpl");
         return UserDto.fromEntity(user);
     }
 
