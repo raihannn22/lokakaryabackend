@@ -39,10 +39,10 @@ public class AssessmentSummary {
     @Column(name = "STATUS", nullable = false)
     private Integer status = 1;
 
-    @Column(name = "CREATED_BY", nullable = false )
+    @Column(name = "CREATED_BY", nullable = false)
     private UUID createdBy;
 
-    @Column(name = "CREATED_AT")
+    @Column(name = "CREATED_AT", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date createdAt = new Date(System.currentTimeMillis());
 

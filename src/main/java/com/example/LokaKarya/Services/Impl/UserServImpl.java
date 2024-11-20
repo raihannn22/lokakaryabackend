@@ -1,14 +1,18 @@
 package com.example.LokaKarya.Services.Impl;
 
+import com.example.LokaKarya.Config.GetUserUtil;
 import com.example.LokaKarya.Dto.AppUserRole.AppUserRoleReqDto;
 import com.example.LokaKarya.Dto.User.UserDto;
 import com.example.LokaKarya.Dto.User.UserReqDto;
 import com.example.LokaKarya.Entity.*;
 import com.example.LokaKarya.Repository.*;
 import com.example.LokaKarya.Services.UserServ;
+import com.example.LokaKarya.util.JwtUtil;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -18,11 +22,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class
-
-
-UserServImpl implements UserServ {
-
+public class UserServImpl implements UserServ {
     private final Logger Log = LoggerFactory.getLogger(UserServImpl.class);
 
     @Autowired
@@ -37,11 +37,20 @@ UserServImpl implements UserServ {
     @Autowired
     private DivisionRepo divisionRepo;
 
+    @Autowired
+    private GetUserUtil getUserUtil;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
 
     @Override
     public List<UserDto> getAllUsers() {
         Log.info("Start getAllUsers in UserServImpl");
+//        String currentUserEntity = getUserUtil.getCurrentUser().getFullName();
+//        System.out.println(currentUserEntity + "akunoin");
+
         List<User> response = userRepo.findAll();
         List<UserDto> userList = new ArrayList<>();
 
@@ -63,25 +72,16 @@ UserServImpl implements UserServ {
     }
 
     @Override
+    @Transactional
     public UserDto createUser(UserReqDto userDto) {
-//        Log.info("Start createUser in UserServImpl");
+        Log.info("Start createUser in UserServImpl");
 //        idRole = appRoleRepo.findById()
         System.out.println(userDto.getAppRole());
-        if (userDto.getAppRole() !=null) {
-            for (UUID roleId: userDto.getAppRole()) {
-               Optional<AppRole> idRole =  appRoleRepo.findById(roleId);
-               if (idRole.isEmpty()) {
-                   throw new RuntimeException("Role not found");
-               }else {
-                   AppUserRole appUserRole = new AppUserRole();
-                   appUserRole.setAppRole(idRole.get());
-                   appUserRole.setUser(UserReqDto.toEntity(userDto));
-                   appUserRoleRepo.save(appUserRole);
-               }
-            };
-        }
 
-        User user = UserReqDto.toEntity(userDto);
+        UUID currentUserEntity = getUserUtil.getCurrentUser().getId();
+        System.out.println(currentUserEntity+ "akunoin");
+
+        User user = UserReqDto.toEntity(userDto, UUID.randomUUID(), new Date(System.currentTimeMillis()), null, null);
 
         if (userDto.getDivision() !=null) {
             Optional<Division> idDivision =  divisionRepo.findById(userDto.getDivision());
@@ -91,10 +91,26 @@ UserServImpl implements UserServ {
                 user.setDivision(idDivision.get());
             }
         }
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user = userRepo.save(user);
+
+        if (userDto.getAppRole() !=null) {
+
+            for (UUID roleId: userDto.getAppRole()) {
+                Optional<AppRole> idRole =  appRoleRepo.findById(roleId);
+                if (idRole.isEmpty()) {
+                    throw new RuntimeException("Role not found");
+                }else {
+                    AppUserRole appUserRole = new AppUserRole();
+                    appUserRole.setAppRole(idRole.get());
+                    appUserRole.setUser(user);
+                    appUserRoleRepo.save(appUserRole);
+                }
+            };
+        }
 
 
-        userRepo.save(user);
-//        Log.info("End createUser in UserServImpl");
+        Log.info("End createUser in UserServImpl");
         return UserDto.fromEntity(user);
     }
 
@@ -175,6 +191,7 @@ UserServImpl implements UserServ {
         if (userDto.getPassword() != null) {
             existingUser.setPassword(userDto.getPassword());
         }
-
     }
+
 }
+

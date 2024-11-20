@@ -22,13 +22,14 @@ public class AppRoleDto {
     @JsonProperty("ROLENAME")
     private String roleName;
 
-    public static AppRole toEntity(AppRoleDto appRoleDto, UUID updatedBy, Date updatedAt, UUID createdBy) {
+    public static AppRole toEntity(AppRoleDto appRoleDto, UUID updatedBy, Date updatedAt, UUID createdBy, Date createdAt) {
         AppRole appRole = new AppRole();
         appRole.setId(appRoleDto.getId());
         appRole.setRoleName(appRoleDto.getRoleName());
         appRole.setUpdatedAt(updatedAt);
         appRole.setUpdatedBy(updatedBy);
         appRole.setCreatedBy(createdBy);
+        appRole.setCreatedAt(createdAt);
         return appRole;
     }
 
