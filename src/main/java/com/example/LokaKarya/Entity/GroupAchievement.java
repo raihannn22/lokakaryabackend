@@ -30,14 +30,14 @@ public class GroupAchievement {
     @Column(name = "ENABLED", length = 1)
     private Integer enabled = 1;
 
-    @Column(name = "CREATED_BY", length = 32)
+    @Column(name = "CREATED_BY")
     private UUID createdBy;
 
     @Column(name = "CREATED_AT")
     @Temporal(TemporalType.DATE)
-    private Date createdAt = new Date(System.currentTimeMillis());
+    private Date createdAt;
 
-    @Column(name = "UPDATED_BY", length = 32)
+    @Column(name = "UPDATED_BY")
     private UUID updatedBy;
 
     @Column(name = "UPDATED_AT")

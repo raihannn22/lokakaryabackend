@@ -6,7 +6,7 @@ import com.example.LokaKarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -37,19 +37,14 @@ public class EmpAchievementSkillDto {
         empAchievementSkill.setAchievement(achievement);
         empAchievementSkill.setScore(empAchievementSkillDto.getScore());
         empAchievementSkill.setAssessmentYear(empAchievementSkillDto.getAssessmentYear());
+        empAchievementSkill.setCreatedAt(createdAt);
+        empAchievementSkill.setCreatedBy(createdBy);
+        empAchievementSkill.setUpdatedAt(updateAt);
+        empAchievementSkill.setUpdatedBy(updateBy);
         return empAchievementSkill;
 
 
-        // public static EmpAchievementSkillDto fromEntity(EmpAchievementSkill empAchievementSkill) {
-        //     EmpAchievementSkillDto empAchievementSkillDto = new EmpAchievementSkillDto();
-        //     empAchievementSkillDto.setId(empAchievementSkill.getId());
-        //     empAchievementSkillDto.setUserId(empAchievementSkill.getUserId());
-        //     empAchievementSkillDto.setNotes(empAchievementSkill.getNotes());
-        //     empAchievementSkillDto.setAchievementId(empAchievementSkill.getAchievementId());
-        //     empAchievementSkillDto.setScore(empAchievementSkill.getScore());
-        //     empAchievementSkillDto.setAssessmentYear(empAchievementSkill.getAssessmentYear());
-        //     return empAchievementSkillDto;
-        // }
+
     }
 }
 

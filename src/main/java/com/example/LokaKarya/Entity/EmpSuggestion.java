@@ -2,7 +2,7 @@ package com.example.LokaKarya.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -18,7 +18,7 @@ public class EmpSuggestion {
     @Column(name = "ID",nullable = false)
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
     
@@ -31,14 +31,14 @@ public class EmpSuggestion {
     @Column(name = "ASSESSMENT_YEAR", length = 4)
     private Integer assessmentYear;
 
-    @Column(name = "CREATED_BY", length = 32)
+    @Column(name = "CREATED_BY")
     private UUID createdBy;
-    
+
     @Column(name = "CREATED_AT")
     @Temporal(TemporalType.DATE)
-    private Date createdAt = new Date(System.currentTimeMillis());
+    private Date createdAt;
 
-    @Column(name = "UPDATED_BY", length = 32)
+    @Column(name = "UPDATED_BY")
     private UUID updatedBy;
 
     @Column(name = "UPDATED_AT")

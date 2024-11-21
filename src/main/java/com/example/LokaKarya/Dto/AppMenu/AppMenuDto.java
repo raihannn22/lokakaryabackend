@@ -6,7 +6,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import lombok.*;
 
-import java.sql.Date;
 import java.util.UUID;
 
 @AllArgsConstructor

@@ -4,7 +4,7 @@ import com.example.LokaKarya.Entity.TechnicalSkill;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -20,19 +20,16 @@ public class TechnicalSkillDto {
     @JsonProperty("enabled")
     private Integer enabled;
 
-    public static TechnicalSkillDto fromEntity(TechnicalSkill technicalSkill) {
-        TechnicalSkillDto technicalSkillDto = new TechnicalSkillDto();
-        technicalSkillDto.setId(technicalSkill.getId());
-        technicalSkillDto.setTechnicalSkill(technicalSkill.getTechnicalSkill());
-        technicalSkillDto.setEnabled(technicalSkill.getEnabled());
-        return technicalSkillDto;
-    }
-
-    public static TechnicalSkill toEntity(TechnicalSkillDto technicalSkillDto) {
+    
+    public static TechnicalSkill toEntity(TechnicalSkillDto technicalSkillDto, UUID updateBy, Date updateAt, UUID createdBy, Date createdAt) {
         TechnicalSkill technicalSkill = new TechnicalSkill();
         technicalSkill.setId(technicalSkillDto.getId());
         technicalSkill.setTechnicalSkill(technicalSkillDto.getTechnicalSkill());
         technicalSkill.setEnabled(technicalSkillDto.getEnabled());
+        technicalSkill.setCreatedAt(createdAt);
+        technicalSkill.setCreatedBy(createdBy);
+        technicalSkill.setUpdatedAt(updateAt);
+        technicalSkill.setUpdatedBy(updateBy);
         return technicalSkill;
     }
 }

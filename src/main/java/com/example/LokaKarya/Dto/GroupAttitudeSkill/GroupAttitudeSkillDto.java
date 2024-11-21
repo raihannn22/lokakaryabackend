@@ -4,7 +4,7 @@ import com.example.LokaKarya.Entity.GroupAttitudeSkill;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -23,21 +23,17 @@ public class GroupAttitudeSkillDto {
     private Integer enabled;
 
 
-    public static GroupAttitudeSkillDto fromEntity(GroupAttitudeSkill groupAttitudeSkill) {
-        GroupAttitudeSkillDto groupAttitudeSkillDto = new GroupAttitudeSkillDto();
-        groupAttitudeSkillDto.setId(groupAttitudeSkill.getId());
-        groupAttitudeSkillDto.setGroupName(groupAttitudeSkill.getGroupName());
-        groupAttitudeSkillDto.setPercentage(groupAttitudeSkill.getPercentage());
-        groupAttitudeSkillDto.setEnabled(groupAttitudeSkill.getEnabled());
-        return groupAttitudeSkillDto;
-    }
-
-    public static GroupAttitudeSkill toEntity(GroupAttitudeSkillDto groupAttitudeSkillDto) {
+    
+    public static GroupAttitudeSkill toEntity(GroupAttitudeSkillDto groupAttitudeSkillDto, UUID updateBy, Date updateAt, UUID createdBy, Date createdAt) {
         GroupAttitudeSkill groupAttitudeSkill = new GroupAttitudeSkill();
         groupAttitudeSkill.setId(groupAttitudeSkillDto.getId());
         groupAttitudeSkill.setGroupName(groupAttitudeSkillDto.getGroupName());
         groupAttitudeSkill.setPercentage(groupAttitudeSkillDto.getPercentage());
         groupAttitudeSkill.setEnabled(groupAttitudeSkillDto.getEnabled());
+        groupAttitudeSkill.setCreatedAt(createdAt);
+        groupAttitudeSkill.setCreatedBy(createdBy);
+        groupAttitudeSkill.setUpdatedAt(updateAt);
+        groupAttitudeSkill.setUpdatedBy(updateBy);
         return groupAttitudeSkill;
     }
 }

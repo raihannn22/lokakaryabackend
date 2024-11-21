@@ -1,8 +1,13 @@
 package com.example.LokaKarya.Services.Impl;
 
+import com.example.LokaKarya.Config.GetUserUtil;
 import com.example.LokaKarya.Dto.GroupAchievement.GroupAchievementDto;
 import com.example.LokaKarya.Dto.GroupAchievement.GroupAchievementReqDto;
+import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
+import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
+// import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
 import com.example.LokaKarya.Entity.GroupAchievement;
+import com.example.LokaKarya.Entity.GroupAttitudeSkill;
 import com.example.LokaKarya.Repository.GroupAchievementRepo;
 import com.example.LokaKarya.Services.GroupAchievementServ;
 
@@ -11,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,71 +30,66 @@ public class GroupAchievementServImpl implements GroupAchievementServ {
     @Autowired
     private GroupAchievementRepo groupAchievementRepo;
 
+    @Autowired
+    GetUserUtil getUserUtil;
+
     @Override
-    public List<GroupAchievementDto> getAllGroupAchievement() {
-       Log.info("Start getAllGroupAchievement in GroupAchievementServImpl");
+    public List<GroupAchievementReqDto> getAllGroupAchievement() {
+        Log.info("Start getAllGroupAchievement in GroupAchievementServImpl");
         List<GroupAchievement> response = groupAchievementRepo.findAll();
-        List<GroupAchievementDto> groupAchievementList = new ArrayList<>();
+        List<GroupAchievementReqDto> groupAchievementReqDto = new ArrayList<>();
 
         for (GroupAchievement groupAchievement : response) {
-            GroupAchievementDto groupAchievementDto = GroupAchievementDto.fromEntity(groupAchievement);
-            groupAchievementList.add(groupAchievementDto);
+            groupAchievementReqDto.add(GroupAchievementReqDto.fromEntity(groupAchievement));
         }
-       Log.info("End getAllGroupAchievement in GroupAchievementServImpl");
-        return groupAchievementList;
+        Log.info("End getAllGroupAchievement in GroupAchievementServImpl");
+        return groupAchievementReqDto;
     }
 
     @Override
-    public GroupAchievementDto getGroupAchievementById(UUID id) {
-       Log.info("Start getGroupAchievementById in GroupAchievementServImpl");
-        Optional<GroupAchievement> groupAchivement = groupAchievementRepo.findById(id);
-       Log.info("End getGroupAchievementById in GroupAchievementServImpl");
-        return groupAchivement.map(GroupAchievementDto::fromEntity).orElse(null);
+    public GroupAchievementReqDto getGroupAchievementById(UUID id) {
+        Log.info("Start getGroupAchievementById in GroupAchievementServImpl");
+        GroupAchievement groupAchievement = groupAchievementRepo.findById(id).orElseThrow(() -> new RuntimeException("GroupAchievement not found"));
+        Log.info("End getAchievementById in AchievementServImpl");
+        return GroupAchievementReqDto.fromEntity(groupAchievement);
     }
 
     @Override
-    public GroupAchievementDto createGroupAchievement(GroupAchievementReqDto groupAchievementDto) {
-       Log.info("Start createGroupAchievement in GroupAchievementServImpl");
+    public GroupAchievementReqDto createGroupAchievement(GroupAchievementDto groupAchievementDto) {
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
+        
+            GroupAchievement groupAchievement = groupAchievementDto.toEntity(groupAchievementDto, null, null, currentUser, new java.util.Date());
+            groupAchievementRepo.save(groupAchievement);
+            return GroupAchievementReqDto.fromEntity(groupAchievementRepo.save(groupAchievement));
+    }
 
-        GroupAchievement groupAchievement = GroupAchievementReqDto.toEntity(groupAchievementDto);
-
+    @Override
+    public GroupAchievementReqDto updateGroupAchievement(UUID id, GroupAchievementDto groupAchievementDto) {
+        Log.info("Start updateAchievement in AchievementServImpl");
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
+        GroupAchievement groupAchievement = groupAchievementRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("GroupAchievement not found"));
+        groupAchievement.setGroupName(groupAchievementDto.getGroupName());     
+        groupAchievement.setPercentage(groupAchievementDto.getPercentage());
+        groupAchievement.setEnabled(groupAchievementDto.getEnabled());
+        groupAchievement.setUpdatedBy(currentUser);
+        groupAchievement.setUpdatedAt(new java.util.Date());
         groupAchievementRepo.save(groupAchievement);
-       Log.info("End createGroupAchievement in GroupAchievementServImpl");
-        return GroupAchievementDto.fromEntity(groupAchievement);
-    }
-
-    @Override
-    public GroupAchievementDto updateGroupAchievement (UUID id, GroupAchievementReqDto groupAchievementDto) {
-       Log.info("Start updateGroupAchievement in GroupAchievementServImpl");
-        GroupAchievement findGroupAchievement  = groupAchievementRepo.findById(id).orElseThrow(() -> new RuntimeException("Group Achievement not found"));
-
-        updateGroupAchievementFields(findGroupAchievement , groupAchievementDto);
-
-        groupAchievementRepo.save(findGroupAchievement);
-       Log.info("End updateGroupAchievement in GroupAchievementServImpl");
-        return GroupAchievementDto.fromEntity(findGroupAchievement);
+        Log.info("End updateAchievement in AchievementServImpl");
+        return GroupAchievementReqDto.fromEntity(groupAchievementRepo.save(groupAchievement));
     }
 
     @Override
     public Boolean deleteGroupAchievement(UUID id) {
-       Log.info("Start deleteGroupAchievement in GroupAchievementServImpl");
-        GroupAchievement findGroupAchievement = groupAchievementRepo.findById(id).orElseThrow(() -> new RuntimeException("Group Achievement not found"));
-        groupAchievementRepo.delete(findGroupAchievement);
-       Log.info("End deleteGroupAchievement in GroupAchievementServImpl");
-        return true;
+        Log.info("Start deleteGroupAchievement in GroupAchievementServImpl");
+
+        if (groupAchievementRepo.existsById(id)) {
+            groupAchievementRepo.deleteById(id);  // hanya menghapus Achievement berdasarkan id
+            Log.info("End deleteGroupAchievement in GroupAchievementServImpl");
+            return true;
+        }
+        throw new RuntimeException("GroupAchievement not found");
     }
 
-    private void updateGroupAchievementFields(GroupAchievement existingGroupAchievement, GroupAchievementReqDto groupAchievementDto) {
-        if (groupAchievementDto.getGroupName() != null) {
-            existingGroupAchievement.setGroupName(groupAchievementDto.getGroupName());
-        }
-        if (groupAchievementDto.getPercentage() != null) {
-            existingGroupAchievement.setPercentage(groupAchievementDto.getPercentage());
-        }
-        if (groupAchievementDto.getEnabled() != null) {
-            existingGroupAchievement.setEnabled(groupAchievementDto.getEnabled());
-        }
-        
-
-    }
+    
 }

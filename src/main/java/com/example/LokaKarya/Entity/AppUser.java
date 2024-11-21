@@ -62,3 +62,4 @@
 //     @Column(name = "UPDATED_BY", length = 32)
 //     private UUID updatedBy;
 // }
+

@@ -4,7 +4,7 @@ import com.example.LokaKarya.Entity.GroupAchievement;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -20,12 +20,12 @@ public class GroupAchievementReqDto {
     @JsonProperty("enabled")
     private Integer enabled;
 
-    public static GroupAchievement toEntity(GroupAchievementReqDto groupAchievementDto) {
-        GroupAchievement groupAchievement = new GroupAchievement();
-        groupAchievement.setGroupName(groupAchievementDto.getGroupName());
-        groupAchievement.setPercentage(groupAchievementDto.getPercentage());
-        groupAchievement.setEnabled(groupAchievementDto.getEnabled());
-        return groupAchievement;
+    public static GroupAchievementReqDto fromEntity(GroupAchievement groupAchievement) {
+        GroupAchievementReqDto groupAchievementReqDto = new GroupAchievementReqDto();
+        groupAchievementReqDto.setGroupName(groupAchievement.getGroupName());
+        groupAchievementReqDto.setPercentage(groupAchievement.getPercentage());
+        groupAchievementReqDto.setEnabled(groupAchievement.getEnabled());
+        return groupAchievementReqDto;
     }
 }
 

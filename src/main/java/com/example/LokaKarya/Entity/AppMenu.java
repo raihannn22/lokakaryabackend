@@ -3,7 +3,7 @@ package com.example.LokaKarya.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Date;
+
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -25,7 +25,7 @@ public class AppMenu {
     @Column(name = "CREATED_AT", nullable = false)
     private java.util.Date createdAt;
 
-    @Column(name = "CREATED_BY")
+    @Column(name = "CREATED_BY", nullable = false)
     private UUID createdBy;
 
     @Column(name = "UPDATED_BY")

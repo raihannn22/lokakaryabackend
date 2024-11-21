@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 import com.example.LokaKarya.Entity.GroupAchievement;
@@ -37,6 +37,10 @@ public class AchievementDto {
         achievement.setAchievement(achievementDto.getAchievement());
         achievement.setGroupAchievement(groupAchievement);
         achievement.setEnabled(achievementDto.getEnabled());
+        achievement.setCreatedAt(createdAt);
+        achievement.setCreatedBy(createdBy);
+        achievement.setUpdatedAt(updateAt);
+        achievement.setUpdatedBy(updateBy);
         return achievement;
     }
 

@@ -5,7 +5,7 @@ import com.example.LokaKarya.Entity.GroupAttitudeSkill;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -31,15 +31,12 @@ public class AttitudeSkillDto {
         attitudeSkill.setAttitudeSkill(attitudeSkillDto.getAttitudeSkill());
         attitudeSkill.setGroupAttitudeSkill(groupAttitudeSkill);
         attitudeSkill.setEnabled(attitudeSkillDto.getEnabled());
+        attitudeSkill.setCreatedAt(createdAt);
+        attitudeSkill.setCreatedBy(createdBy);
+        attitudeSkill.setUpdatedAt(updateAt);
+        attitudeSkill.setUpdatedBy(updateBy);
+        
         return attitudeSkill;
     }
 }
 
-// public static AttitudeSkillDto fromEntity(AttitudeSkill attitudeSkill) {
-//     AttitudeSkillDto attitudeSkillDto = new AttitudeSkillDto();
-//     attitudeSkillDto.setId(attitudeSkill.getId());
-//     attitudeSkillDto.setAttitudeSkill(attitudeSkill.getAttitudeSkill());
-//     attitudeSkillDto.setGroupId(attitudeSkill.getGroupId());
-//     attitudeSkillDto.setEnabled(attitudeSkill.getEnabled());
-//     return attitudeSkillDto;
-// }
