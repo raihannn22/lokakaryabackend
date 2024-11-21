@@ -25,12 +25,12 @@ public class GroupAchievementController extends ServerResponseList {
     GroupAchievementServ groupAchievementServ;
 
     @GetMapping("/all")
-    public ResponseEntity<ManagerDto<List<GroupAchievementDto>>>  getAllGroupAchievement() {
+    public ResponseEntity<ManagerDto<List<GroupAchievementReqDto>>>  getAllGroupAchievement() {
         Log.info("Start getAllGroupAchievement in GroupAchievementController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<List<GroupAchievementDto>> response = new ManagerDto<>();
-        List<GroupAchievementDto> content = groupAchievementServ.getAllGroupAchievement();
+        ManagerDto<List<GroupAchievementReqDto>> response = new ManagerDto<>();
+        List<GroupAchievementReqDto> content = groupAchievementServ.getAllGroupAchievement();
 
         response.setContent(content);
         response.setTotalRows(content.size());
@@ -42,12 +42,12 @@ public class GroupAchievementController extends ServerResponseList {
     }
 
     @PutMapping("/save")
-    public ResponseEntity<ManagerDto<GroupAchievementDto>>  saveGroupAchievement(@RequestBody GroupAchievementReqDto groupAchievementDto) {
+    public ResponseEntity<ManagerDto<GroupAchievementReqDto>>  saveGroupAchievement(@RequestBody GroupAchievementDto groupAchievementDto) {
         Log.info("Start saveGroupAchievement in GroupAchievementController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<GroupAchievementDto> response = new ManagerDto<>();
-        GroupAchievementDto content = groupAchievementServ.createGroupAchievement(groupAchievementDto);
+        ManagerDto<GroupAchievementReqDto> response = new ManagerDto<>();
+        GroupAchievementReqDto content = groupAchievementServ.createGroupAchievement(groupAchievementDto);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -58,13 +58,13 @@ public class GroupAchievementController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<ManagerDto<GroupAchievementDto>>  getGroupAchievementDetail(@PathVariable("id") UUID id) {
+    @GetMapping("/get/{id}")
+    public ResponseEntity<ManagerDto<GroupAchievementReqDto>>  getGroupAchievementDetail(@PathVariable("id") UUID id) {
         Log.info("Start getGroupAchievementDetail in GroupAchievementController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<GroupAchievementDto> response = new ManagerDto<>();
-        GroupAchievementDto content = groupAchievementServ.getGroupAchievementById(id);
+        ManagerDto<GroupAchievementReqDto> response = new ManagerDto<>();
+        GroupAchievementReqDto content = groupAchievementServ.getGroupAchievementById(id);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -76,12 +76,12 @@ public class GroupAchievementController extends ServerResponseList {
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<ManagerDto<GroupAchievementDto>>  updateGroupAchievement(@PathVariable("id") UUID id, @RequestBody GroupAchievementReqDto groupAchievementDto) {
+    public ResponseEntity<ManagerDto<GroupAchievementReqDto>>  updateGroupAchievement(@PathVariable("id") UUID id, @RequestBody GroupAchievementDto groupAchievementDto) {
         Log.info("Start updateGroupAchievement in GroupAchievementController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<GroupAchievementDto> response = new ManagerDto<>();
-        GroupAchievementDto content = groupAchievementServ.updateGroupAchievement(id, groupAchievementDto);
+        ManagerDto<GroupAchievementReqDto> response = new ManagerDto<>();
+        GroupAchievementReqDto content = groupAchievementServ.updateGroupAchievement(id, groupAchievementDto);
 
         response.setContent(content);
         response.setTotalRows(1);

@@ -80,15 +80,15 @@ public class AttitudeSkillServImpl implements AttitudeSkillServ {
     }
 
     @Override
-public Boolean deleteAttitudeSkill(UUID id) {
-    Log.info("Start deleteAttitudeSkill in AttitudeSkillServImpl");
+    public Boolean deleteAttitudeSkill(UUID id) {
+        Log.info("Start deleteAttitudeSkill in AttitudeSkillServImpl");
 
-    if (attitudeSkillRepo.existsById(id)) {
-        attitudeSkillRepo.deleteById(id);  // hanya menghapus AttitudeSkill berdasarkan id
-        Log.info("End deleteAttitudeSkill in AttitudeSkillServImpl");
-        return true;
+        if (attitudeSkillRepo.existsById(id)) {
+            attitudeSkillRepo.deleteById(id);  // hanya menghapus AttitudeSkill berdasarkan id
+            Log.info("End deleteAttitudeSkill in AttitudeSkillServImpl");
+            return true;
+        }
+        throw new RuntimeException("AttitudeSkill not found");
     }
-    throw new RuntimeException("AttitudeSkill not found");
-}
     
 }

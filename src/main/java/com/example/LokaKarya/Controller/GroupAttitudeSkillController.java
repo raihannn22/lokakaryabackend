@@ -25,12 +25,12 @@ public class GroupAttitudeSkillController extends ServerResponseList {
     GroupAttitudeSkillServ groupAttitudeSkillServ;
 
     @GetMapping("/all")
-    public ResponseEntity<ManagerDto<List<GroupAttitudeSkillDto>>> getAllGroupAttitudeSkill() {
+    public ResponseEntity<ManagerDto<List<GroupAttitudeSkillReqDto>>> getAllGroupAttitudeSkill() {
         Log.info("Start getAllGroupAttitudeSkill in GroupAttitudeSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<List<GroupAttitudeSkillDto>> response = new ManagerDto<>();
-        List<GroupAttitudeSkillDto> content = groupAttitudeSkillServ.getAllGroupAttitudeSkill();
+        ManagerDto<List<GroupAttitudeSkillReqDto>> response = new ManagerDto<>();
+        List<GroupAttitudeSkillReqDto> content = groupAttitudeSkillServ.getAllGroupAttitudeSkill();
 
         response.setContent(content);
         response.setTotalRows(content.size());
@@ -42,12 +42,12 @@ public class GroupAttitudeSkillController extends ServerResponseList {
     }
 
     @PutMapping("/save")
-    public ResponseEntity<ManagerDto<GroupAttitudeSkillDto>> saveGroupAttitudeSkill(@RequestBody GroupAttitudeSkillReqDto groupAttitudeSkillDto) {
+    public ResponseEntity<ManagerDto<GroupAttitudeSkillReqDto>> saveGroupAttitudeSkill(@RequestBody GroupAttitudeSkillDto groupAttitudeSkillDto) {
         Log.info("Start saveGroupAttitudeSkill in GroupAttitudeSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<GroupAttitudeSkillDto> response = new ManagerDto<>();
-        GroupAttitudeSkillDto content = groupAttitudeSkillServ.createGroupAttitudeSkill(groupAttitudeSkillDto);
+        ManagerDto<GroupAttitudeSkillReqDto> response = new ManagerDto<>();
+        GroupAttitudeSkillReqDto content = groupAttitudeSkillServ.createGroupAttitudeSkill(groupAttitudeSkillDto);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -58,13 +58,13 @@ public class GroupAttitudeSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<ManagerDto<GroupAttitudeSkillDto>> getGroupAttitudeSkillDetail(@PathVariable("id") UUID id) {
+    @GetMapping("/get/{id}")
+    public ResponseEntity<ManagerDto<GroupAttitudeSkillReqDto>> getGroupAttitudeSkillDetail(@PathVariable("id") UUID id) {
         Log.info("Start getGroupAttitudeSkillDetail in GroupAttitudeSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<GroupAttitudeSkillDto> response = new ManagerDto<>();
-        GroupAttitudeSkillDto content = groupAttitudeSkillServ.getGroupAttitudeSkillById(id);
+        ManagerDto<GroupAttitudeSkillReqDto> response = new ManagerDto<>();
+        GroupAttitudeSkillReqDto content = groupAttitudeSkillServ.getGroupAttitudeSkillById(id);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -76,12 +76,12 @@ public class GroupAttitudeSkillController extends ServerResponseList {
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<ManagerDto<GroupAttitudeSkillDto>> updateGroupAttitudeSkill(@PathVariable("id") UUID id, @RequestBody GroupAttitudeSkillReqDto groupAttitudeSkillDto) {
+    public ResponseEntity<ManagerDto<GroupAttitudeSkillReqDto>> updateGroupAttitudeSkill(@PathVariable("id") UUID id, @RequestBody GroupAttitudeSkillDto groupAttitudeSkillDto) {
         Log.info("Start updateGroupAttitudeSkill in GroupAttitudeSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<GroupAttitudeSkillDto> response = new ManagerDto<>();
-        GroupAttitudeSkillDto content = groupAttitudeSkillServ.updateGroupAttitudeSkill(id, groupAttitudeSkillDto);
+        ManagerDto<GroupAttitudeSkillReqDto> response = new ManagerDto<>();
+        GroupAttitudeSkillReqDto content = groupAttitudeSkillServ.updateGroupAttitudeSkill(id, groupAttitudeSkillDto);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -92,7 +92,7 @@ public class GroupAttitudeSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping
     public ResponseEntity<ManagerDto<Boolean>> deleteGroupAttitudeSkill(@PathVariable("id") UUID id) {
         Log.info("Start deleteGroupAttitudeSkill in GroupAttitudeSkillController");
         long startTime = System.currentTimeMillis();

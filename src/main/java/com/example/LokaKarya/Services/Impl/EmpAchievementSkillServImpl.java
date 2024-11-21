@@ -1,5 +1,6 @@
 package com.example.LokaKarya.Services.Impl;
 
+import com.example.LokaKarya.Config.GetUserUtil;
 import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillDto;
 import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillReqDto;
 import com.example.LokaKarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillDto;
@@ -42,6 +43,9 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    GetUserUtil getUserUtil;
+
     @Override
     public List<EmpAchievementSkillReqDto> getAllEmpAchievementSkill() {
        Log.info("Start getAllEmpAchievementSkill in EmpAchievementSkillServImpl");
@@ -63,43 +67,25 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
         return EmpAchievementSkillReqDto.fromEntity(empAchievementSkill);
     }
 
-    // @Override
-    // public EmpAchievementSkillReqDto createEmpAchievementSkill(EmpAchievementSkillDto empAchievementSkillDto) {
-    //     Optional<Achievement> achievement = achievementRepo.findById(empAchievementSkillDto.getAchievementId());
-    //     Optional<User> user = userRepo.findById(empAchievementSkillDto.getUserId());
-    //     if (achievement.isPresent()) {
-    //         EmpAchievementSkill empAchievementSkill = empAchievementSkillDto.toEntity(empAchievementSkillDto, achievement.get(), user.get() , UUID.randomUUID(), Date.valueOf(LocalDate.now()), achievement.get().getId(), Date.valueOf(LocalDate.now()));
-    //        empAchievementSkillRepo.save(empAchievementSkill);
-    //         return EmpAchievementSkillReqDto.fromEntity(empAchievementSkillRepo.save(empAchievementSkill));
-    //     }else {
-    //         throw new RuntimeException("EmpAchievementSkill not found");
-    //     }
-    // }
-
     @Override
     public EmpAchievementSkillReqDto createEmpAchievementSkill(EmpAchievementSkillDto empAchievementSkillDto) {
-        // Cari achievement berdasarkan ID
         Optional<Achievement> achievementOpt = achievementRepo.findById(empAchievementSkillDto.getAchievementId());
-        // Cari user berdasarkan ID
         Optional<User> userOpt = userRepo.findById(empAchievementSkillDto.getUserId());
-
-        // Validasi keberadaan achievement dan user
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
         if (achievementOpt.isEmpty()) {
             throw new RuntimeException("Achievement not found with ID: " + empAchievementSkillDto.getAchievementId());
         }
         if (userOpt.isEmpty()) {
             throw new RuntimeException("User not found with ID: " + empAchievementSkillDto.getUserId());
         }
-
-        // Konversi DTO ke entity
         EmpAchievementSkill empAchievementSkill = empAchievementSkillDto.toEntity(
             empAchievementSkillDto,
             achievementOpt.get(),
             userOpt.get(),
-            UUID.randomUUID(),
-            Date.valueOf(LocalDate.now()), // Created date
-            achievementOpt.get().getId(), // Achievement ID
-            Date.valueOf(LocalDate.now()) // Last modified date
+            null, 
+            null,
+            currentUser, 
+            new java.util.Date() 
         );
 
         // Simpan ke repository
@@ -113,7 +99,7 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
     @Override
     public EmpAchievementSkillReqDto updateEmpAchievementSkill(UUID id, EmpAchievementSkillDto empAchievementSkillDto) {
         Log.info("Start updateEmpAchievementSkill in EmpAchievementSkillServImpl");
-
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
         EmpAchievementSkill empAchievementSkill = empAchievementSkillRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Emp Achievement Skill not found"));
         empAchievementSkill.setUser(userRepo.findById(empAchievementSkillDto.getUserId()).orElseThrow(() -> new RuntimeException("User not found")));   
@@ -121,6 +107,8 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
         empAchievementSkill.setAchievement(achievementRepo.findById(empAchievementSkillDto.getAchievementId()).orElseThrow(() -> new RuntimeException("Achievement not found")));
         empAchievementSkill.setScore(empAchievementSkillDto.getScore());
         empAchievementSkill.setAssessmentYear(empAchievementSkillDto.getAssessmentYear());
+        empAchievementSkill.setUpdatedBy(currentUser);
+        empAchievementSkill.setUpdatedAt(new java.util.Date());
         empAchievementSkillRepo.save(empAchievementSkill);
         Log.info("End updateEmpAchievementSkill in EmpAchievementSkillServImpl");
         return EmpAchievementSkillReqDto.fromEntity(empAchievementSkillRepo.save(empAchievementSkill));
@@ -137,25 +125,4 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
             }
             throw new RuntimeException("EmpAchievementSkill not found");
         }
-
-    // private void updateEmpAchievementSkillFields(EmpAchievementSkill existingEmpAchievementSkill, EmpAchievementSkillReqDto empAchievementSkillDto) {
-    //     if (empAchievementSkillDto.getUserId() != null) {
-    //         existingEmpAchievementSkill.setUserId(empAchievementSkillDto.getUserId());
-    //     }
-    //     if (empAchievementSkillDto.getNotes() != null) {
-    //         existingEmpAchievementSkill.setNotes(empAchievementSkillDto.getNotes());
-    //     }
-    //     if (empAchievementSkillDto.getAchievementId() != null) {
-    //         existingEmpAchievementSkill.setAchievementId(empAchievementSkillDto.getAchievementId());
-    //     }
-    //     if (empAchievementSkillDto.getScore() != null) {
-    //         existingEmpAchievementSkill.setScore(empAchievementSkillDto.getScore());
-    //     }
-    //     if (empAchievementSkillDto.getAssessmentYear() != null) {
-    //         existingEmpAchievementSkill.setAssessmentYear(empAchievementSkillDto.getAssessmentYear());
-    //     }
-        
-        
-
-    // }
 }

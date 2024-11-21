@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.UUID;
 
 public interface GroupAttitudeSkillServ {
-    List<GroupAttitudeSkillDto> getAllGroupAttitudeSkill();
-    GroupAttitudeSkillDto getGroupAttitudeSkillById(UUID id);
-    GroupAttitudeSkillDto createGroupAttitudeSkill(GroupAttitudeSkillReqDto GroupAttitudeSkillDto);
-    GroupAttitudeSkillDto updateGroupAttitudeSkill(UUID id, GroupAttitudeSkillReqDto GroupAttitudeSkillDto);
+    List<GroupAttitudeSkillReqDto> getAllGroupAttitudeSkill();
+    GroupAttitudeSkillReqDto getGroupAttitudeSkillById(UUID id);
+    GroupAttitudeSkillReqDto createGroupAttitudeSkill(GroupAttitudeSkillDto GroupAttitudeSkillDto);
+    GroupAttitudeSkillReqDto updateGroupAttitudeSkill(UUID id, GroupAttitudeSkillDto GroupAttitudeSkillDto);
     Boolean deleteGroupAttitudeSkill(UUID id);
 }
 

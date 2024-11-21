@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.UUID;
 
 public interface GroupAchievementServ {
-    List<GroupAchievementDto> getAllGroupAchievement();
-    GroupAchievementDto getGroupAchievementById(UUID id);
-    GroupAchievementDto createGroupAchievement(GroupAchievementReqDto groupAchievementDto);
-    GroupAchievementDto updateGroupAchievement(UUID id, GroupAchievementReqDto groupAchievementDto);
+    List<GroupAchievementReqDto> getAllGroupAchievement();
+    GroupAchievementReqDto getGroupAchievementById(UUID id);
+    GroupAchievementReqDto createGroupAchievement(GroupAchievementDto groupAchievementDto);
+    GroupAchievementReqDto updateGroupAchievement(UUID id, GroupAchievementDto groupAchievementDto);
     Boolean deleteGroupAchievement(UUID id);
 }
 

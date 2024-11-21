@@ -22,7 +22,7 @@ public class AttitudeSkill {
     @Column(name = "ATTITUDE_SKILL", length = 100, nullable = false)
     private String attitudeSkill;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "GROUP_ID", nullable = false)
     private GroupAttitudeSkill groupAttitudeSkill;
 

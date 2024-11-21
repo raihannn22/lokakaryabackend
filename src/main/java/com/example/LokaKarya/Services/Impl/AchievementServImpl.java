@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.LokaKarya.Config.GetUserUtil;
 import com.example.LokaKarya.Dto.Achievement.AchievementDto;
 import com.example.LokaKarya.Dto.Achievement.AchievementReqDto;
 import com.example.LokaKarya.Entity.Achievement;
@@ -29,6 +30,9 @@ public class AchievementServImpl implements AchievementServ {
 
     @Autowired
     GroupAchievementRepo groupAchievementRepo;
+
+    @Autowired
+    GetUserUtil getUserUtil;
 
     @Override
     public List<AchievementReqDto> getAllAchievement() {
@@ -51,8 +55,9 @@ public class AchievementServImpl implements AchievementServ {
     @Override
     public AchievementReqDto createAchievement(AchievementDto achievementDto) {
         Optional<GroupAchievement> groupAchievement = groupAchievementRepo.findById(achievementDto.getGroupId());
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
         if (groupAchievement.isPresent()) {
-            Achievement achievement = achievementDto.toEntity(achievementDto, groupAchievement.get(), UUID.randomUUID(), Date.valueOf(LocalDate.now()), groupAchievement.get().getId(), Date.valueOf(LocalDate.now()));
+            Achievement achievement = achievementDto.toEntity(achievementDto, groupAchievement.get(), null, null, currentUser, new java.util.Date());
             achievementRepo.save(achievement);
             return AchievementReqDto.fromEntity(achievementRepo.save(achievement));
         }else {
@@ -63,14 +68,14 @@ public class AchievementServImpl implements AchievementServ {
     @Override
     public AchievementReqDto updateAchievement(UUID id, AchievementDto achievementDto) {
         Log.info("Start updateAchievement in AchievementServImpl");
-
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
         Achievement achievement = achievementRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Achievement not found"));
         achievement.setAchievement(achievementDto.getAchievement());     
         achievement.setGroupAchievement(groupAchievementRepo.findById(achievementDto.getGroupId()).orElseThrow(() -> new RuntimeException("Group Achievement not found")));
         achievement.setEnabled(achievementDto.getEnabled());
-        achievement.setUpdatedBy(UUID.randomUUID());
-        achievement.setUpdatedAt(Date.valueOf(LocalDate.now()));
+        achievement.setUpdatedBy(currentUser);
+        achievement.setUpdatedAt(new java.util.Date());
         achievementRepo.save(achievement);
         Log.info("End updateachievement in achievementServImpl");
         return AchievementReqDto.fromEntity(achievementRepo.save(achievement));

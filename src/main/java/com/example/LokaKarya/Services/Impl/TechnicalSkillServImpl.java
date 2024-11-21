@@ -1,8 +1,12 @@
 package com.example.LokaKarya.Services.Impl;
 
 import com.example.LokaKarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
+import com.example.LokaKarya.Config.GetUserUtil;
+import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
+import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
 import com.example.LokaKarya.Dto.TechnicalSkill.TechnicalSkillDto;
 import com.example.LokaKarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
+import com.example.LokaKarya.Entity.GroupAttitudeSkill;
 import com.example.LokaKarya.Entity.TechnicalSkill;
 import com.example.LokaKarya.Repository.TechnicalSkillRepo;
 import com.example.LokaKarya.Services.TechnicalSkillServ;
@@ -25,72 +29,66 @@ public class TechnicalSkillServImpl implements TechnicalSkillServ {
     @Autowired
     private TechnicalSkillRepo technicalSkillRepo;
 
+    @Autowired
+    GetUserUtil getUserUtil;
+
 
     @Override
-    public List<TechnicalSkillDto> getAllTechnicalSkill() {
+    public List<TechnicalSkillReqDto> getAllTechnicalSkill() {
         Log.info("Start getAllTechnicalSkill in TechnicalSkillServImpl");
         List<TechnicalSkill> response = technicalSkillRepo.findAll();
-        List<TechnicalSkillDto> technicalSkillList = new ArrayList<>();
+        List<TechnicalSkillReqDto> technicalSkillReqDto = new ArrayList<>();
 
         for (TechnicalSkill technicalSkill : response) {
-            TechnicalSkillDto technicalSkillDto = TechnicalSkillDto.fromEntity(technicalSkill);
-            technicalSkillList.add(technicalSkillDto);
+            technicalSkillReqDto.add(TechnicalSkillReqDto.fromEntity(technicalSkill));
         }
         Log.info("End getAllTechnicalSkill in TechnicalSkillServImpl");
-        return technicalSkillList;
+        return technicalSkillReqDto;
     }
 
     @Override
-    public TechnicalSkillDto getTechnicalSkillById(UUID id) {
+    public TechnicalSkillReqDto getTechnicalSkillById(UUID id) {
         Log.info("Start getTechnicalSkillById in TechnicalSkillServImpl");
-        Optional<TechnicalSkill> technicalSkill = technicalSkillRepo.findById(id);
-        Log.info("End getTechnicalSkillById in TechnicalSkillServImpl");
-        return technicalSkill.map(TechnicalSkillDto::fromEntity).orElse(null);
+        TechnicalSkill technicalSkill = technicalSkillRepo.findById(id).orElseThrow(() -> new RuntimeException("TechnicalSkill not found"));
+        Log.info("End getAttitudeSkillById in AttitudeSkillServImpl");
+        return TechnicalSkillReqDto.fromEntity(technicalSkill);
     }
 
     @Override
-    public TechnicalSkillDto createTechnicalSkill(TechnicalSkillReqDto technicalSkillDto) {
-        Log.info("Start createTechnicalSkill in TechnicalSkillServImpl");
+    public TechnicalSkillReqDto createTechnicalSkill(TechnicalSkillDto technicalSkillDto) {
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
+        
+            TechnicalSkill technicalSkill = technicalSkillDto.toEntity(technicalSkillDto, null, null, currentUser, new java.util.Date());
+            technicalSkillRepo.save(technicalSkill);
+            return TechnicalSkillReqDto.fromEntity(technicalSkillRepo.save(technicalSkill));
+    }
 
-        TechnicalSkill technicalSkill = TechnicalSkillReqDto.toEntity(technicalSkillDto);
-
+    @Override
+    public TechnicalSkillReqDto updateTechnicalSkill(UUID id, TechnicalSkillDto technicalSkillDto) {
+        Log.info("Start updateAttitudeSkill in AttitudeSkillServImpl");
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
+        TechnicalSkill technicalSkill = technicalSkillRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("TechnicalSkill not found"));
+        technicalSkill.setTechnicalSkill(technicalSkillDto.getTechnicalSkill());
+        technicalSkill.setEnabled(technicalSkillDto.getEnabled());
+        technicalSkill.setUpdatedBy(currentUser);
+        technicalSkill.setUpdatedAt(new java.util.Date());
         technicalSkillRepo.save(technicalSkill);
-        Log.info("End createTechnicalSkill in TechnicalSkillServImpl");
-        return TechnicalSkillDto.fromEntity(technicalSkill);
-    }
-
-    @Override
-    public TechnicalSkillDto updateTechnicalSkill(UUID id, TechnicalSkillReqDto technicalSkillDto) {
-        Log.info("Start updateTechnicalSkill in TechnicalSkillServImpl");
-        TechnicalSkill findTechnicalSkill = technicalSkillRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Technical Skill not found"));
-
-        updateTechnicalSkillFields(findTechnicalSkill, technicalSkillDto);
-
-        technicalSkillRepo.save(findTechnicalSkill);
-        Log.info("End updateTechnicalSkill in TechnicalSkillServImpl");
-        return TechnicalSkillDto.fromEntity(findTechnicalSkill);
+        Log.info("End updateAttitudeSkill in AttitudeSkillServImpl");
+        return TechnicalSkillReqDto.fromEntity(technicalSkillRepo.save(technicalSkill));
     }
 
     @Override
     public Boolean deleteTechnicalSkill(UUID id) {
         Log.info("Start deleteTechnicalSkill in TechnicalSkillServImpl");
-        TechnicalSkill findTechnicalSkill = technicalSkillRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Technical Skill not found"));
-        technicalSkillRepo.delete(findTechnicalSkill);
-        Log.info("End deleteTechnicalSkill in TechnicalSkillServImpl");
-        return true;
+
+        if (technicalSkillRepo.existsById(id)) {
+            technicalSkillRepo.deleteById(id);  // hanya menghapus TechnicalSkill berdasarkan id
+            Log.info("End deleteTechnicalSkill in TechnicalSkillServImpl");
+            return true;
+        }
+        throw new RuntimeException("TechnicalSkill not found");
     }
 
-    // KONTOLODON
-    private void updateTechnicalSkillFields(TechnicalSkill existingTechnicalSkill, TechnicalSkillReqDto TechnicalSkillDto) {
-        if (TechnicalSkillDto.getTechnicalSkill() != null) {
-            existingTechnicalSkill.setTechnicalSkill(TechnicalSkillDto.getTechnicalSkill());
-        }
-        if (TechnicalSkillDto.getEnabled() != null) {
-            existingTechnicalSkill.setEnabled(TechnicalSkillDto.getEnabled());
-        }
-        
 
-    }
 }

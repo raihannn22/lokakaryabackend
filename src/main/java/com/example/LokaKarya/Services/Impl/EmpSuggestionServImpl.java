@@ -1,5 +1,6 @@
 package com.example.LokaKarya.Services.Impl;
 
+import com.example.LokaKarya.Config.GetUserUtil;
 import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillDto;
 import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillReqDto;
 import com.example.LokaKarya.Dto.EmpSuggestion.EmpSuggestionDto;
@@ -35,6 +36,9 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    GetUserUtil getUserUtil;
+
     @Override
     public List<EmpSuggestionReqDto> getAllEmpSuggestion() {
        Log.info("Start getAllEmpSuggestion in EmpSuggestionServImpl");
@@ -60,7 +64,7 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
     public EmpSuggestionReqDto createEmpSuggestion (EmpSuggestionDto empSuggestionDto) {
         // Cari user berdasarkan ID
         Optional<User> userOpt = userRepo.findById(empSuggestionDto.getUserId());
-
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
         // Validasi keberadaan dan user
         if (userOpt.isEmpty()) {
             throw new RuntimeException("User not found with ID: " + empSuggestionDto.getUserId());
@@ -70,10 +74,10 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
         EmpSuggestion empSuggestion = empSuggestionDto.toEntity(
             empSuggestionDto,
             userOpt.get(),
-            UUID.randomUUID(),
-            Date.valueOf(LocalDate.now()),
-            userOpt.get().getId(), // ???
-            Date.valueOf(LocalDate.now()) // Last modified date
+            null,
+            null,
+            currentUser, 
+            new java.util.Date() 
         );
 
         // Simpan ke repository
@@ -86,12 +90,14 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
     @Override
     public EmpSuggestionReqDto updateEmpSuggestion(UUID id, EmpSuggestionDto empSuggestionDto) {
         Log.info("Start updateEmpSuggestion in EmpSuggestionServImpl");
-
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
         EmpSuggestion empSuggestion = empSuggestionRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Emp Achievement Skill not found"));
         empSuggestion.setUser(userRepo.findById(empSuggestionDto.getUserId()).orElseThrow(() -> new RuntimeException("User not found")));   
         empSuggestion.setSuggestion(empSuggestionDto.getSuggestion());     
         empSuggestion.setAssessmentYear(empSuggestionDto.getAssessmentYear());
+        empSuggestion.setUpdatedBy(currentUser);
+        empSuggestion.setUpdatedAt(new java.util.Date());
         empSuggestionRepo.save(empSuggestion);
         Log.info("End updateEmpSuggestion in EmpSuggestionServImpl");
         return EmpSuggestionReqDto.fromEntity(empSuggestionRepo.save(empSuggestion));

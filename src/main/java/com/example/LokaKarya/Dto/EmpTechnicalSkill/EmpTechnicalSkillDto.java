@@ -6,7 +6,7 @@ import com.example.LokaKarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -35,6 +35,10 @@ public class EmpTechnicalSkillDto {
         empTechnicalSkill.setTechnicalSkill(technicalSkill);
         empTechnicalSkill.setScore(empTechnicalSkillDto.getScore());
         empTechnicalSkill.setAssessmentYear(empTechnicalSkillDto.getAssessmentYear());
+        empTechnicalSkill.setCreatedAt(createdAt);
+        empTechnicalSkill.setCreatedBy(createdBy);
+        empTechnicalSkill.setUpdatedAt(updateAt);
+        empTechnicalSkill.setUpdatedBy(updateBy);
         return empTechnicalSkill;
     }
 

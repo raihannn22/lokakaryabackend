@@ -1,10 +1,11 @@
 package com.example.LokaKarya.Dto.GroupAttitudeSkill;
 
 import com.example.LokaKarya.Entity.GroupAttitudeSkill;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -13,6 +14,9 @@ import java.util.UUID;
 @Data
 @ToString
 public class GroupAttitudeSkillReqDto {
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonProperty("id")
+    private UUID id;
     @JsonProperty("group_name")
     private String groupName;
     @JsonProperty("percentage")
@@ -20,13 +24,14 @@ public class GroupAttitudeSkillReqDto {
     @JsonProperty("enabled")
     private Integer enabled;
 
-    public static GroupAttitudeSkill toEntity(GroupAttitudeSkillReqDto groupAttitudeSkillDto) {
-        GroupAttitudeSkill groupAttitudeSkill = new GroupAttitudeSkill();
-        groupAttitudeSkill.setGroupName(groupAttitudeSkillDto.getGroupName());
-        groupAttitudeSkill.setPercentage(groupAttitudeSkillDto.getPercentage());
-        groupAttitudeSkill.setEnabled(groupAttitudeSkillDto.getEnabled());
-        return groupAttitudeSkill;
-    }
+    public static GroupAttitudeSkillReqDto fromEntity(GroupAttitudeSkill groupAttitudeSkill) {
+            GroupAttitudeSkillReqDto groupAttitudeSkillReqDto = new GroupAttitudeSkillReqDto();
+            groupAttitudeSkillReqDto.setId(groupAttitudeSkill.getId());
+            groupAttitudeSkillReqDto.setGroupName(groupAttitudeSkill.getGroupName());
+            groupAttitudeSkillReqDto.setPercentage(groupAttitudeSkill.getPercentage());
+            groupAttitudeSkillReqDto.setEnabled(groupAttitudeSkill.getEnabled());
+            return groupAttitudeSkillReqDto;
+        }
 }
 
 

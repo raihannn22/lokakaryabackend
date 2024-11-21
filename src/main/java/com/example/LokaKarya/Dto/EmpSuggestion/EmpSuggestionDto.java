@@ -6,7 +6,7 @@ import com.example.LokaKarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -32,6 +32,10 @@ public class EmpSuggestionDto {
         empSuggestion.setUser(user);
         empSuggestion.setSuggestion(empSuggestionDto.getSuggestion());
         empSuggestion.setAssessmentYear(empSuggestionDto.getAssessmentYear());
+        empSuggestion.setCreatedAt(createdAt);
+        empSuggestion.setCreatedBy(createdBy);
+        empSuggestion.setUpdatedAt(updateAt);
+        empSuggestion.setUpdatedBy(updateBy);
         return empSuggestion;
     }
 

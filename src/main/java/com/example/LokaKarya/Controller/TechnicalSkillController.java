@@ -25,12 +25,12 @@ public class TechnicalSkillController extends ServerResponseList {
     TechnicalSkillServ technicalSkillServ;
 
     @GetMapping("/all")
-    public ResponseEntity<ManagerDto<List<TechnicalSkillDto>>> getAllTechnicalSkill() {
+    public ResponseEntity<ManagerDto<List<TechnicalSkillReqDto>>> getAllTechnicalSkill() {
         Log.info("Start getAllTechnicalSkill in TechnicalSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<List<TechnicalSkillDto>> response = new ManagerDto<>();
-        List<TechnicalSkillDto> content = technicalSkillServ.getAllTechnicalSkill();
+        ManagerDto<List<TechnicalSkillReqDto>> response = new ManagerDto<>();
+        List<TechnicalSkillReqDto> content = technicalSkillServ.getAllTechnicalSkill();
 
         response.setContent(content);
         response.setTotalRows(content.size());
@@ -42,12 +42,12 @@ public class TechnicalSkillController extends ServerResponseList {
     }
 
     @PutMapping("/save")
-    public ResponseEntity<ManagerDto<TechnicalSkillDto>> saveTechnicalSkill(@RequestBody TechnicalSkillReqDto technicalSkillDto) {
+    public ResponseEntity<ManagerDto<TechnicalSkillReqDto>> saveTechnicalSkill(@RequestBody TechnicalSkillDto technicalSkillDto) {
         Log.info("Start saveTechnicalSkill in TechnicalSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<TechnicalSkillDto> response = new ManagerDto<>();
-        TechnicalSkillDto content = technicalSkillServ.createTechnicalSkill(technicalSkillDto);
+        ManagerDto<TechnicalSkillReqDto> response = new ManagerDto<>();
+        TechnicalSkillReqDto content = technicalSkillServ.createTechnicalSkill(technicalSkillDto);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -58,13 +58,13 @@ public class TechnicalSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<ManagerDto<TechnicalSkillDto>> getTechnicalSkillDetail(@PathVariable("id") UUID id) {
+    @GetMapping("/get/{id}")
+    public ResponseEntity<ManagerDto<TechnicalSkillReqDto>> getTechnicalSkillDetail(@PathVariable("id") UUID id) {
         Log.info("Start getTechnicalSkillDetail in TechnicalSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<TechnicalSkillDto> response = new ManagerDto<>();
-        TechnicalSkillDto content = technicalSkillServ.getTechnicalSkillById(id);
+        ManagerDto<TechnicalSkillReqDto> response = new ManagerDto<>();
+        TechnicalSkillReqDto content = technicalSkillServ.getTechnicalSkillById(id);
 
         response.setContent(content);
         response.setTotalRows(1);
@@ -76,12 +76,12 @@ public class TechnicalSkillController extends ServerResponseList {
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<ManagerDto<TechnicalSkillDto>> updateTechnicalSkill(@PathVariable("id") UUID id, @RequestBody TechnicalSkillReqDto technicalSkillDto) {
+    public ResponseEntity<ManagerDto<TechnicalSkillReqDto>> updateTechnicalSkill(@PathVariable("id") UUID id, @RequestBody TechnicalSkillDto technicalSkillDto) {
         Log.info("Start updateTechnicalSkill in TechnicalSkillController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<TechnicalSkillDto> response = new ManagerDto<>();
-        TechnicalSkillDto content = technicalSkillServ.updateTechnicalSkill(id, technicalSkillDto);
+        ManagerDto<TechnicalSkillReqDto> response = new ManagerDto<>();
+        TechnicalSkillReqDto content = technicalSkillServ.updateTechnicalSkill(id, technicalSkillDto);
 
         response.setContent(content);
         response.setTotalRows(1);

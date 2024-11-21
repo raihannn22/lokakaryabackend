@@ -1,5 +1,6 @@
 package com.example.LokaKarya.Services.Impl;
 
+import com.example.LokaKarya.Config.GetUserUtil;
 import com.example.LokaKarya.Dto.Achievement.AchievementDto;
 import com.example.LokaKarya.Dto.Achievement.AchievementReqDto;
 import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillDto;
@@ -42,6 +43,9 @@ public class EmpTechnicalSkillServImpl implements EmpTechnicalSkillServ {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    GetUserUtil getUserUtil;
+
     @Override
     public List<EmpTechnicalSkillReqDto> getAllEmpTechnicalSkill() {
        Log.info("Start getAllEmpTechnicalSkill in EmpTechnicalSkillServImpl");
@@ -63,62 +67,54 @@ public class EmpTechnicalSkillServImpl implements EmpTechnicalSkillServ {
         return EmpTechnicalSkillReqDto.fromEntity(empTechnicalSkill);
     }
 
-    // @Override
-    // public EmpTechnicalSkillReqDto createEmpTechnicalSkill(EmpTechnicalSkillDto empTechnicalSkillDto) {
-    //     Optional<TechnicalSkill> technicalSkill = technicalSkillRepo.findById(empTechnicalSkillDto.getTechnicalSkillId());
-    //     if (technicalSkill.isPresent()) {
-    //         EmpTechnicalSkill empTechnicalSkill = empTechnicalSkillDto.toEntity(empTechnicalSkillDto, technicalSkill.get(), UUID.randomUUID(), Date.valueOf(LocalDate.now()), technicalSkill.get().getId(), Date.valueOf(LocalDate.now()));
-    //        empTechnicalSkillRepo.save(empTechnicalSkill);
-    //         return EmpTechnicalSkillReqDto.fromEntity(empTechnicalSkillRepo.save(empTechnicalSkill));
-    //     }else {
-    //         throw new RuntimeException("EmpTechnicalSkill not found");
-    //     }
-    // }
 
     @Override
-public EmpTechnicalSkillReqDto createEmpTechnicalSkill(EmpTechnicalSkillDto empTechnicalSkillDto) {
-    // Cari technical skill berdasarkan ID
-    Optional<TechnicalSkill> technicalSkillOpt = technicalSkillRepo.findById(empTechnicalSkillDto.getTechnicalSkillId());
-    // Cari user berdasarkan ID
-    Optional<User> userOpt = userRepo.findById(empTechnicalSkillDto.getUserId());
+    public EmpTechnicalSkillReqDto createEmpTechnicalSkill(EmpTechnicalSkillDto empTechnicalSkillDto) {
+        // Cari technical skill berdasarkan ID
+        Optional<TechnicalSkill> technicalSkillOpt = technicalSkillRepo.findById(empTechnicalSkillDto.getTechnicalSkillId());
+        // Cari user berdasarkan ID
+        Optional<User> userOpt = userRepo.findById(empTechnicalSkillDto.getUserId());
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
 
-    // Validasi keberadaan technical skill dan user
-    if (technicalSkillOpt.isEmpty()) {
-        throw new RuntimeException("Technical Skill not found with ID: " + empTechnicalSkillDto.getTechnicalSkillId());
+        // Validasi keberadaan technical skill dan user
+        if (technicalSkillOpt.isEmpty()) {
+            throw new RuntimeException("Technical Skill not found with ID: " + empTechnicalSkillDto.getTechnicalSkillId());
+        }
+        if (userOpt.isEmpty()) {
+            throw new RuntimeException("User not found with ID: " + empTechnicalSkillDto.getUserId());
+        }
+
+        // Konversi DTO ke entity
+        EmpTechnicalSkill empTechnicalSkill = empTechnicalSkillDto.toEntity(
+            empTechnicalSkillDto,
+            technicalSkillOpt.get(),
+            userOpt.get(),
+            null, 
+            null,
+            currentUser, 
+            new java.util.Date() 
+        );
+
+        // Simpan entity ke repository
+        EmpTechnicalSkill savedEntity = empTechnicalSkillRepo.save(empTechnicalSkill);
+
+        // Konversi entity ke response DTO
+        return EmpTechnicalSkillReqDto.fromEntity(savedEntity);
     }
-    if (userOpt.isEmpty()) {
-        throw new RuntimeException("User not found with ID: " + empTechnicalSkillDto.getUserId());
-    }
-
-    // Konversi DTO ke entity
-    EmpTechnicalSkill empTechnicalSkill = empTechnicalSkillDto.toEntity(
-        empTechnicalSkillDto,
-        technicalSkillOpt.get(),
-        userOpt.get(),
-        UUID.randomUUID(), // Created by
-        Date.valueOf(LocalDate.now()), // Created date
-        UUID.randomUUID(), // Last modified by
-        Date.valueOf(LocalDate.now()) // Last modified date
-    );
-
-    // Simpan entity ke repository
-    EmpTechnicalSkill savedEntity = empTechnicalSkillRepo.save(empTechnicalSkill);
-
-    // Konversi entity ke response DTO
-    return EmpTechnicalSkillReqDto.fromEntity(savedEntity);
-}
 
 
     @Override
     public EmpTechnicalSkillReqDto updateEmpTechnicalSkill(UUID id, EmpTechnicalSkillDto empTechnicalSkillDto) {
         Log.info("Start updateEmpTechnicalSkill in EmpTechnicalSkillServImpl");
-
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
         EmpTechnicalSkill empTechnicalSkill = empTechnicalSkillRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Emp Technical Skill not found"));
         empTechnicalSkill.setUser(userRepo.findById(empTechnicalSkillDto.getUserId()).orElseThrow(() -> new RuntimeException("User not found")));    
         empTechnicalSkill.setTechnicalSkill(technicalSkillRepo.findById(empTechnicalSkillDto.getTechnicalSkillId()).orElseThrow(() -> new RuntimeException("Technical Skill not found")));
         empTechnicalSkill.setScore(empTechnicalSkillDto.getScore());
         empTechnicalSkill.setAssessmentYear(empTechnicalSkillDto.getAssessmentYear());
+        empTechnicalSkill.setUpdatedBy(currentUser);
+        empTechnicalSkill.setUpdatedAt(new java.util.Date());
         empTechnicalSkillRepo.save(empTechnicalSkill);
         Log.info("End updateEmpTechnicalSkill in EmpTechnicalSkillServImpl");
         return EmpTechnicalSkillReqDto.fromEntity(empTechnicalSkillRepo.save(empTechnicalSkill));

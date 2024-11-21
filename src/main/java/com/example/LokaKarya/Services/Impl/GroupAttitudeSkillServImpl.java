@@ -1,8 +1,12 @@
 package com.example.LokaKarya.Services.Impl;
 
+import com.example.LokaKarya.Config.GetUserUtil;
+import com.example.LokaKarya.Dto.AttitudeSkill.AttitudeSkillDto;
+import com.example.LokaKarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
 import com.example.LokaKarya.Dto.GroupAchievement.GroupAchievementReqDto;
 import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
 import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
+import com.example.LokaKarya.Entity.AttitudeSkill;
 import com.example.LokaKarya.Entity.GroupAchievement;
 import com.example.LokaKarya.Entity.GroupAttitudeSkill;
 import com.example.LokaKarya.Repository.GroupAttitudeSkillRepo;
@@ -26,74 +30,66 @@ public class GroupAttitudeSkillServImpl implements GroupAttitudeSkillServ {
     @Autowired
     private GroupAttitudeSkillRepo groupAttitudeSkillRepo;
 
+    @Autowired
+    GetUserUtil getUserUtil;
+
     @Override
-    public List<GroupAttitudeSkillDto> getAllGroupAttitudeSkill() {
+    public List<GroupAttitudeSkillReqDto> getAllGroupAttitudeSkill() {
         Log.info("Start getAllGroupAttitudeSkill in GroupAttitudeSkillServImpl");
         List<GroupAttitudeSkill> response = groupAttitudeSkillRepo.findAll();
-        List<GroupAttitudeSkillDto> groupAttitudeSkillList = new ArrayList<>();
+        List<GroupAttitudeSkillReqDto> groupAttitudeSkillReqDto = new ArrayList<>();
 
         for (GroupAttitudeSkill groupAttitudeSkill : response) {
-            GroupAttitudeSkillDto groupAttitudeSkillDto = GroupAttitudeSkillDto.fromEntity(groupAttitudeSkill);
-            groupAttitudeSkillList.add(groupAttitudeSkillDto);
+            groupAttitudeSkillReqDto.add(GroupAttitudeSkillReqDto.fromEntity(groupAttitudeSkill));
         }
         Log.info("End getAllGroupAttitudeSkill in GroupAttitudeSkillServImpl");
-        return groupAttitudeSkillList;
+        return groupAttitudeSkillReqDto;
     }
 
     @Override
-    public GroupAttitudeSkillDto getGroupAttitudeSkillById(UUID id) {
+    public GroupAttitudeSkillReqDto getGroupAttitudeSkillById(UUID id) {
         Log.info("Start getGroupAttitudeSkillById in GroupAttitudeSkillServImpl");
-        Optional<GroupAttitudeSkill> groupAttitudeSkill = groupAttitudeSkillRepo.findById(id);
-        Log.info("End getGroupAttitudeSkillById in GroupAttitudeSkillServImpl");
-        return groupAttitudeSkill.map(GroupAttitudeSkillDto::fromEntity).orElse(null);
+        GroupAttitudeSkill groupAttitudeSkill = groupAttitudeSkillRepo.findById(id).orElseThrow(() -> new RuntimeException("GroupAttitudeSkill not found"));
+        Log.info("End getAttitudeSkillById in AttitudeSkillServImpl");
+        return GroupAttitudeSkillReqDto.fromEntity(groupAttitudeSkill);
     }
 
     @Override
-    public GroupAttitudeSkillDto createGroupAttitudeSkill(GroupAttitudeSkillReqDto groupAttitudeSkillDto) {
-        Log.info("Start createGroupAttitudeSkill in GroupAttitudeSkillServImpl");
+    public GroupAttitudeSkillReqDto createGroupAttitudeSkill(GroupAttitudeSkillDto groupAttitudeSkillDto) {
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
+        
+            GroupAttitudeSkill groupAttitudeSkill = groupAttitudeSkillDto.toEntity(groupAttitudeSkillDto, null, null, currentUser, new java.util.Date());
+            groupAttitudeSkillRepo.save(groupAttitudeSkill);
+            return GroupAttitudeSkillReqDto.fromEntity(groupAttitudeSkillRepo.save(groupAttitudeSkill));
+    }
 
-        GroupAttitudeSkill groupAttitudeSkill = GroupAttitudeSkillReqDto.toEntity(groupAttitudeSkillDto);
-
+    @Override
+    public GroupAttitudeSkillReqDto updateGroupAttitudeSkill(UUID id, GroupAttitudeSkillDto groupAttitudeSkillDto) {
+        Log.info("Start updateAttitudeSkill in AttitudeSkillServImpl");
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
+        GroupAttitudeSkill groupAttitudeSkill = groupAttitudeSkillRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("GroupAttitudeSkill not found"));
+        groupAttitudeSkill.setGroupName(groupAttitudeSkillDto.getGroupName());     
+        groupAttitudeSkill.setPercentage(groupAttitudeSkillDto.getPercentage());
+        groupAttitudeSkill.setEnabled(groupAttitudeSkillDto.getEnabled());
+        groupAttitudeSkill.setUpdatedBy(currentUser);
+        groupAttitudeSkill.setUpdatedAt(new java.util.Date());
         groupAttitudeSkillRepo.save(groupAttitudeSkill);
-        Log.info("End createGroupAttitudeSkill in GroupAttitudeSkillServImpl");
-        return GroupAttitudeSkillDto.fromEntity(groupAttitudeSkill);
-    }
-
-    @Override
-    public GroupAttitudeSkillDto updateGroupAttitudeSkill(UUID id, GroupAttitudeSkillReqDto groupAttitudeSkillDto) {
-        Log.info("Start updateGroupAttitudeSkill in GroupAttitudeSkillServImpl");
-        GroupAttitudeSkill findGroupAttitudeSkill = groupAttitudeSkillRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Group Attitude Skill not found"));
-
-        updateGroupAttitudeSkillFields(findGroupAttitudeSkill, groupAttitudeSkillDto);
-
-        groupAttitudeSkillRepo.save(findGroupAttitudeSkill);
-        Log.info("End updateGroupAttitudeSkill in GroupAttitudeSkillServImpl");
-        return GroupAttitudeSkillDto.fromEntity(findGroupAttitudeSkill);
+        Log.info("End updateAttitudeSkill in AttitudeSkillServImpl");
+        return GroupAttitudeSkillReqDto.fromEntity(groupAttitudeSkillRepo.save(groupAttitudeSkill));
     }
 
     @Override
     public Boolean deleteGroupAttitudeSkill(UUID id) {
         Log.info("Start deleteGroupAttitudeSkill in GroupAttitudeSkillServImpl");
-        GroupAttitudeSkill findGroupAttitudeSkill = groupAttitudeSkillRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Group Attitude Skill not found"));
-        groupAttitudeSkillRepo.delete(findGroupAttitudeSkill);
-        Log.info("End deleteGroupAttitudeSkill in GroupAttitudeSkillServImpl");
-        return true;
+
+        if (groupAttitudeSkillRepo.existsById(id)) {
+            groupAttitudeSkillRepo.deleteById(id);  // hanya menghapus AttitudeSkill berdasarkan id
+            Log.info("End deleteGroupAttitudeSkill in GroupAttitudeSkillServImpl");
+            return true;
+        }
+        throw new RuntimeException("GroupAttitudeSkill not found");
     }
 
-    // KONTOLODON
-    private void updateGroupAttitudeSkillFields(GroupAttitudeSkill existingGroupAttitudeSkill, GroupAttitudeSkillReqDto groupAttitudeSkillDto) {
-        if (groupAttitudeSkillDto.getGroupName() != null) {
-            existingGroupAttitudeSkill.setGroupName(groupAttitudeSkillDto.getGroupName());
-        }
-        if (groupAttitudeSkillDto.getPercentage() != null) {
-            existingGroupAttitudeSkill.setPercentage(groupAttitudeSkillDto.getPercentage());
-        }
-        if (groupAttitudeSkillDto.getEnabled() != null) {
-            existingGroupAttitudeSkill.setEnabled(groupAttitudeSkillDto.getEnabled());
-        }
-        
-
-    }
+    
 }

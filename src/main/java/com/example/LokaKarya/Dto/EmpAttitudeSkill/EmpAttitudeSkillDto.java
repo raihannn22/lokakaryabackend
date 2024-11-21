@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 import com.example.LokaKarya.Entity.AttitudeSkill;
@@ -36,6 +36,10 @@ public class EmpAttitudeSkillDto {
         empAttitudeSkill.setAttitudeSkill(attitudeSkill);
         empAttitudeSkill.setScore(empAttitudeSkillDto.getScore());
         empAttitudeSkill.setAssessmentYear(empAttitudeSkillDto.getAssessmentYear());
+        empAttitudeSkill.setCreatedAt(createdAt);
+        empAttitudeSkill.setCreatedBy(createdBy);
+        empAttitudeSkill.setUpdatedAt(updateAt);
+        empAttitudeSkill.setUpdatedBy(updateBy);
         return empAttitudeSkill;
 
 
