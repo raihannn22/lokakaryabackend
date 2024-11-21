@@ -76,10 +76,10 @@ public class UserServImpl implements UserServ {
     public UserDto createUser(UserReqDto userDto) {
         Log.info("Start createUser in UserServImpl");
 //        idRole = appRoleRepo.findById()
-        System.out.println(userDto.getAppRole());
+//        System.out.println(userDto.getAppRole());
 
-        UUID currentUserEntity = getUserUtil.getCurrentUser().getId();
-        System.out.println(currentUserEntity+ "akunoin");
+//        UUID currentUserEntity = getUserUtil.getCurrentUser().getId();
+//        System.out.println(currentUserEntity+ "akunoin");
 
         User user = UserReqDto.toEntity(userDto, UUID.randomUUID(), new Date(System.currentTimeMillis()), null, null);
 
@@ -97,11 +97,15 @@ public class UserServImpl implements UserServ {
         if (userDto.getAppRole() !=null) {
 
             for (UUID roleId: userDto.getAppRole()) {
+                System.out.println(roleId + "ini id role!123213!");
+
                 Optional<AppRole> idRole =  appRoleRepo.findById(roleId);
                 if (idRole.isEmpty()) {
                     throw new RuntimeException("Role not found");
                 }else {
+                    System.out.println("INI ROLE NYA: " + idRole.get());
                     AppUserRole appUserRole = new AppUserRole();
+                    System.out.println(idRole + "ini id role!!!");
                     appUserRole.setAppRole(idRole.get());
                     appUserRole.setUser(user);
                     appUserRoleRepo.save(appUserRole);

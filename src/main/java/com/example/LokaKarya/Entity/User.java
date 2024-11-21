@@ -76,7 +76,6 @@ public class User implements UserDetails {
     @Column(name = "UPDATED_BY")
     private UUID updatedBy;
 
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<EmpAchievementSkill> empAchievementSkills;
 

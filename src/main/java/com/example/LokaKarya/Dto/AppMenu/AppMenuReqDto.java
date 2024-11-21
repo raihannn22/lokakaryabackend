@@ -4,7 +4,6 @@ import com.example.LokaKarya.Entity.AppMenu;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.sql.Date;
 import java.util.UUID;
 
 @AllArgsConstructor

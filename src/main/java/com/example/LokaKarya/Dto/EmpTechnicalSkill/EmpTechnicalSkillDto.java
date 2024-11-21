@@ -27,7 +27,7 @@ public class EmpTechnicalSkillDto {
     private Integer assessmentYear;
 
 
-    
+
     public static EmpTechnicalSkill toEntity(EmpTechnicalSkillDto empTechnicalSkillDto, TechnicalSkill technicalSkill, User user, UUID updateBy, Date updateAt, UUID createdBy, Date createdAt) {
         EmpTechnicalSkill empTechnicalSkill = new EmpTechnicalSkill();
         empTechnicalSkill.setId(empTechnicalSkillDto.getId());

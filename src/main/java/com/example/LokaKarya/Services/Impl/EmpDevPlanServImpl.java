@@ -1,5 +1,6 @@
 package com.example.LokaKarya.Services.Impl;
 
+import com.example.LokaKarya.Config.GetUserUtil;
 import com.example.LokaKarya.Dto.EmpDevPlan.EmpDevPlanDto;
 import com.example.LokaKarya.Dto.EmpDevPlan.EmpDevPlanReqDto;
 import com.example.LokaKarya.Entity.DevPlan;
@@ -29,6 +30,9 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private GetUserUtil getUserUtil;
+
     @Override
     public List<EmpDevPlanReqDto> getAllEmpDevPlan() {
         List<EmpDevPlan> response = empDevPlanRepo.findAll();
@@ -48,7 +52,8 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
     @Override
     public EmpDevPlanReqDto createEmpDevPlan(EmpDevPlanDto empDevPlanDto) {
         Log.info("Start createEmpDevPlan in EmpDevPlanServImpl");
-        EmpDevPlan empDevPlan = EmpDevPlanDto.toEntity(empDevPlanDto, UUID.randomUUID(), new Date(), null,null);
+        UUID currentUserId = getUserUtil.getCurrentUser().getId();
+        EmpDevPlan empDevPlan = EmpDevPlanDto.toEntity(empDevPlanDto, currentUserId, new Date(), null,null);
         if (empDevPlanDto != null) {
             Optional<DevPlan> devPlan = devPlanRepo.findById(empDevPlanDto.getDevPlan());
             Optional<User> user = userRepo.findById(empDevPlanDto.getUser());
@@ -67,6 +72,7 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
     @Override
     public EmpDevPlanReqDto updateEmpDevPlan(UUID id, EmpDevPlanDto empDevPlanDto) {
         Log.info("Start updateEmpDevPlan in EmpDevPlanServImpl");
+        UUID currentUserId = getUserUtil.getCurrentUser().getId();
         EmpDevPlan empDevPlan = empDevPlanRepo.findById(id).orElseThrow(() -> new RuntimeException("EmpDevPlan not found"));
         if (empDevPlanDto != null) {
             Optional<DevPlan> devPlan = devPlanRepo.findById(empDevPlanDto.getDevPlan());
@@ -74,6 +80,8 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
             if (devPlan.isPresent() && user.isPresent()) {
                 empDevPlan.setDevPlan(devPlan.get());
                 empDevPlan.setUser(user.get());
+                empDevPlan.setUpdatedBy(currentUserId);
+                empDevPlan.setUpdatedAt(new Date());
             } else {
                 throw new RuntimeException("User or DevPlan not found");
             }
