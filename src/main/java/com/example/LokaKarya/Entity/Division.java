@@ -4,7 +4,7 @@ package com.example.LokaKarya.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -28,12 +28,12 @@ public class Division {
 
     @Column(name = "CREATED_AT", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date createdAt = new Date(System.currentTimeMillis());
+    private Date createdAt ;
 
-    @Column(name = "UPDATED_BY",nullable = false)
+    @Column(name = "UPDATED_BY")
     private UUID updatedBy;
 
-    @Column(name = "UPDATED_AT", nullable = false)
+    @Column(name = "UPDATED_AT")
     @Temporal(TemporalType.DATE)
     private Date updatedAt;
 }

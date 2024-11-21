@@ -1,5 +1,6 @@
 package com.example.LokaKarya.Services.Impl;
 
+import com.example.LokaKarya.Config.GetUserUtil;
 import com.example.LokaKarya.Dto.AppRole.AppRoleDto;
 import com.example.LokaKarya.Dto.AppRole.AppRoleReqDto;
 import com.example.LokaKarya.Dto.AssessmentSummary.AssessmentSummaryReqDto;
@@ -20,6 +21,9 @@ public class AppRoleServImpl implements AppRoleServ {
     @Autowired
     private AppRoleRepo appRoleRepo;
 
+    @Autowired
+    private GetUserUtil getUserUtil;
+
     @Override
     public List<AppRoleReqDto> getAllAppRole() {
         List<AppRole> response = appRoleRepo.findAll();
@@ -38,15 +42,17 @@ public class AppRoleServImpl implements AppRoleServ {
 
     @Override
     public AppRoleReqDto createAppRole(AppRoleDto appRoleDto) {
-        AppRole appRole = AppRoleDto.toEntity(appRoleDto, UUID.randomUUID(), Date.valueOf(LocalDate.now()), UUID.randomUUID(), new Date(System.currentTimeMillis()));
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
+        AppRole appRole = AppRoleDto.toEntity(appRoleDto, null, null, currentUser,new java.util.Date());
         appRoleRepo.save(appRole);
         return AppRoleReqDto.fromEntity(appRole);
     }
 
     @Override
     public AppRoleReqDto updateAppRole(UUID id, AppRoleDto appRoleDto) {
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
         AppRole appRole = appRoleRepo.findById(id).orElseThrow(() -> new RuntimeException("AppRole not found"));
-        AppRole appRole1 = AppRoleDto.toEntity(appRoleDto, appRole.getUpdatedBy(), Date.valueOf(LocalDate.now()), appRole.getCreatedBy(), new Date(System.currentTimeMillis()));
+        AppRole appRole1 = AppRoleDto.toEntity(appRoleDto, currentUser, new java.util.Date(), appRole.getCreatedBy(),appRole.getCreatedAt());
         appRole1.setId(id);
         appRoleRepo.save(appRole1);
         return AppRoleReqDto.fromEntity(appRole1);

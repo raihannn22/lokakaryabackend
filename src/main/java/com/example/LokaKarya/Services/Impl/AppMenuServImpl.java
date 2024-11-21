@@ -1,5 +1,6 @@
 package com.example.LokaKarya.Services.Impl;
 
+import com.example.LokaKarya.Config.GetUserUtil;
 import com.example.LokaKarya.Dto.AppMenu.AppMenuDto;
 import com.example.LokaKarya.Dto.AppMenu.AppMenuReqDto;
 import com.example.LokaKarya.Entity.AppMenu;
@@ -23,6 +24,9 @@ public class AppMenuServImpl implements AppMenuServ {
     @Autowired
     AppMenuRepo appMenuRepo;
 
+    @Autowired
+    GetUserUtil getUserUtil;
+
     @Override
     public List<AppMenuReqDto> getAllAppMenu() {
         List<AppMenu> response = appMenuRepo.findAll();
@@ -41,7 +45,8 @@ public class AppMenuServImpl implements AppMenuServ {
 
     @Override
     public AppMenuReqDto createAppMenu(AppMenuDto appMenuDto) {
-        AppMenu appMenu = AppMenuDto.toEntity(appMenuDto, null, null, UUID.randomUUID(), new java.util.Date());
+        UUID currentUserId = getUserUtil.getCurrentUser().getId();
+        AppMenu appMenu = AppMenuDto.toEntity(appMenuDto, null, null, currentUserId, new java.util.Date());
         appMenuRepo.save(appMenu);
         return AppMenuReqDto.fromEntity(appMenu);
     }
@@ -49,7 +54,8 @@ public class AppMenuServImpl implements AppMenuServ {
     @Override
     public AppMenuReqDto updateAppMenu(UUID id, AppMenuDto appMenuDto) {
         AppMenu appMenu = appMenuRepo.findById(id).orElseThrow(() -> new RuntimeException("AppMenu not found"));
-        AppMenu appMenuUpdate = AppMenuDto.toEntity(appMenuDto, appMenu.getUpdatedBy(), new java.util.Date(), appMenu.getCreatedBy() ,appMenu.getCreatedAt());
+        UUID currentUserId = getUserUtil.getCurrentUser().getId();
+        AppMenu appMenuUpdate = AppMenuDto.toEntity(appMenuDto, currentUserId, new java.util.Date(), appMenu.getCreatedBy() ,appMenu.getCreatedAt());
         appMenuUpdate.setId(id);
         appMenuRepo.save(appMenuUpdate);
         return AppMenuReqDto.fromEntity(appMenu);

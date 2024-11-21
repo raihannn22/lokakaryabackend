@@ -5,7 +5,7 @@ import com.example.LokaKarya.Entity.GroupAttitudeSkill;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor

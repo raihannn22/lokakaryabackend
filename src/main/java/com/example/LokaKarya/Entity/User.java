@@ -34,7 +34,7 @@ public class User implements UserDetails {
     @Column(name = "ID", nullable = false)
     private UUID id;
 
-    @Column(name = "USERNAME", length = 100, nullable = false)
+    @Column(name = "USERNAME", length = 100, nullable = false, unique = true)
     private String username;
 
     @Column(name = "FULL_NAME", length = 100, nullable = false)
@@ -43,7 +43,7 @@ public class User implements UserDetails {
     @Column(name = "POSITION", length = 50)
     private String position;
 
-    @Column(name = "EMAIL_ADDRESS", length = 100)
+    @Column(name = "EMAIL_ADDRESS", length = 100, unique = true)
     private String email;
 
     @Column(name = "EMPLOYEE_STATUS", nullable = false)
@@ -75,7 +75,6 @@ public class User implements UserDetails {
 
     @Column(name = "UPDATED_BY")
     private UUID updatedBy;
-
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<EmpAchievementSkill> empAchievementSkills;

@@ -75,14 +75,19 @@ public class UserServImpl implements UserServ {
     @Transactional
     public UserDto createUser(UserReqDto userDto) {
         Log.info("Start createUser in UserServImpl");
-//        idRole = appRoleRepo.findById()
-        System.out.println(userDto.getAppRole());
+        UUID currentUserId = getUserUtil.getCurrentUser().getId();
+        User user = UserReqDto.toEntity(userDto, currentUserId, new java.util.Date(), null, null);
 
-        UUID currentUserEntity = getUserUtil.getCurrentUser().getId();
-        System.out.println(currentUserEntity+ "akunoin");
+        // Validasi Username Unik
+        if (userRepo.existsByUsername(userDto.getUsername())) {
+            throw new IllegalArgumentException("Username already exists: " + userDto.getUsername());
+        }
+        // Validasi Email Unik
+        if (userRepo.existsByEmail(userDto.getEmailAddress())) {
+            throw new IllegalArgumentException("Email already exists: " + userDto.getEmailAddress());
+        }
 
-        User user = UserReqDto.toEntity(userDto, UUID.randomUUID(), new Date(System.currentTimeMillis()), null, null);
-
+        // Validasi apakah ada id divisi
         if (userDto.getDivision() !=null) {
             Optional<Division> idDivision =  divisionRepo.findById(userDto.getDivision());
             if (idDivision.isEmpty()) {
@@ -97,19 +102,21 @@ public class UserServImpl implements UserServ {
         if (userDto.getAppRole() !=null) {
 
             for (UUID roleId: userDto.getAppRole()) {
+                System.out.println(roleId + "ini id role!123213!");
+
                 Optional<AppRole> idRole =  appRoleRepo.findById(roleId);
                 if (idRole.isEmpty()) {
                     throw new RuntimeException("Role not found");
                 }else {
+                    System.out.println("INI ROLE NYA: " + idRole.get());
                     AppUserRole appUserRole = new AppUserRole();
+                    System.out.println(idRole + "ini id role!!!");
                     appUserRole.setAppRole(idRole.get());
                     appUserRole.setUser(user);
                     appUserRoleRepo.save(appUserRole);
                 }
             };
         }
-
-
         Log.info("End createUser in UserServImpl");
         return UserDto.fromEntity(user);
     }
@@ -138,23 +145,6 @@ public class UserServImpl implements UserServ {
         }
 
         return appUserRoles;
-//        userDto.setAppRole(appUserRoles);
-//
-//        if (userDto.getDivision() !=null) {
-//            Optional<Division> idDivision =  divisionRepo.findById(userDto.getDivision());
-//            if (idDivision.isEmpty()) {
-//                throw new RuntimeException("Division not found");
-//            }else {
-//                findUser.setDivision(idDivision.get());
-//            }
-//        }
-//        // Update fields based on userDto, falling back to findUser  if userDto field is null
-//        updateUserFields(findUser , userDto);
-//
-//
-//        userRepo.save(findUser);
-////        Log.info("End updateUser in UserServImpl");
-//        return UserDto.fromEntity(findUser);
     }
 
     @Override

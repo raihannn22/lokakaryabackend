@@ -1,12 +1,9 @@
 package com.example.LokaKarya.Services.Impl;
 
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
+import com.example.LokaKarya.Config.GetUserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +29,9 @@ public class AttitudeSkillServImpl implements AttitudeSkillServ {
     @Autowired
     GroupAttitudeSkillRepo groupAttitudeSkillRepo;
 
+    @Autowired
+    GetUserUtil getUserUtil;
+
     @Override
     public List<AttitudeSkillReqDto> getAllAttitudeSkill() {
         List<AttitudeSkill> response = attitudeSkillRepo.findAll();
@@ -52,9 +52,10 @@ public class AttitudeSkillServImpl implements AttitudeSkillServ {
 
     @Override
     public AttitudeSkillReqDto createAttitudeSkill(AttitudeSkillDto attitudeSkillDto) {
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
         Optional<GroupAttitudeSkill> user = groupAttitudeSkillRepo.findById(attitudeSkillDto.getGroupId());
         if (user.isPresent()) {
-            AttitudeSkill attitudeSkill = attitudeSkillDto.toEntity(attitudeSkillDto, user.get(), UUID.randomUUID(), Date.valueOf(LocalDate.now()), user.get().getId(), Date.valueOf(LocalDate.now()));
+            AttitudeSkill attitudeSkill = attitudeSkillDto.toEntity(attitudeSkillDto, user.get(), null, null, currentUser, new java.util.Date());
             attitudeSkillRepo.save(attitudeSkill);
             return AttitudeSkillReqDto.fromEntity(attitudeSkillRepo.save(attitudeSkill));
         }else {
@@ -65,14 +66,14 @@ public class AttitudeSkillServImpl implements AttitudeSkillServ {
     @Override
     public AttitudeSkillReqDto updateAttitudeSkill(UUID id, AttitudeSkillDto attitudeSkillDto) {
         Log.info("Start updateAttitudeSkill in AttitudeSkillServImpl");
-
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
         AttitudeSkill attitudeSkill = attitudeSkillRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("AttitudeSkill not found"));
         attitudeSkill.setAttitudeSkill(attitudeSkillDto.getAttitudeSkill());     
         attitudeSkill.setGroupAttitudeSkill(groupAttitudeSkillRepo.findById(attitudeSkillDto.getGroupId()).orElseThrow(() -> new RuntimeException("Group AttitudeSkill not found")));
         attitudeSkill.setEnabled(attitudeSkillDto.getEnabled());
-        attitudeSkill.setUpdatedBy(UUID.randomUUID());
-        attitudeSkill.setUpdatedAt(Date.valueOf(LocalDate.now()));
+        attitudeSkill.setUpdatedBy(currentUser);
+        attitudeSkill.setUpdatedAt(new java.util.Date());
         attitudeSkillRepo.save(attitudeSkill);
         Log.info("End updateAttitudeSkill in AttitudeSkillServImpl");
         return AttitudeSkillReqDto.fromEntity(attitudeSkillRepo.save(attitudeSkill));

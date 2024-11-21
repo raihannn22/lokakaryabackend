@@ -1,6 +1,8 @@
 package com.example.LokaKarya.Services.Impl;
 
 import com.example.LokaKarya.Dto.LoginDto;
+import com.example.LokaKarya.Dto.LoginResponseDto;
+import com.example.LokaKarya.Dto.User.UserDto;
 import com.example.LokaKarya.Entity.User;
 import com.example.LokaKarya.Repository.UserRepo;
 import com.example.LokaKarya.Services.AuthServ;
@@ -24,7 +26,7 @@ public class AuthServImpl implements AuthServ {
 
 
     @Override
-    public String login(LoginDto data) {
+    public LoginResponseDto login(LoginDto data) {
         User user = userRepo.findByEmail(data.getEmail());
         if (user == null) {
             throw new RuntimeException("User not found");
@@ -35,6 +37,14 @@ public class AuthServImpl implements AuthServ {
         }
 
         String token = jwtUtil.generateToken(user);
-        return token;
+
+        // Konversi User ke UserDto
+        UserDto userDto = UserDto.fromEntity(user);
+
+        // Buat LoginResponseDto dan kembalikan
+        return LoginResponseDto.builder()
+                .user(userDto)
+                .token(token)
+                .build();
     }
 }

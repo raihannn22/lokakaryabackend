@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -44,7 +44,7 @@ public class AssessmentSummary {
 
     @Column(name = "CREATED_AT", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date createdAt = new Date(System.currentTimeMillis());
+    private Date createdAt;
 
     @Column(name = "UPDATED_BY")
     private UUID updatedBy;

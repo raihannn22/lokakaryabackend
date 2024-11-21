@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.LokaKarya.Entity.User;
+import com.example.LokaKarya.Repository.UserRepo;
 import com.example.LokaKarya.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,8 +27,12 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class JwtValidationFilter extends OncePerRequestFilter {
 
+
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private UserRepo userRepository;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -38,9 +44,8 @@ public class JwtValidationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
 
-
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            doFilter(request, response, filterChain);
+            filterChain.doFilter(request, response);
             return;
         }
 
@@ -48,19 +53,16 @@ public class JwtValidationFilter extends OncePerRequestFilter {
             final String jwt = authHeader.substring(7);
             final String userEmail = jwtUtil.extractUsername(jwt);
 
-            if (userEmail != null
-                    && SecurityContextHolder.getContext().getAuthentication() == null) {
-                List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+            if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                User user = userRepository.findByUsername(userEmail);
 
-                if (jwtUtil.isTokenValid(jwt)) {
+                if (user != null && jwtUtil.isTokenValid(jwt)) {
                     UsernamePasswordAuthenticationToken authToken =
-                            new UsernamePasswordAuthenticationToken(userEmail, null, authorities);
-                    authToken
-                            .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                            new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 } else {
-                    throw new RuntimeException("invalid token!");
+                    throw new RuntimeException("Invalid token or user not found!");
                 }
             }
 
@@ -69,7 +71,6 @@ public class JwtValidationFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             response.setStatus(HttpStatus.FORBIDDEN.value());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-
             e.printStackTrace();
             objectMapper.writeValue(response.getOutputStream(), "NOT OKAY");
         }

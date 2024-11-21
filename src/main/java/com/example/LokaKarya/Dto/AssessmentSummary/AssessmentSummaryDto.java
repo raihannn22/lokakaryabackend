@@ -6,7 +6,7 @@ import com.example.LokaKarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -24,10 +24,10 @@ public class AssessmentSummaryDto {
     @JsonProperty("SCORE")
     private Integer score;
     @JsonProperty("STATUS")
-    private Integer status = 1;
+    private Integer status;
 
     public static AssessmentSummary toEntity(AssessmentSummaryDto assessmentSummaryDto, User user, UUID updatedBy
-    , Date updatedAt, UUID createdBy) {
+    , Date updatedAt, UUID createdBy, Date CreatedAt) {
         AssessmentSummary assessmentSummary = new AssessmentSummary();
         assessmentSummary.setId(assessmentSummaryDto.getId());
         assessmentSummary.setUser(user);
@@ -37,6 +37,7 @@ public class AssessmentSummaryDto {
         assessmentSummary.setUpdatedBy(updatedBy);
         assessmentSummary.setUpdatedAt(updatedAt);
         assessmentSummary.setCreatedBy(createdBy);
+        assessmentSummary.setCreatedAt(CreatedAt);
         return assessmentSummary;
     }
 }
