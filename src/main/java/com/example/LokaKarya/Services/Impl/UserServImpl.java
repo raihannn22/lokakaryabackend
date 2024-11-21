@@ -1,25 +1,32 @@
 package com.example.LokaKarya.Services.Impl;
 
-import com.example.LokaKarya.Config.GetUserUtil;
-import com.example.LokaKarya.Dto.AppUserRole.AppUserRoleReqDto;
-import com.example.LokaKarya.Dto.User.UserDto;
-import com.example.LokaKarya.Dto.User.UserReqDto;
-import com.example.LokaKarya.Entity.*;
-import com.example.LokaKarya.Repository.*;
-import com.example.LokaKarya.Services.UserServ;
-import com.example.LokaKarya.util.JwtUtil;
-import jakarta.transaction.Transactional;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import com.example.LokaKarya.Config.GetUserUtil;
+import com.example.LokaKarya.Dto.AppUserRole.AppUserRoleReqDto;
+import com.example.LokaKarya.Dto.User.UserDto;
+import com.example.LokaKarya.Dto.User.UserReqDto;
+import com.example.LokaKarya.Entity.AppRole;
+import com.example.LokaKarya.Entity.AppUserRole;
+import com.example.LokaKarya.Entity.Division;
+import com.example.LokaKarya.Entity.User;
+import com.example.LokaKarya.Repository.AppRoleRepo;
+import com.example.LokaKarya.Repository.AppUserRoleRepo;
+import com.example.LokaKarya.Repository.DivisionRepo;
+import com.example.LokaKarya.Repository.UserRepo;
+import com.example.LokaKarya.Services.UserServ;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class UserServImpl implements UserServ {
@@ -48,8 +55,8 @@ public class UserServImpl implements UserServ {
     @Override
     public List<UserDto> getAllUsers() {
         Log.info("Start getAllUsers in UserServImpl");
-//        String currentUserEntity = getUserUtil.getCurrentUser().getFullName();
-//        System.out.println(currentUserEntity + "akunoin");
+       UUID currentUserEntity = getUserUtil.getCurrentUser().getId();
+       System.out.println(currentUserEntity + "akunoin");
 
         List<User> response = userRepo.findAll();
         List<UserDto> userList = new ArrayList<>();
@@ -81,7 +88,7 @@ public class UserServImpl implements UserServ {
         UUID currentUserEntity = getUserUtil.getCurrentUser().getId();
         System.out.println(currentUserEntity+ "akunoin");
 
-        User user = UserReqDto.toEntity(userDto, UUID.randomUUID(), new Date(System.currentTimeMillis()), null, null);
+        User user = UserReqDto.toEntity(userDto, currentUserEntity, new Date(System.currentTimeMillis()), null, null);
 
         if (userDto.getDivision() !=null) {
             Optional<Division> idDivision =  divisionRepo.findById(userDto.getDivision());
