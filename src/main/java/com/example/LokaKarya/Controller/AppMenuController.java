@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RestController("/AppMenu")
+@RestController
+@RequestMapping("/appMenu")
 public class AppMenuController extends ServerResponseList {
     private final Logger Log = LoggerFactory.getLogger(AppMenuController.class);
 

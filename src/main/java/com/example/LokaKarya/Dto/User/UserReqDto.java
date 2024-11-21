@@ -36,14 +36,6 @@ public class UserReqDto {
     private String password;
     @JsonProperty("division_id")
     private UUID division;
-    @JsonProperty("created_by")
-    private UUID createdBy;
-    @JsonProperty("created_at")
-    private Date createdAt;
-    @JsonProperty("updated_by")
-    private UUID updatedBy;
-    @JsonProperty("updated_at")
-    private Date updatedAt;
 
     public static User toEntity(UserReqDto userDto, UUID createdBy,Date createdAt ,UUID updatedBy, Date updatedAt) {
         User user = new User();
