@@ -12,6 +12,9 @@ import com.example.LokaKarya.Entity.User;
 
 @Repository
 public interface UserRepo extends JpaRepository<User, UUID> {
+
+    boolean existsByUsername(String username); // Cek username unik
+    boolean existsByEmail(String email);
     User findByEmail(String email);
 
     User findByUsername(String username);
