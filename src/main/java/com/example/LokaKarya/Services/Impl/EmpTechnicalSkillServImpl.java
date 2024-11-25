@@ -1,16 +1,10 @@
 package com.example.LokaKarya.Services.Impl;
 
-import com.example.LokaKarya.Config.GetUserUtil;
-import com.example.LokaKarya.Dto.Achievement.AchievementDto;
-import com.example.LokaKarya.Dto.Achievement.AchievementReqDto;
-import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillDto;
-import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillReqDto;
+import com.example.LokaKarya.util.GetUserUtil;
 import com.example.LokaKarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillDto;
 import com.example.LokaKarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillReqDto;
 import com.example.LokaKarya.Entity.TechnicalSkill;
-import com.example.LokaKarya.Entity.Achievement;
 import com.example.LokaKarya.Entity.EmpTechnicalSkill;
-import com.example.LokaKarya.Entity.GroupAchievement;
 import com.example.LokaKarya.Entity.User;
 import com.example.LokaKarya.Repository.EmpTechnicalSkillRepo;
 import com.example.LokaKarya.Repository.TechnicalSkillRepo;
@@ -22,8 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

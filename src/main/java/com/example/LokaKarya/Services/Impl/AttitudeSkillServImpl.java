@@ -1,18 +1,15 @@
 package com.example.LokaKarya.Services.Impl;
 
-import java.time.LocalDate;
 import java.util.*;
 
-import com.example.LokaKarya.Config.GetUserUtil;
+import com.example.LokaKarya.util.GetUserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.LokaKarya.Dto.Achievement.AchievementReqDto;
 import com.example.LokaKarya.Dto.AttitudeSkill.AttitudeSkillDto;
 import com.example.LokaKarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
-import com.example.LokaKarya.Entity.Achievement;
 import com.example.LokaKarya.Entity.AttitudeSkill;
 import com.example.LokaKarya.Entity.GroupAttitudeSkill;
 import com.example.LokaKarya.Repository.AttitudeSkillRepo;

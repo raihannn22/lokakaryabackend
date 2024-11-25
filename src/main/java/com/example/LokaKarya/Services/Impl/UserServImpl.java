@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.LokaKarya.Config.GetUserUtil;
+import com.example.LokaKarya.util.GetUserUtil;
 import com.example.LokaKarya.Dto.AppUserRole.AppUserRoleReqDto;
 import com.example.LokaKarya.Dto.User.UserDto;
 import com.example.LokaKarya.Dto.User.UserReqDto;
@@ -55,8 +55,8 @@ public class UserServImpl implements UserServ {
     @Override
     public List<UserDto> getAllUsers() {
         Log.info("Start getAllUsers in UserServImpl");
-       UUID currentUserEntity = getUserUtil.getCurrentUser().getId();
-       System.out.println(currentUserEntity + "akunoin");
+//       UUID currentUserEntity = getUserUtil.getCurrentUser().getId();
+//       System.out.println(currentUserEntity + "akunoin");
 
         List<User> response = userRepo.findAll();
         List<UserDto> userList = new ArrayList<>();

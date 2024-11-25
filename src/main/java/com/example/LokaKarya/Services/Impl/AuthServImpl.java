@@ -42,7 +42,7 @@ public class AuthServImpl implements AuthServ {
         UserDto userDto = UserDto.fromEntity(user);
 
         // Buat LoginResponseDto dan kembalikan
-        return LoginResponseDto.builder()
+        return   LoginResponseDto.builder()
                 .user(userDto)
                 .token(token)
                 .build();

@@ -1,9 +1,8 @@
 package com.example.LokaKarya.Services.Impl;
 
-import com.example.LokaKarya.Config.GetUserUtil;
+import com.example.LokaKarya.util.GetUserUtil;
 import com.example.LokaKarya.Dto.AssessmentSummary.AssessmentSummaryDto;
 import com.example.LokaKarya.Dto.AssessmentSummary.AssessmentSummaryReqDto;
-import com.example.LokaKarya.Dto.User.UserDto;
 import com.example.LokaKarya.Entity.AssessmentSummary;
 import com.example.LokaKarya.Entity.User;
 import com.example.LokaKarya.Repository.AssessmentSummaryRepo;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @Service

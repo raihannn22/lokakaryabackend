@@ -1,6 +1,6 @@
 package com.example.LokaKarya.Services.Impl;
 
-import com.example.LokaKarya.Config.GetUserUtil;
+import com.example.LokaKarya.util.GetUserUtil;
 import com.example.LokaKarya.Dto.EmpDevPlan.EmpDevPlanDto;
 import com.example.LokaKarya.Dto.EmpDevPlan.EmpDevPlanReqDto;
 import com.example.LokaKarya.Entity.DevPlan;
