@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import jakarta.persistence.EntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,9 @@ public class UserServImpl implements UserServ {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private EntityManager entityManager;
 
 
 
@@ -131,35 +135,64 @@ public class UserServImpl implements UserServ {
     }
 
     @Override
-    public List<AppUserRoleReqDto> updateUser (UUID id, UserReqDto userDto) {
+    @Transactional
+    public UserDto updateUser (UUID id, UserReqDto userDto) {
         Log.info("Start updateUser in UserServImpl");
-        List<AppUserRole> appRole = appUserRoleRepo.findByUserId(id);
+        UUID currentUserId = getUserUtil.getCurrentUser().getId();
         User findUser  = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User  not found"));
-        List<AppUserRoleReqDto> appUserRoles = new ArrayList<>();
-        for (AppUserRole userRole : appRole) {
-            appUserRoleRepo.delete(userRole);
-            }
+
+        updateUserFields(findUser, userDto);
+
+
+
+        appUserRoleRepo.deleteByUserId(id);
         if (userDto.getDivision() != null) {
             Division division = divisionRepo.findById(userDto.getDivision()).orElseThrow(() -> new RuntimeException("Division not found"));
             findUser.setDivision(division);
         }
 
-        for (UUID roleId: userDto.getAppRole()) {
-            AppRole role = appRoleRepo.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found"));
-            AppUserRole appUserRole = new AppUserRole();
-            appUserRole.setAppRole(role);
-            appUserRole.setUser(findUser);
-            appUserRoleRepo.save(appUserRole);
-            appUserRoles.add(AppUserRoleReqDto.fromEntity(appUserRole));
-        }
 
-        return appUserRoles;
+        findUser.setUsername(userDto.getUsername());
+        findUser.setFullName(userDto.getFullName());
+        findUser.setPosition(userDto.getPosition());
+        findUser.setEmail(userDto.getEmailAddress());
+        findUser.setEmployeeStatus(userDto.getEmployeeStatus());
+        findUser.setJoinDate(userDto.getJoinDate() != null ? java.sql.Date.valueOf(userDto.getJoinDate().toLocalDate()) : null);
+        findUser.setEnabled(userDto.getEnabled());
+        findUser.setPassword(userDto.getPassword());
+        findUser.setUpdatedAt(new java.util.Date());
+        findUser.setUpdatedBy(currentUserId);
+        userRepo.save(findUser);
+
+        if (userDto.getAppRole() !=null) {
+            List<AppUserRole> appUserRoles = appUserRoleRepo.findByUserId(id);
+            appUserRoles.forEach(appUserRole -> appUserRoleRepo.delete(appUserRole));
+            for (UUID roleId: userDto.getAppRole()) {
+                System.out.println(roleId + "ini id role!123213!");
+
+                Optional<AppRole> idRole =  appRoleRepo.findById(roleId);
+                if (idRole.isEmpty()) {
+                    throw new RuntimeException("Role not found");
+                }else {
+                    System.out.println("INI ROLE NYA: " + idRole.get());
+                    AppUserRole appUserRole = new AppUserRole();
+                    System.out.println(idRole + "ini id role!!!");
+                    appUserRole.setAppRole(idRole.get());
+                    appUserRole.setUser(findUser);
+                    appUserRoleRepo.save(appUserRole);
+                }
+            };
+        }
+        Log.info("End updateUser in UserServImpl");
+        return UserDto.fromEntity(userRepo.save(findUser));
     }
 
     @Override
+    @Transactional
     public Boolean deleteUser(UUID id) {
 //        Log.info("Start deleteUser in UserServImpl");
         User findUser = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User  not found"));
+        appUserRoleRepo.deleteByUserId(id);
         userRepo.delete(findUser);
 //        Log.info("End deleteUser in UserServImpl");
         return true;

@@ -52,7 +52,7 @@
     //                        .anyRequest().authenticated());
 
                     .authorizeHttpRequests(
-                            auth -> auth.requestMatchers("/user/**").hasAuthority("HR")
+                            auth -> auth.requestMatchers("/users/**").hasAuthority("HR")
                                     .anyRequest().permitAll())
 //                            auth -> auth.requestMatchers("/user/**").authenticated().anyRequest().permitAll())
                     .csrf(csrf -> csrf.ignoringRequestMatchers("/**")
