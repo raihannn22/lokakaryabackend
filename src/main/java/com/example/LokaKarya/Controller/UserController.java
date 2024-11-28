@@ -5,8 +5,10 @@ import com.example.LokaKarya.Dto.AppUserRole.AppUserRoleReqDto;
 import com.example.LokaKarya.Dto.ManagerDto;
 import com.example.LokaKarya.Dto.User.UserDto;
 import com.example.LokaKarya.Dto.User.UserReqDto;
+import com.example.LokaKarya.Entity.User;
 import com.example.LokaKarya.Services.UserServ;
 import com.example.LokaKarya.util.ServerResponseList;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,13 +77,14 @@ public class UserController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
+
     @PatchMapping("/update/{id}")
-    public ResponseEntity<ManagerDto<List<AppUserRoleReqDto>>>  updateUser(@PathVariable("id") UUID id, @RequestBody UserReqDto userDto) {
+    public ResponseEntity<ManagerDto<UserDto>>  updateUser(@PathVariable("id") UUID id, @RequestBody UserReqDto userDto) {
         Log.info("Start updateUser in UserController");
         long startTime = System.currentTimeMillis();
 
-        ManagerDto<List<AppUserRoleReqDto>> response = new ManagerDto<>();
-        List<AppUserRoleReqDto> content = userServ.updateUser(id, userDto);
+        ManagerDto<UserDto> response = new ManagerDto<>();
+        UserDto content = userServ.updateUser(id, userDto);
 
         response.setContent(content);
         response.setTotalRows(1);

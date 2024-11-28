@@ -89,7 +89,7 @@ public class User implements UserDetails {
     private List<EmpSuggestion> empSuggestions;
 
 
-    @OneToMany(mappedBy = "user" , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<AppUserRole> appRoles;
 
 

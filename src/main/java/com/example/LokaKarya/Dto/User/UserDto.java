@@ -1,14 +1,13 @@
 package com.example.LokaKarya.Dto.User;
 
 import com.example.LokaKarya.Entity.AppRole;
-import com.example.LokaKarya.Entity.Division;
+import com.example.LokaKarya.Entity.AppUserRole;
 import com.example.LokaKarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.io.DataInput;
 import java.sql.Date;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -37,6 +36,10 @@ public class UserDto {
     private String password;
     @JsonProperty("division_id")
     private UUID division;
+    @JsonProperty("division_name")
+    private String divisionName;
+    @JsonProperty("app_role")
+    private List<AppRole> appRole;
 
 
     public static UserDto fromEntity(User user) {
@@ -50,10 +53,13 @@ public class UserDto {
         userDto.setJoinDate(Date.valueOf(user.getJoinDate().toLocalDate()));
         userDto.setEnabled(user.getEnabled());
         userDto.setPassword(user.getPassword());
+        userDto.setAppRole(user.getAppRoles().stream().map(AppUserRole::getAppRole).toList());
         if (user.getDivision() != null) {
             userDto.setDivision(user.getDivision().getId());
+            userDto.setDivisionName(user.getDivision().getDivisionName());
         } else {
-            userDto.setDivision(null); // or handle it in another way if needed
+            userDto.setDivision(null);
+            userDto.setDivisionName(null); // or handle it in another way if needed
         }
         return userDto;
     }
