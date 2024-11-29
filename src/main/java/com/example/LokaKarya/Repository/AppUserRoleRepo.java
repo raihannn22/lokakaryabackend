@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface AppUserRoleRepo extends JpaRepository<AppUserRole, UUID> {
 
     public List<AppUserRole> findByUserId(UUID id);
+    public List<AppUserRole> deleteByUserId(UUID id);
 }

@@ -32,6 +32,9 @@ public class EmpDevPlan {
     @Column(name = "ASSESSMENT_YEAR", nullable = false)
     private Integer assessmentYear;
 
+    @Column(name = "TOO_BRIGHT", nullable = false)
+    private String tooBright;
+
     @Column(name = "CREATED_BY")
     private UUID createdBy;
 

@@ -1,13 +1,8 @@
 package com.example.LokaKarya.Services.Impl;
 
-import com.example.LokaKarya.Config.GetUserUtil;
-import com.example.LokaKarya.Dto.AttitudeSkill.AttitudeSkillDto;
-import com.example.LokaKarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
-import com.example.LokaKarya.Dto.GroupAchievement.GroupAchievementReqDto;
+import com.example.LokaKarya.util.GetUserUtil;
 import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
 import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
-import com.example.LokaKarya.Entity.AttitudeSkill;
-import com.example.LokaKarya.Entity.GroupAchievement;
 import com.example.LokaKarya.Entity.GroupAttitudeSkill;
 import com.example.LokaKarya.Repository.GroupAttitudeSkillRepo;
 import com.example.LokaKarya.Services.GroupAttitudeSkillServ;
@@ -19,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service

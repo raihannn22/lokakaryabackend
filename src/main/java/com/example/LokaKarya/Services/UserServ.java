@@ -11,6 +11,6 @@ public interface UserServ {
     List<UserDto> getAllUsers();
     UserDto getUserById(UUID id);
     UserDto createUser(UserReqDto userDto);
-    List<AppUserRoleReqDto> updateUser(UUID id, UserReqDto userDto);
+    UserDto updateUser(UUID id, UserReqDto userDto);
     Boolean deleteUser(UUID id);
 }

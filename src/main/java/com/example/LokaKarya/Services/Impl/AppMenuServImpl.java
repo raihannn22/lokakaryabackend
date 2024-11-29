@@ -1,6 +1,6 @@
 package com.example.LokaKarya.Services.Impl;
 
-import com.example.LokaKarya.Config.GetUserUtil;
+import com.example.LokaKarya.util.GetUserUtil;
 import com.example.LokaKarya.Dto.AppMenu.AppMenuDto;
 import com.example.LokaKarya.Dto.AppMenu.AppMenuReqDto;
 import com.example.LokaKarya.Entity.AppMenu;
@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

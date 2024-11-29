@@ -1,12 +1,8 @@
 package com.example.LokaKarya.Services.Impl;
 
-import com.example.LokaKarya.Config.GetUserUtil;
-import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillDto;
-import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillReqDto;
+import com.example.LokaKarya.util.GetUserUtil;
 import com.example.LokaKarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillDto;
 import com.example.LokaKarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillReqDto;
-import com.example.LokaKarya.Entity.Achievement;
-import com.example.LokaKarya.Entity.EmpAchievementSkill;
 import com.example.LokaKarya.Entity.EmpAttitudeSkill;
 import com.example.LokaKarya.Entity.User;
 import com.example.LokaKarya.Repository.EmpAttitudeSkillRepo;
@@ -19,8 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
