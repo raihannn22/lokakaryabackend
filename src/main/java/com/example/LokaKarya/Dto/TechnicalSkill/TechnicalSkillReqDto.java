@@ -14,6 +14,8 @@ import java.util.UUID;
 @Data
 @ToString
 public class TechnicalSkillReqDto {
+    @JsonProperty("id")
+    private UUID id;
     @JsonProperty("technical_skill")
     private String technicalSkill;
     @JsonProperty("enabled")
@@ -21,6 +23,7 @@ public class TechnicalSkillReqDto {
 
     public static TechnicalSkillReqDto fromEntity(TechnicalSkill technicalSkill) {
         TechnicalSkillReqDto technicalSkillReqDto = new TechnicalSkillReqDto();
+        technicalSkillReqDto.setId(technicalSkill.getId());
         technicalSkillReqDto.setTechnicalSkill(technicalSkill.getTechnicalSkill());
         technicalSkillReqDto.setEnabled(technicalSkill.getEnabled());
         return technicalSkillReqDto;

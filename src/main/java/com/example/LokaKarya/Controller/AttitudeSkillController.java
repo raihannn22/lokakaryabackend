@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.LokaKarya.Dto.AttitudeSkill.AttitudeSkillDto;
@@ -32,7 +31,7 @@ public class AttitudeSkillController extends ServerResponseList {
 @Autowired
     AttitudeSkillServ attitudeSkillServ;
 
-    @GetMapping("/get-all")
+    @GetMapping("/all")
     public ResponseEntity<ManagerDto<List<AttitudeSkillReqDto>>>  getAllAttitudeSkill() {
         Log.info("Start getAllAttitudeSkill in AttitudeSkillController");
         long startTime = System.currentTimeMillis();
@@ -100,22 +99,23 @@ public class AttitudeSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
-    @DeleteMapping
-    public ResponseEntity<ManagerDto<Boolean>> deleteAttitudeSkill(@RequestParam("id") UUID id) {
-        Log.info("Start deleteAttitudeSkill in AttitudeSkillController");
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<ManagerDto<Boolean>> deleteAttitudeSkill(@PathVariable("id") UUID id) {
+        Log.info("Start deleteAttitudeSKill in AttitudeController");
         long startTime = System.currentTimeMillis();
 
         ManagerDto<Boolean> response = new ManagerDto<>();
         Boolean content = attitudeSkillServ.deleteAttitudeSkill(id);
-
         response.setContent(content);
         response.setTotalRows(1);
+
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success delete data", executionTime));
-        Log.info("End deleteAttitudeSkill in AttitudeSkillController");
-        return new ResponseEntity<>(response, HttpStatus.OK) ;
+        Log.info("End deleteAttitudeSKill in AttitudeController");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
 
 

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.LokaKarya.Dto.Achievement.AchievementDto;
@@ -98,12 +97,12 @@ public class AchievementController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success update data", executionTime));
-        Log.info("End updateAchievementSummary in AchievementSummaryController");
+        Log.info("End updateAchievement in AchievementController");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping
-    public ResponseEntity<ManagerDto<Boolean>> deleteAchievement(@RequestParam("id") UUID id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<ManagerDto<Boolean>> deleteAchievement(@PathVariable("id") UUID id) {
         Log.info("Start deleteAchievement in AchievementController");
         long startTime = System.currentTimeMillis();
 

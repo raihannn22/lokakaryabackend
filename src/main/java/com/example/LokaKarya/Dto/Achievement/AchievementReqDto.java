@@ -23,12 +23,15 @@ public class AchievementReqDto {
     private String achievement;
     @JsonProperty("group_id")
     private UUID groupId;
+    @JsonProperty("group_name")
+    private String groupName;
     @JsonProperty("enabled")
     private Integer enabled;
 
     public static AchievementReqDto fromEntity(Achievement achievement) {
         AchievementReqDto achievementReqDto = new AchievementReqDto();
         achievementReqDto.setId(achievement.getId());
+        achievementReqDto.setGroupName(achievement.getGroupAchievement().getGroupName());
         achievementReqDto.setAchievement(achievement.getAchievement());
         achievementReqDto.setGroupId(achievement.getGroupAchievement().getId());
         achievementReqDto.setEnabled(achievement.getEnabled());
