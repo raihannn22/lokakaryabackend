@@ -13,6 +13,8 @@ import java.util.UUID;
 @Data
 @ToString
 public class GroupAchievementReqDto {
+    @JsonProperty("id")
+    private UUID id;
     @JsonProperty("group_name")
     private String groupName;
     @JsonProperty("percentage")
@@ -22,6 +24,7 @@ public class GroupAchievementReqDto {
 
     public static GroupAchievementReqDto fromEntity(GroupAchievement groupAchievement) {
         GroupAchievementReqDto groupAchievementReqDto = new GroupAchievementReqDto();
+        groupAchievementReqDto.setId(groupAchievement.getId());
         groupAchievementReqDto.setGroupName(groupAchievement.getGroupName());
         groupAchievementReqDto.setPercentage(groupAchievement.getPercentage());
         groupAchievementReqDto.setEnabled(groupAchievement.getEnabled());

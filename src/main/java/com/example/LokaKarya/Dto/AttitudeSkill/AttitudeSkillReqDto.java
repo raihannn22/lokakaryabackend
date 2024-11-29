@@ -22,12 +22,15 @@ public class AttitudeSkillReqDto {
     private String attitudeSkill;
     @JsonProperty("group_id")
     private UUID groupId;
+    @JsonProperty("group_name")
+    private String groupName;
     @JsonProperty("enabled")
     private Integer enabled;
 
     public static AttitudeSkillReqDto fromEntity(AttitudeSkill attitudeSkill) {
         AttitudeSkillReqDto attitudeSkillReqDto = new AttitudeSkillReqDto();
         attitudeSkillReqDto.setId(attitudeSkill.getId());
+        attitudeSkillReqDto.setGroupName(attitudeSkill.getGroupAttitudeSkill().getGroupName());
         attitudeSkillReqDto.setAttitudeSkill(attitudeSkill.getAttitudeSkill());
         attitudeSkillReqDto.setGroupId(attitudeSkill.getGroupAttitudeSkill().getId());
         attitudeSkillReqDto.setEnabled(attitudeSkill.getEnabled());

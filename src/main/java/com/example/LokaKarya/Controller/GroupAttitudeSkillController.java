@@ -1,20 +1,27 @@
 package com.example.LokaKarya.Controller;
 
-import com.example.LokaKarya.Dto.ManagerDto;
-import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
-import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
-import com.example.LokaKarya.Services.GroupAttitudeSkillServ;
-import com.example.LokaKarya.util.ServerResponseList;
-import lombok.extern.java.Log;
+import java.util.List;
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.UUID;
+import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
+import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
+import com.example.LokaKarya.Dto.ManagerDto;
+import com.example.LokaKarya.Services.GroupAttitudeSkillServ;
+import com.example.LokaKarya.util.ServerResponseList;
 
 @RestController
 @RequestMapping("/group-attitude-skill")
@@ -92,7 +99,7 @@ public class GroupAttitudeSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<ManagerDto<Boolean>> deleteGroupAttitudeSkill(@PathVariable("id") UUID id) {
         Log.info("Start deleteGroupAttitudeSkill in GroupAttitudeSkillController");
         long startTime = System.currentTimeMillis();

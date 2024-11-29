@@ -1,6 +1,15 @@
 package com.example.LokaKarya.Services.Impl;
 
-import com.example.LokaKarya.util.GetUserUtil;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.LokaKarya.Dto.EmpSuggestion.EmpSuggestionDto;
 import com.example.LokaKarya.Dto.EmpSuggestion.EmpSuggestionReqDto;
 import com.example.LokaKarya.Entity.EmpSuggestion;
@@ -8,16 +17,7 @@ import com.example.LokaKarya.Entity.User;
 import com.example.LokaKarya.Repository.EmpSuggestionRepo;
 import com.example.LokaKarya.Repository.UserRepo;
 import com.example.LokaKarya.Services.EmpSuggestionServ;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import com.example.LokaKarya.util.GetUserUtil;
 
 @Service
 public class EmpSuggestionServImpl implements EmpSuggestionServ {
@@ -109,18 +109,4 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
             throw new RuntimeException("EmpSuggestion not found");
         }
 
-    // private void updateEmpSuggestionFields(EmpSuggestion existingEmpSuggestion, EmpSuggestionReqDto empSuggestionDto) {
-    //     if (empSuggestionDto.getUserId() != null) {
-    //         existingEmpSuggestion.setUserId(empSuggestionDto.getUserId());
-    //     }
-    //     if (empSuggestionDto.getSuggestion() != null) {
-    //         existingEmpSuggestion.setSuggestion(empSuggestionDto.getSuggestion());
-    //     }
-    //     if (empSuggestionDto.getAssessmentYear() != null) {
-    //         existingEmpSuggestion.setAssessmentYear(empSuggestionDto.getAssessmentYear());
-    //     }
-        
-        
-
-    // }
 }

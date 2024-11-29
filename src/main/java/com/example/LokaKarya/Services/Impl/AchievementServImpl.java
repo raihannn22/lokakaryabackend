@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.LokaKarya.util.GetUserUtil;
 import com.example.LokaKarya.Dto.Achievement.AchievementDto;
 import com.example.LokaKarya.Dto.Achievement.AchievementReqDto;
 import com.example.LokaKarya.Entity.Achievement;
@@ -18,6 +17,7 @@ import com.example.LokaKarya.Entity.GroupAchievement;
 import com.example.LokaKarya.Repository.AchievementRepo;
 import com.example.LokaKarya.Repository.GroupAchievementRepo;
 import com.example.LokaKarya.Services.AchievementServ;
+import com.example.LokaKarya.util.GetUserUtil;
 
 @Service
 public class AchievementServImpl implements AchievementServ {
@@ -90,18 +90,5 @@ public Boolean deleteAchievement(UUID id) {
     }
     throw new RuntimeException("Achievement not found");
 }
-
-
-    // @Override
-    // public Boolean deleteAchievement(UUID id) {
-    //     Log.info("Start deleteAchievement in AchievementServImpl");
-    //     if (achievementRepo.existsById(id)) {
-    //         achievementRepo.deleteById(id);
-    //         Log.info("End deleteAchievement in AchievementServImpl");
-    //         return true;
-    //     }
-    //     throw new RuntimeException("Achievement not found");
-    // }
-
     
 }

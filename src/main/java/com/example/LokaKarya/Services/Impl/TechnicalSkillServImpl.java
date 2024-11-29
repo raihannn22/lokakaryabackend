@@ -1,20 +1,20 @@
 package com.example.LokaKarya.Services.Impl;
 
-import com.example.LokaKarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
-import com.example.LokaKarya.util.GetUserUtil;
-import com.example.LokaKarya.Dto.TechnicalSkill.TechnicalSkillDto;
-import com.example.LokaKarya.Entity.TechnicalSkill;
-import com.example.LokaKarya.Repository.TechnicalSkillRepo;
-import com.example.LokaKarya.Services.TechnicalSkillServ;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import com.example.LokaKarya.Dto.TechnicalSkill.TechnicalSkillDto;
+import com.example.LokaKarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
+import com.example.LokaKarya.Entity.TechnicalSkill;
+import com.example.LokaKarya.Repository.TechnicalSkillRepo;
+import com.example.LokaKarya.Services.TechnicalSkillServ;
+import com.example.LokaKarya.util.GetUserUtil;
 
 @Service
 public class TechnicalSkillServImpl implements TechnicalSkillServ {
@@ -51,9 +51,9 @@ public class TechnicalSkillServImpl implements TechnicalSkillServ {
 
     @Override
     public TechnicalSkillReqDto createTechnicalSkill(TechnicalSkillDto technicalSkillDto) {
-        UUID currentUser = getUserUtil.getCurrentUser().getId();
+        // UUID currentUser = getUserUtil.getCurrentUser().getId();
         
-            TechnicalSkill technicalSkill = technicalSkillDto.toEntity(technicalSkillDto, null, null, currentUser, new java.util.Date());
+            TechnicalSkill technicalSkill = technicalSkillDto.toEntity(technicalSkillDto, null, null, null, new java.util.Date());
             technicalSkillRepo.save(technicalSkill);
             return TechnicalSkillReqDto.fromEntity(technicalSkillRepo.save(technicalSkill));
     }
@@ -61,12 +61,12 @@ public class TechnicalSkillServImpl implements TechnicalSkillServ {
     @Override
     public TechnicalSkillReqDto updateTechnicalSkill(UUID id, TechnicalSkillDto technicalSkillDto) {
         Log.info("Start updateAttitudeSkill in AttitudeSkillServImpl");
-        UUID currentUser = getUserUtil.getCurrentUser().getId();
+        // UUID currentUser = getUserUtil.getCurrentUser().getId();
         TechnicalSkill technicalSkill = technicalSkillRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("TechnicalSkill not found"));
         technicalSkill.setTechnicalSkill(technicalSkillDto.getTechnicalSkill());
         technicalSkill.setEnabled(technicalSkillDto.getEnabled());
-        technicalSkill.setUpdatedBy(currentUser);
+        // technicalSkill.setUpdatedBy(currentUser);
         technicalSkill.setUpdatedAt(new java.util.Date());
         technicalSkillRepo.save(technicalSkill);
         Log.info("End updateAttitudeSkill in AttitudeSkillServImpl");
