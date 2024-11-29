@@ -152,20 +152,11 @@ public class UserServImpl implements UserServ {
         }
 
 
-        findUser.setUsername(userDto.getUsername());
-        findUser.setFullName(userDto.getFullName());
-        findUser.setPosition(userDto.getPosition());
-        findUser.setEmail(userDto.getEmailAddress());
-        findUser.setEmployeeStatus(userDto.getEmployeeStatus());
-        findUser.setJoinDate(userDto.getJoinDate() != null ? java.sql.Date.valueOf(userDto.getJoinDate().toLocalDate()) : null);
-        findUser.setEnabled(userDto.getEnabled());
-        findUser.setPassword(userDto.getPassword());
-        findUser.setUpdatedAt(new java.util.Date());
-        findUser.setUpdatedBy(currentUserId);
-        userRepo.save(findUser);
+        findUser = userRepo.save(findUser);
 
         if (userDto.getAppRole() !=null) {
             List<AppUserRole> appUserRoles = appUserRoleRepo.findByUserId(id);
+
             appUserRoles.forEach(appUserRole -> appUserRoleRepo.delete(appUserRole));
             for (UUID roleId: userDto.getAppRole()) {
                 System.out.println(roleId + "ini id role!123213!");
@@ -184,7 +175,7 @@ public class UserServImpl implements UserServ {
             };
         }
         Log.info("End updateUser in UserServImpl");
-        return UserDto.fromEntity(userRepo.save(findUser));
+        return UserDto.fromEntity(findUser);
     }
 
     @Override
@@ -221,7 +212,7 @@ public class UserServImpl implements UserServ {
             existingUser.setEnabled(userDto.getEnabled());
         }
         if (userDto.getPassword() != null) {
-            existingUser.setPassword(userDto.getPassword());
+            existingUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
         }
     }
 

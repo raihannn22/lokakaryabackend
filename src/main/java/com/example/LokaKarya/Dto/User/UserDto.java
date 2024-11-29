@@ -53,7 +53,13 @@ public class UserDto {
         userDto.setJoinDate(Date.valueOf(user.getJoinDate().toLocalDate()));
         userDto.setEnabled(user.getEnabled());
         userDto.setPassword(user.getPassword());
-        userDto.setAppRole(user.getAppRoles().stream().map(AppUserRole::getAppRole).toList());
+        if (user.getAppRoles() != null) {
+            userDto.setAppRole(user.getAppRoles().stream().map(AppUserRole::getAppRole).toList());
+        }else{
+            userDto.setAppRole(null);
+        }
+//        userDto.setAppRole(user.getAppRoles().stream().map(AppUserRole::getAppRole).toList());
+//        userDto.setAppRole(user.getAppRoles().stream().map(AppUserRole::getAppRole).toList());
         if (user.getDivision() != null) {
             userDto.setDivision(user.getDivision().getId());
             userDto.setDivisionName(user.getDivision().getDivisionName());
