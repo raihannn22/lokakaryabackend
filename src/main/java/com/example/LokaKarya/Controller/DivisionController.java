@@ -85,8 +85,8 @@ public class DivisionController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping
-    public ResponseEntity<ManagerDto<Boolean>> deleteDivision(@RequestParam("id") UUID id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<ManagerDto<Boolean>> deleteDivision(@PathVariable("id") UUID id) {
         Log.info("Start deleteDivision in DivisionController");
         long startTime = System.currentTimeMillis();
         ManagerDto<Boolean> response = new ManagerDto<>();

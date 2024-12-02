@@ -24,9 +24,9 @@ public class AppMenuDto {
         AppMenu appMenu = new AppMenu();
         appMenu.setId(dto.getId());
         appMenu.setMenuName(dto.getMenuName());
-        appMenu.setCreatedBy(updatedBy);
+        appMenu.setUpdatedBy(updatedBy);
         appMenu.setUpdatedAt(updatedAt);
-        appMenu.setUpdatedBy(createdBy);
+        appMenu.setCreatedBy(createdBy);
         appMenu.setCreatedAt(createdAt);
         return appMenu;
     }
