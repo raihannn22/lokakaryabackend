@@ -1,8 +1,10 @@
 package com.example.LokaKarya.Controller;
 
+import com.example.LokaKarya.Dto.ChangePassDto;
 import com.example.LokaKarya.Dto.LoginDto;
 import com.example.LokaKarya.Dto.LoginResponseDto;
 import com.example.LokaKarya.Dto.ManagerDto;
+import com.example.LokaKarya.Dto.User.UserDto;
 import com.example.LokaKarya.Services.AuthServ;
 import com.example.LokaKarya.Services.UserServ;
 import org.slf4j.Logger;
@@ -26,5 +28,10 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginDto data) {
         return ResponseEntity.ok(authServ.login(data));
+    }
+
+    @PostMapping("/changePassword")
+    public ResponseEntity<UserDto> changePassword(@RequestBody ChangePassDto data) {
+        return ResponseEntity.ok(authServ.changePassword(data));
     }
 }
