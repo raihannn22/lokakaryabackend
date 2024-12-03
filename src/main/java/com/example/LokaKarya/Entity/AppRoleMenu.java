@@ -17,11 +17,11 @@ public class AppRoleMenu {
     @Column(name = "ID", nullable = false)
     private UUID id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ROLE_ID", nullable = false)
     private AppRole appRole;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MENU_ID",  nullable = false)
     private AppMenu appMenu;
 }
