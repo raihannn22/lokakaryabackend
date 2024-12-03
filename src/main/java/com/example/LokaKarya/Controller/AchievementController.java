@@ -67,6 +67,27 @@ public class AchievementController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/group/{groupId}")
+    public ResponseEntity<ManagerDto<List<AchievementReqDto>>> getAchievementByGroupId(@PathVariable("groupId") UUID groupId) {
+        Log.info("Start getAchievementsByGroup in AchievementController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<List<AchievementReqDto>> response = new ManagerDto<>();
+        List<AchievementReqDto> content = achievementServ.getAchievementsByGroupId(groupId); // pastikan method di service mengembalikan list
+        response.setContent(content);
+        response.setTotalRows(content.size());
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+        Log.info("End getAchievementsByGroup in AchievementController");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+
+
+
     @PutMapping("/save")
     public ResponseEntity<ManagerDto<AchievementReqDto>> saveAchievement (@RequestBody AchievementDto achievementDto) {
         Log.info("Start saveAchievement in AchievementController");
