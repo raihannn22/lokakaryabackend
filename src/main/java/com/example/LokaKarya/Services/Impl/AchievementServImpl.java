@@ -21,7 +21,7 @@ import com.example.LokaKarya.util.GetUserUtil;
 
 @Service
 public class AchievementServImpl implements AchievementServ {
-    private final Logger Log = LoggerFactory.getLogger(AssessmentSummaryServImpl.class);
+    private final Logger Log = LoggerFactory.getLogger(AchievementServImpl.class);
 
     @Autowired
     AchievementRepo achievementRepo;
@@ -49,6 +49,19 @@ public class AchievementServImpl implements AchievementServ {
         Log.info("End getAchievementById in AchievementServImpl");
         return AchievementReqDto.fromEntity(achievement);
     }
+
+    @Override
+    public List<AchievementReqDto> getAchievementsByGroupId(UUID groupId) {
+        List<Achievement> achievements = achievementRepo.findByGroupAchievementId(groupId);
+        List<AchievementReqDto> achievementReqDtos = new ArrayList<>();
+        for (Achievement achievement : achievements) {
+            achievementReqDtos.add(AchievementReqDto.fromEntity(achievement));
+        }
+        return achievementReqDtos;
+    }
+
+
+
 
     @Override
     public AchievementReqDto createAchievement(AchievementDto achievementDto) {

@@ -58,6 +58,25 @@ public class EmpAchievementSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
+    @PostMapping("/save-all")
+    public ResponseEntity<ManagerDto<List<EmpAchievementSkillReqDto>>> createAllEmpAchievementSkills(@RequestBody List<EmpAchievementSkillDto> empAchievementSkills) {
+        Log.info("Start saveAllEmpAchievementSkills in EmpAchievementSkillController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<List<EmpAchievementSkillReqDto>> response = new ManagerDto<>();
+        List<EmpAchievementSkillReqDto> content = empAchievementSkillServ.createAllEmpAchievementSkill(empAchievementSkills);
+
+        response.setContent(content);
+        response.setTotalRows(content.size());
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success save all data", executionTime));
+
+        Log.info("End saveAllEmpAchievementSkills in EmpAchievementSkillController");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/get/{id}")
     public ResponseEntity<ManagerDto<EmpAchievementSkillReqDto>>  getEmpAchievementSkillDetail(@PathVariable("id") UUID id) {
         Log.info("Start getEmpAchievementSkillDetail in EmpAchievementSkillController");

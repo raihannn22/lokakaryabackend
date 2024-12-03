@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
@@ -47,7 +48,7 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
          for (EmpAchievementSkill empAchievementSkill : response) {
             empAchievementSkillReqDto.add(EmpAchievementSkillReqDto.fromEntity(empAchievementSkill));
         }
-       Log.info("End getAllEmpAchievementSkillt in EmpAchievementSkillServImpl");
+       Log.info("End getAllEmpAchievementSkill in EmpAchievementSkillServImpl");
         return empAchievementSkillReqDto;
     }
 
@@ -85,6 +86,39 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
 
         // Return sebagai DTO
         return EmpAchievementSkillReqDto.fromEntity(empAchievementSkill);
+    }
+
+     @Override
+    public List<EmpAchievementSkillReqDto> createAllEmpAchievementSkill(List<EmpAchievementSkillDto> empAchievementSkillDtos) {
+        List<EmpAchievementSkill> empAchievementSkills = empAchievementSkillDtos.stream().map(empAchievementSkillDto -> {
+            Optional<Achievement> achievementOpt = achievementRepo.findById(empAchievementSkillDto.getAchievementId());
+            Optional<User> userOpt = userRepo.findById(empAchievementSkillDto.getUserId());
+            UUID currentUser = getUserUtil.getCurrentUser().getId();
+
+            if (achievementOpt.isEmpty()) {
+                throw new RuntimeException("Achievement not found with ID: " + empAchievementSkillDto.getAchievementId());
+            }
+            if (userOpt.isEmpty()) {
+                throw new RuntimeException("User not found with ID: " + empAchievementSkillDto.getUserId());
+            }
+            return empAchievementSkillDto.toEntity(
+                empAchievementSkillDto,
+                achievementOpt.get(),
+                userOpt.get(),
+                null,
+                null,
+                currentUser,
+                new java.util.Date()
+            );
+        }).collect(Collectors.toList());
+
+        // Save all at once
+        List<EmpAchievementSkill> savedSkills = empAchievementSkillRepo.saveAll(empAchievementSkills);
+
+        // Return as DTOs
+        return savedSkills.stream()
+                          .map(EmpAchievementSkillReqDto::fromEntity)
+                          .collect(Collectors.toList());
     }
 
 
