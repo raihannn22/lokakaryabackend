@@ -36,8 +36,19 @@ public class JwtUtil {
     }
 
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+        Map<String, Object> extraClaims = new HashMap<>();
+
+        // Asumsikan userDetails memiliki metode getRole() yang mengembalikan String atau List<String>
+        // Misalnya, jika role disimpan dalam userDetails.getUsername() atau userDetails.getRoles():
+        String userRole = userDetails.getAuthorities().toString(); // Sesuaikan dengan implementasi Anda
+        extraClaims.put("role", userRole);
+
+        return generateToken(extraClaims, userDetails);
     }
+
+//    public String generateToken(UserDetails userDetails) {
+//        return generateToken(new HashMap<>(), userDetails);
+//    }
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

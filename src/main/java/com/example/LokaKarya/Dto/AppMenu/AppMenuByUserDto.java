@@ -19,6 +19,9 @@ public class AppMenuByUserDto {
     @JsonProperty("MENU_NAME")
     private String menuName;
 
+    @JsonProperty("ROLE_NAME")
+    private String roleName;
+
     public static AppMenuByUserDto fromEntity(AppMenu appMenu) {
         return AppMenuByUserDto.builder()
                 .id(appMenu.getId())

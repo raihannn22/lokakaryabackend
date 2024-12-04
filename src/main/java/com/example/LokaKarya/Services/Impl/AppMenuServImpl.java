@@ -76,6 +76,7 @@ public class AppMenuServImpl implements AppMenuServ {
             AppMenuByUserDto appMenuByUserDto1 = new AppMenuByUserDto();
             appMenuByUserDto1.setId(bytesToUUID((byte[]) e[0]));
             appMenuByUserDto1.setMenuName((String) e[1]);
+            appMenuByUserDto1.setRoleName((String) e[2]);
             appMenuByUserDto.add(appMenuByUserDto1);
         }
         return appMenuByUserDto;
