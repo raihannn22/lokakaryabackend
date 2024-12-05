@@ -24,6 +24,9 @@ public class EmpDevPlanDto {
     @JsonIgnore
     private UUID user;
 
+    @JsonProperty("DETAIL")
+    private String detail;
+
     @JsonProperty("DEV_PLAN_ID")
     private UUID devPlan;
 
@@ -33,8 +36,7 @@ public class EmpDevPlanDto {
     public static EmpDevPlan toEntity(EmpDevPlanDto empDevPlanDto, UUID CreatedBy, Date CreatedAt, UUID UpdatedBy, Date UpdatedAt) {
         EmpDevPlan empDevPlan = new EmpDevPlan();
         empDevPlan.setId(empDevPlanDto.getId());
-//        empDevPlan.setUser(empDevPlanDto.getUser().getId());
-//        empDevPlan.setDevPlan(empDevPlanDto.getDevPlan().getId());
+        empDevPlan.setDetail(empDevPlanDto.getDetail());
         empDevPlan.setAssessmentYear(empDevPlanDto.getAssessmentYear());
         empDevPlan.setCreatedBy(CreatedBy);
         empDevPlan.setCreatedAt(CreatedAt);

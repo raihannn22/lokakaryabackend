@@ -24,11 +24,11 @@ public class EmpDevPlanController extends ServerResponseList {
     EmpDevPlanServ empDevPlanServ;
 
     @PostMapping("/create")
-    public ResponseEntity<ManagerDto<EmpDevPlanReqDto>> saveEmpDevPlan(@RequestBody EmpDevPlanDto empDevPlanDto) {
+    public ResponseEntity<ManagerDto<List<EmpDevPlanReqDto>>> saveEmpDevPlan(@RequestBody List<EmpDevPlanDto> empDevPlanDto) {
         Log.info("Start saveEmpDevPlan in EmpDevPlanController");
         long StartTime = System.currentTimeMillis();
-        ManagerDto<EmpDevPlanReqDto> response = new ManagerDto<>();
-        EmpDevPlanReqDto content = empDevPlanServ.createEmpDevPlan(empDevPlanDto);
+        ManagerDto<List<EmpDevPlanReqDto>> response = new ManagerDto<>();
+        List<EmpDevPlanReqDto> content = empDevPlanServ.createEmpDevPlans(empDevPlanDto);
         response.setContent(content);
         long EndTime = System.currentTimeMillis();
         response.setInfo(getInfoOk("Success Create data", EndTime - StartTime));
