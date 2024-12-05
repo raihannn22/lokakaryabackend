@@ -88,4 +88,17 @@ public class EmpDevPlanController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/get/{id}/{year}")
+    public ResponseEntity<ManagerDto<List<EmpDevPlanReqDto>>> getEmpDevPlanByYear(@PathVariable("id") UUID id, @PathVariable("year") Integer year) {
+        Log.info("Start getEmpDevPlanByYear in EmpDevPlanController");
+        long startTime = System.currentTimeMillis();
+        ManagerDto<List<EmpDevPlanReqDto>> response = new ManagerDto<>();
+        List<EmpDevPlanReqDto> content = empDevPlanServ.getByUserIdAndYear(id, year);
+        response.setContent(content);
+        long endTime = System.currentTimeMillis();
+        response.setInfo(getInfoOk("Success Get data", endTime - startTime));
+        Log.info("End getEmpDevPlanByYear in EmpDevPlanController, time: " + (endTime - startTime) + "ms");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }

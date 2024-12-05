@@ -53,6 +53,8 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
     public EmpDevPlanReqDto createEmpDevPlan(EmpDevPlanDto empDevPlanDto) {
         Log.info("Start createEmpDevPlan in EmpDevPlanServImpl");
         UUID currentUserId = getUserUtil.getCurrentUser().getId();
+        empDevPlanRepo.deleteByUserId(currentUserId);
+        empDevPlanDto.setDevPlan(currentUserId);
         EmpDevPlan empDevPlan = EmpDevPlanDto.toEntity(empDevPlanDto, currentUserId, new Date(), null,null);
         if (empDevPlanDto != null) {
             Optional<DevPlan> devPlan = devPlanRepo.findById(empDevPlanDto.getDevPlan());
@@ -99,5 +101,15 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
         if (!empDevPlanRepo.existsById(id)) throw new RuntimeException("EmpDevPlan not found");
         empDevPlanRepo.deleteById(id);
         return true;
+    }
+
+    @Override
+    public List<EmpDevPlanReqDto> getByUserIdAndYear(UUID userId, Integer year) {
+        List<EmpDevPlan> response = empDevPlanRepo.findEmpDevPlanByUserIdAndAssessmentYear(userId, year);
+        List<EmpDevPlanReqDto> empDevPlanReqDto = new ArrayList<>();
+        for (EmpDevPlan empDevPlan : response) {
+            empDevPlanReqDto.add(EmpDevPlanReqDto.fromEntity(empDevPlan));
+        }
+        return empDevPlanReqDto;
     }
 }

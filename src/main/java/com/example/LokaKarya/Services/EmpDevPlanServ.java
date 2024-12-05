@@ -12,4 +12,5 @@ public interface EmpDevPlanServ {
     EmpDevPlanReqDto createEmpDevPlan(EmpDevPlanDto empDevPlanDto);
     EmpDevPlanReqDto updateEmpDevPlan(UUID id, EmpDevPlanDto empDevPlanDto);
     Boolean deleteEmpDevPlan(UUID id);
+    List<EmpDevPlanReqDto> getByUserIdAndYear(UUID userId, Integer year);
 }
