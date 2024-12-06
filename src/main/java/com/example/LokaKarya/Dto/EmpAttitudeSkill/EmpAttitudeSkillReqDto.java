@@ -18,8 +18,6 @@ public class EmpAttitudeSkillReqDto {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonProperty("user_id")
     private UUID userId;
-    @JsonProperty("notes")
-    private String notes;
     @JsonProperty("attitude_skill_id")
     private UUID attitudeSkillId;
     @JsonProperty("score")

@@ -42,17 +42,6 @@ public class EmpAttitudeSkillDto {
         empAttitudeSkill.setUpdatedBy(updateBy);
         return empAttitudeSkill;
 
-
-        // public static EmpAttitudeSkillDto fromEntity(EmpAttitudeSkill empAttitudeSkill) {
-        //     EmpAttitudeSkillDto empAttitudeSkillDto = new EmpAttitudeSkillDto();
-        //     empAttitudeSkillDto.setId(empAttitudeSkill.getId());
-        //     empAttitudeSkillDto.setUserId(empAttitudeSkill.getUserId());
-        //     empAttitudeSkillDto.setAttitudeSkillId(empAttitudeSkill.getAttitudeSkillId());
-        //     empAttitudeSkillDto.setScore(empAttitudeSkill.getScore());
-        //     empAttitudeSkillDto.setAssessmentYear(empAttitudeSkill.getAssessmentYear());
-        //     return empAttitudeSkillDto;
-        // }
-
     }
 }
 

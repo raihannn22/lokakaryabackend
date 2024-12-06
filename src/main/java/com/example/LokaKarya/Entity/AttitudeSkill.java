@@ -19,7 +19,7 @@ public class AttitudeSkill {
     @Column(name = "ID",nullable = false)
     private UUID id;
 
-    @Column(name = "ATTITUDE_SKILL", length = 100, nullable = false)
+    @Column(name = "ATTITUDE_SKILL", length = 200, nullable = false)
     private String attitudeSkill;
 
     @ManyToOne(fetch = FetchType.EAGER)

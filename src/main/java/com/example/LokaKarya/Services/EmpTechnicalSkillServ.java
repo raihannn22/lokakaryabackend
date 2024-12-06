@@ -11,6 +11,10 @@ public interface EmpTechnicalSkillServ {
     List<EmpTechnicalSkillReqDto> getAllEmpTechnicalSkill();
     EmpTechnicalSkillReqDto getEmpTechnicalSkillById(UUID id);
     EmpTechnicalSkillReqDto createEmpTechnicalSkill(EmpTechnicalSkillDto empTechnicalSkillDto);
-    EmpTechnicalSkillReqDto updateEmpTechnicalSkill(UUID id, EmpTechnicalSkillDto empTechnicalSkillDto);
-    Boolean deleteEmpTechnicalSkill(UUID id);
+    List<EmpTechnicalSkillReqDto> createAllEmpTechnicalSkill(List<EmpTechnicalSkillDto> empTechnicalSkillDto);
+    List<EmpTechnicalSkillReqDto> getEmpTechnicalSkillByUserId(UUID userId);
+
+    // EmpTechnicalSkillReqDto updateEmpTechnicalSkill(UUID id, EmpTechnicalSkillDto empTechnicalSkillDto);
+    // Boolean deleteEmpTechnicalSkill(UUID id);
+
 }

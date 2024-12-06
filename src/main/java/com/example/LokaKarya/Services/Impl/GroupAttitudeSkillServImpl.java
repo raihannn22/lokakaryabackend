@@ -3,14 +3,17 @@ package com.example.LokaKarya.Services.Impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.LokaKarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
 import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
 import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
+import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillWithDetailsDto;
 import com.example.LokaKarya.Entity.GroupAttitudeSkill;
 import com.example.LokaKarya.Repository.GroupAttitudeSkillRepo;
 import com.example.LokaKarya.Services.GroupAttitudeSkillServ;
@@ -47,6 +50,31 @@ public class GroupAttitudeSkillServImpl implements GroupAttitudeSkillServ {
         Log.info("End getAttitudeSkillById in AttitudeSkillServImpl");
         return GroupAttitudeSkillReqDto.fromEntity(groupAttitudeSkill);
     }
+
+    @Override
+    public List<GroupAttitudeSkillWithDetailsDto> getAllGroupAttitudeSkillsWithDetails() {
+        List<GroupAttitudeSkill> skills = groupAttitudeSkillRepo.findAll();
+        return skills.stream()
+            .map(this::convertToGroupAttitudeSkillWithDetailsDto)
+            .collect(Collectors.toList());
+    }
+
+    private GroupAttitudeSkillWithDetailsDto convertToGroupAttitudeSkillWithDetailsDto(GroupAttitudeSkill groupAttitudeSkill) {
+        List<AttitudeSkillReqDto> attitudeSkillDtos = groupAttitudeSkill.getAttitudeSkill().stream()
+            .map(attitudeSkill -> AttitudeSkillReqDto.fromEntity(attitudeSkill))
+            .collect(Collectors.toList());
+
+        return new GroupAttitudeSkillWithDetailsDto(
+            groupAttitudeSkill.getId(),
+            groupAttitudeSkill.getGroupName(),
+            groupAttitudeSkill.getPercentage(),
+            groupAttitudeSkill.getEnabled(),
+            attitudeSkillDtos
+        );
+    }
+
+
+
 
     @Override
     public GroupAttitudeSkillReqDto createGroupAttitudeSkill(GroupAttitudeSkillDto groupAttitudeSkillDto) {
