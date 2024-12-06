@@ -3,6 +3,8 @@ package com.example.LokaKarya.Dto.EmpDevPlan;
 import com.example.LokaKarya.Entity.DevPlan;
 import com.example.LokaKarya.Entity.EmpDevPlan;
 import com.example.LokaKarya.Entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -18,8 +20,12 @@ public class EmpDevPlanDto {
     @JsonProperty("ID")
     private UUID id;
 
-    @JsonProperty("USER_ID")
+    @JsonIgnoreProperties
+    @JsonIgnore
     private UUID user;
+
+    @JsonProperty("DETAIL")
+    private String detail;
 
     @JsonProperty("DEV_PLAN_ID")
     private UUID devPlan;
@@ -30,8 +36,7 @@ public class EmpDevPlanDto {
     public static EmpDevPlan toEntity(EmpDevPlanDto empDevPlanDto, UUID CreatedBy, Date CreatedAt, UUID UpdatedBy, Date UpdatedAt) {
         EmpDevPlan empDevPlan = new EmpDevPlan();
         empDevPlan.setId(empDevPlanDto.getId());
-//        empDevPlan.setUser(empDevPlanDto.getUser().getId());
-//        empDevPlan.setDevPlan(empDevPlanDto.getDevPlan().getId());
+        empDevPlan.setDetail(empDevPlanDto.getDetail());
         empDevPlan.setAssessmentYear(empDevPlanDto.getAssessmentYear());
         empDevPlan.setCreatedBy(CreatedBy);
         empDevPlan.setCreatedAt(CreatedAt);

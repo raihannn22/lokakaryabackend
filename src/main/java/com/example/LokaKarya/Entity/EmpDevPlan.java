@@ -21,19 +21,19 @@ public class EmpDevPlan {
     @Column(name = "ID", nullable = false)
     private UUID id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(name = "DEV_PLAN_ID", nullable = false)
     private DevPlan devPlan;
 
     @Column(name = "ASSESSMENT_YEAR", nullable = false)
     private Integer assessmentYear;
 
-    @Column(name = "TOO_BRIGHT", nullable = false)
-    private String tooBright;
+    @Column(name = "DETAIL", nullable = false)
+    private String detail;
 
     @Column(name = "CREATED_BY")
     private UUID createdBy;

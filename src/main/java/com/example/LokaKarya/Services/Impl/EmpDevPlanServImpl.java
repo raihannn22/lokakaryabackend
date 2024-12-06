@@ -10,12 +10,15 @@ import com.example.LokaKarya.Repository.DevPlanRepo;
 import com.example.LokaKarya.Repository.EmpDevPlanRepo;
 import com.example.LokaKarya.Repository.UserRepo;
 import com.example.LokaKarya.Services.EmpDevPlanServ;
+import jakarta.persistence.EntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class EmpDevPlanServImpl implements EmpDevPlanServ {
@@ -33,6 +36,9 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
     @Autowired
     private GetUserUtil getUserUtil;
 
+    @Autowired
+    EntityManager entityManager;
+
     @Override
     public List<EmpDevPlanReqDto> getAllEmpDevPlan() {
         List<EmpDevPlan> response = empDevPlanRepo.findAll();
@@ -49,24 +55,46 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
         return EmpDevPlanReqDto.fromEntity(empDevPlan);
     }
 
+    @Transactional
     @Override
-    public EmpDevPlanReqDto createEmpDevPlan(EmpDevPlanDto empDevPlanDto) {
-        Log.info("Start createEmpDevPlan in EmpDevPlanServImpl");
+    public List<EmpDevPlanReqDto> createEmpDevPlans(List<EmpDevPlanDto> empDevPlanDtos) {
+        Log.info("Start createEmpDevPlans in EmpDevPlanServImpl");
+
         UUID currentUserId = getUserUtil.getCurrentUser().getId();
-        EmpDevPlan empDevPlan = EmpDevPlanDto.toEntity(empDevPlanDto, currentUserId, new Date(), null,null);
-        if (empDevPlanDto != null) {
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        // Batch delete existing plans for the current user (if needed)
+        empDevPlanRepo.deleteByUserIdAndAssessmentYear(currentUserId, currentYear);
+        entityManager.flush();  // Clear the entity manager to avoid persistence context issues
+
+        List<EmpDevPlan> empDevPlans = new ArrayList<>();
+        for (EmpDevPlanDto empDevPlanDto : empDevPlanDtos) {
+            empDevPlanDto.setUser(currentUserId);
+            System.out.println("ini id user " + empDevPlanDto.getUser());
+            System.out.println("ini id devplan " + empDevPlanDto.getDevPlan());
+
             Optional<DevPlan> devPlan = devPlanRepo.findById(empDevPlanDto.getDevPlan());
             Optional<User> user = userRepo.findById(empDevPlanDto.getUser());
+
             if (devPlan.isPresent() && user.isPresent()) {
+                EmpDevPlan empDevPlan = EmpDevPlanDto.toEntity(empDevPlanDto, currentUserId, new Date(), null, null);
                 empDevPlan.setDevPlan(devPlan.get());
                 empDevPlan.setUser(user.get());
+                empDevPlans.add(empDevPlan);
             } else {
-                throw new RuntimeException("User or DevPlan not found");
+                throw new RuntimeException("User or DevPlan not found for ID: " + empDevPlanDto.getUser() + " or " + empDevPlanDto.getDevPlan());
             }
         }
-        empDevPlanRepo.save(empDevPlan);
-        Log.info("End createEmpDevPlan in EmpDevPlanServImpl");
-        return EmpDevPlanReqDto.fromEntity(empDevPlan);
+
+        // Save all EmpDevPlans at once
+        empDevPlanRepo.saveAll(empDevPlans);  // Using batch insert to save multiple entities
+        entityManager.flush();  // Ensure changes are persisted
+
+        Log.info("End createEmpDevPlans in EmpDevPlanServImpl");
+
+        // Convert and return the result DTOs
+        return empDevPlans.stream()
+                .map(EmpDevPlanReqDto::fromEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -99,5 +127,15 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
         if (!empDevPlanRepo.existsById(id)) throw new RuntimeException("EmpDevPlan not found");
         empDevPlanRepo.deleteById(id);
         return true;
+    }
+
+    @Override
+    public List<EmpDevPlanReqDto> getByUserIdAndYear(UUID userId, Integer year) {
+        List<EmpDevPlan> response = empDevPlanRepo.findEmpDevPlanByUserIdAndAssessmentYear(userId, year);
+        List<EmpDevPlanReqDto> empDevPlanReqDto = new ArrayList<>();
+        for (EmpDevPlan empDevPlan : response) {
+            empDevPlanReqDto.add(EmpDevPlanReqDto.fromEntity(empDevPlan));
+        }
+        return empDevPlanReqDto;
     }
 }

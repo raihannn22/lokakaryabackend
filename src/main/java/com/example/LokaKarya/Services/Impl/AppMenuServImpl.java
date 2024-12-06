@@ -1,5 +1,6 @@
 package com.example.LokaKarya.Services.Impl;
 
+import com.example.LokaKarya.Dto.AppMenu.AppMenuByUserDto;
 import com.example.LokaKarya.util.GetUserUtil;
 import com.example.LokaKarya.Dto.AppMenu.AppMenuDto;
 import com.example.LokaKarya.Dto.AppMenu.AppMenuReqDto;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -64,5 +66,26 @@ public class AppMenuServImpl implements AppMenuServ {
         AppMenu appMenu = appMenuRepo.findById(id).orElseThrow(() -> new RuntimeException("AppMenu not found"));
         appMenuRepo.delete(appMenu);
         return true;
+    }
+
+    @Override
+    public List<AppMenuByUserDto> getAllAppMenuByUser(UUID id) {
+        List<Object[]> menuList = appMenuRepo.getAppMenuByUserId(id);
+        List<AppMenuByUserDto> appMenuByUserDto = new ArrayList<>();
+        for (Object[] e : menuList) {
+            AppMenuByUserDto appMenuByUserDto1 = new AppMenuByUserDto();
+            appMenuByUserDto1.setId(bytesToUUID((byte[]) e[0]));
+            appMenuByUserDto1.setMenuName((String) e[1]);
+            appMenuByUserDto1.setRoleName((String) e[2]);
+            appMenuByUserDto.add(appMenuByUserDto1);
+        }
+        return appMenuByUserDto;
+    }
+
+    private UUID bytesToUUID(byte[] bytes) {
+        ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
+        long high = byteBuffer.getLong();
+        long low = byteBuffer.getLong();
+        return new UUID(high, low);
     }
 }

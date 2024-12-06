@@ -1,5 +1,6 @@
 package com.example.LokaKarya.Controller;
 
+import com.example.LokaKarya.Dto.AppMenu.AppMenuByUserDto;
 import com.example.LokaKarya.Dto.AppMenu.AppMenuDto;
 import com.example.LokaKarya.Dto.AppMenu.AppMenuReqDto;
 import com.example.LokaKarya.Dto.ManagerDto;
@@ -89,6 +90,19 @@ public class AppMenuController extends ServerResponseList {
         Log.info("End deleteAppRole in AppRoleController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
 
+    }
+
+    @GetMapping("/get/byUserId/{id}")
+    public ResponseEntity<ManagerDto<List<AppMenuByUserDto>>> getAppMenuByUserId(@PathVariable("id") UUID id) {
+        Log.info("Start getAppMenuByUserId in AppMenuController");
+        long startTime = System.currentTimeMillis();
+        ManagerDto<List<AppMenuByUserDto>> response = new ManagerDto<>();
+        List<AppMenuByUserDto> content = appMenuServ.getAllAppMenuByUser(id);
+        response.setContent(content);
+        long endTime = System.currentTimeMillis();
+        response.setInfo(getInfoOk("Success Get data", endTime - startTime));
+        Log.info("End getAppMenuByUserId in AppMenuController, time: " + (endTime - startTime) + "ms");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

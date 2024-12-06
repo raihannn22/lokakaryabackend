@@ -1,13 +1,11 @@
 package com.example.LokaKarya.Dto.User;
 
-import com.example.LokaKarya.Entity.Division;
 import com.example.LokaKarya.Entity.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.data.annotation.ReadOnlyProperty;
-//import ogya.workshop.performance_appraisal.entity.User;?
+
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -17,7 +15,7 @@ import java.util.UUID;
 @Builder
 @Data
 @ToString
-public class UserReqDto {
+public class UserReqUpdateDto {
 
     @JsonProperty("username")
     private String username;
@@ -35,13 +33,10 @@ public class UserReqDto {
     private java.sql.Date joinDate;
     @JsonProperty("enabled")
     private Integer enabled;
-    @ReadOnlyProperty
-    @JsonIgnoreProperties
-    private String password = "ogya123";
     @JsonProperty("division_id")
     private UUID division;
 
-    public static User toEntity(UserReqDto userDto, UUID createdBy,Date createdAt ,UUID updatedBy, Date updatedAt) {
+    public static User toEntity(UserReqUpdateDto userDto, UUID createdBy, Date createdAt , UUID updatedBy, Date updatedAt) {
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setFullName(userDto.getFullName());
@@ -50,24 +45,10 @@ public class UserReqDto {
         user.setEmployeeStatus(userDto.getEmployeeStatus());
         user.setJoinDate(userDto.getJoinDate() != null ? java.sql.Date.valueOf(userDto.getJoinDate().toLocalDate()) : null);
         user.setEnabled(userDto.getEnabled());
-        user.setPassword(userDto.getPassword());
         user.setCreatedBy(createdBy);
         user.setCreatedAt(createdAt);
         user.setUpdatedBy(updatedBy);
         user.setUpdatedAt(updatedAt);
-        return user;
-    }
-
-    public static User toEntity2(UserReqDto userDto) {
-        User user = new User();
-        user.setUsername(userDto.getUsername());
-        user.setFullName(userDto.getFullName());
-        user.setPosition(userDto.getPosition());
-        user.setEmail(userDto.getEmailAddress());
-        user.setEmployeeStatus(userDto.getEmployeeStatus());
-        user.setJoinDate(userDto.getJoinDate() != null ? java.sql.Date.valueOf(userDto.getJoinDate().toLocalDate()) : null);
-        user.setEnabled(userDto.getEnabled());
-        user.setPassword(userDto.getPassword());
         return user;
     }
 

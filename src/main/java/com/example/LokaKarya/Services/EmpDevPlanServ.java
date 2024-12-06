@@ -9,7 +9,8 @@ import java.util.UUID;
 public interface EmpDevPlanServ {
     List<EmpDevPlanReqDto> getAllEmpDevPlan();
     EmpDevPlanReqDto getEmpDevPlanById(UUID id);
-    EmpDevPlanReqDto createEmpDevPlan(EmpDevPlanDto empDevPlanDto);
+    List<EmpDevPlanReqDto> createEmpDevPlans(List<EmpDevPlanDto> empDevPlanDtos);
     EmpDevPlanReqDto updateEmpDevPlan(UUID id, EmpDevPlanDto empDevPlanDto);
     Boolean deleteEmpDevPlan(UUID id);
+    List<EmpDevPlanReqDto> getByUserIdAndYear(UUID userId, Integer year);
 }

@@ -21,13 +21,16 @@ public class EmpDevPlanReqDto {
     private UUID id;
 
     @JsonProperty("USER_ID")
-    private User user;
+    private UUID user;
 
     @JsonProperty("DEV_PLAN_ID")
-    private DevPlan devPlan;
+    private UUID devPlan;
 
     @JsonProperty("ASSESSMENT_YEAR")
     private Integer assessmentYear;
+
+    @JsonProperty("DETAIL")
+    private String detail;
 
     @JsonProperty("CREATED_BY")
     private UUID createdBy;
@@ -44,9 +47,10 @@ public class EmpDevPlanReqDto {
     public static EmpDevPlanReqDto fromEntity(EmpDevPlan empDevPlan) {
         EmpDevPlanReqDto empDevPlanReqDto = new EmpDevPlanReqDto();
         empDevPlanReqDto.setId(empDevPlan.getId());
-        empDevPlanReqDto.setUser(empDevPlan.getUser());
-        empDevPlanReqDto.setDevPlan(empDevPlan.getDevPlan());
+        empDevPlanReqDto.setUser(empDevPlan.getUser().getId());
+        empDevPlanReqDto.setDevPlan(empDevPlan.getDevPlan().getId());
         empDevPlanReqDto.setAssessmentYear(empDevPlan.getAssessmentYear());
+        empDevPlanReqDto.setDetail(empDevPlan.getDetail());
         empDevPlanReqDto.setCreatedBy(empDevPlan.getCreatedBy());
         empDevPlanReqDto.setCreatedAt(empDevPlan.getCreatedAt());
         empDevPlanReqDto.setUpdatedBy(empDevPlan.getUpdatedBy());

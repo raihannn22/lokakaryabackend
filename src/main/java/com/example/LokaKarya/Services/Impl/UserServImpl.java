@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.example.LokaKarya.Dto.User.UserReqUpdateDto;
 import jakarta.persistence.EntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -136,12 +137,12 @@ public class UserServImpl implements UserServ {
 
     @Override
     @Transactional
-    public UserDto updateUser (UUID id, UserReqDto userDto) {
+    public UserDto updateUser (UUID id, UserReqUpdateDto userDto) {
         Log.info("Start updateUser in UserServImpl");
         UUID currentUserId = getUserUtil.getCurrentUser().getId();
         User findUser  = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User  not found"));
 
-        updateUserFields(findUser, userDto);
+        updateUserFields2(findUser, userDto);
 
 
 
@@ -213,6 +214,30 @@ public class UserServImpl implements UserServ {
         }
         if (userDto.getPassword() != null) {
             existingUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        }
+    }
+
+    private void updateUserFields2(User existingUser, UserReqUpdateDto userDto) {
+        if (userDto.getUsername() != null) {
+            existingUser.setUsername(userDto.getUsername());
+        }
+        if (userDto.getFullName() != null) {
+            existingUser.setFullName(userDto.getFullName());
+        }
+        if (userDto.getPosition() != null) {
+            existingUser.setPosition(userDto.getPosition());
+        }
+        if (userDto.getEmailAddress() != null) {
+            existingUser.setEmail(userDto.getEmailAddress());
+        }
+        if (userDto.getEmployeeStatus() != null) {
+            existingUser.setEmployeeStatus(userDto.getEmployeeStatus());
+        }
+        if (userDto.getJoinDate() != null) {
+            existingUser.setJoinDate(Date.valueOf(userDto.getJoinDate().toLocalDate()));
+        }
+        if (userDto.getEnabled() != null) {
+            existingUser.setEnabled(userDto.getEnabled());
         }
     }
 

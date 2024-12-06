@@ -1,10 +1,12 @@
 package com.example.LokaKarya.Services;
 
+import com.example.LokaKarya.Dto.AppMenu.AppMenuByUserDto;
 import com.example.LokaKarya.Dto.AppMenu.AppMenuDto;
 import com.example.LokaKarya.Dto.AppMenu.AppMenuReqDto;
 
 import java.util.List;
 import java.util.UUID;
+
 
 public interface AppMenuServ {
     List<AppMenuReqDto> getAllAppMenu();
@@ -12,4 +14,6 @@ public interface AppMenuServ {
     AppMenuReqDto createAppMenu(AppMenuDto appMenuDto);
     AppMenuReqDto updateAppMenu(UUID id, AppMenuDto appMenuDto);
     Boolean deleteAppMenu(UUID id);
+
+    List<AppMenuByUserDto> getAllAppMenuByUser(UUID id);
 }
