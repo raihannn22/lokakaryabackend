@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
 import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
+import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillWithDetailsDto;
 import com.example.LokaKarya.Dto.ManagerDto;
 import com.example.LokaKarya.Services.GroupAttitudeSkillServ;
 import com.example.LokaKarya.util.ServerResponseList;
@@ -47,6 +48,27 @@ public class GroupAttitudeSkillController extends ServerResponseList {
         Log.info("End getAllGroupAttitudeSkill in GroupAttitudeSkillController");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    
+    @GetMapping("/with-details")
+    public ResponseEntity<ManagerDto<List<GroupAttitudeSkillWithDetailsDto>>> getAllGroupAttitudeSkillsWithDetails() {
+        Log.info("Start getAllGroupAttitudeSkillsWithDetails in GroupAttitudeSkillController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<List<GroupAttitudeSkillWithDetailsDto>> response = new ManagerDto<>();
+        List<GroupAttitudeSkillWithDetailsDto> content = groupAttitudeSkillServ.getAllGroupAttitudeSkillsWithDetails();
+
+        response.setContent(content);
+        response.setTotalRows(content.size());
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+        Log.info("End getAllGroupAttitudeSkillsWithDetails in GroupAttitudeSkillController");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+
 
     @PutMapping("/save")
     public ResponseEntity<ManagerDto<GroupAttitudeSkillReqDto>> saveGroupAttitudeSkill(@RequestBody GroupAttitudeSkillDto groupAttitudeSkillDto) {

@@ -1,5 +1,6 @@
 package com.example.LokaKarya.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,4 +10,5 @@ import com.example.LokaKarya.Entity.EmpAttitudeSkill;
 
 @Repository
 public interface EmpAttitudeSkillRepo extends JpaRepository<EmpAttitudeSkill, UUID> {
+    List<EmpAttitudeSkill> findByUserId(UUID userId);
 }

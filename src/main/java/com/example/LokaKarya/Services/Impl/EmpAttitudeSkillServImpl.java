@@ -1,26 +1,26 @@
 package com.example.LokaKarya.Services.Impl;
 
-import com.example.LokaKarya.util.GetUserUtil;
-import com.example.LokaKarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillDto;
-import com.example.LokaKarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillReqDto;
-import com.example.LokaKarya.Entity.EmpAttitudeSkill;
-import com.example.LokaKarya.Entity.User;
-import com.example.LokaKarya.Repository.EmpAttitudeSkillRepo;
-import com.example.LokaKarya.Repository.AttitudeSkillRepo;
-import com.example.LokaKarya.Repository.UserRepo;
-import com.example.LokaKarya.Services.EmpAttitudeSkillServ;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
+import com.example.LokaKarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillDto;
+import com.example.LokaKarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillReqDto;
 import com.example.LokaKarya.Entity.AttitudeSkill;
+import com.example.LokaKarya.Entity.EmpAttitudeSkill;
+import com.example.LokaKarya.Entity.User;
+import com.example.LokaKarya.Repository.AttitudeSkillRepo;
+import com.example.LokaKarya.Repository.EmpAttitudeSkillRepo;
+import com.example.LokaKarya.Repository.UserRepo;
+import com.example.LokaKarya.Services.EmpAttitudeSkillServ;
+import com.example.LokaKarya.util.GetUserUtil;
 
 @Service
 public class EmpAttitudeSkillServImpl implements EmpAttitudeSkillServ {
@@ -59,6 +59,8 @@ public class EmpAttitudeSkillServImpl implements EmpAttitudeSkillServ {
         Log.info("End getEmpAttitudeSkillById in EmpAttitudeSkillServImpl");
         return EmpAttitudeSkillReqDto.fromEntity(empAttitudeSkill);
     }
+
+    
 
     @Override
     public EmpAttitudeSkillReqDto createEmpAttitudeSkill(EmpAttitudeSkillDto empAttitudeSkillDto) {
@@ -100,33 +102,90 @@ public class EmpAttitudeSkillServImpl implements EmpAttitudeSkillServ {
         return EmpAttitudeSkillReqDto.fromEntity(empAttitudeSkill);
     }
 
-
     @Override
-    public EmpAttitudeSkillReqDto updateEmpAttitudeSkill(UUID id, EmpAttitudeSkillDto empAttitudeSkillDto) {
-        Log.info("Start updateEmpAttitudeSkill in EmpAttitudeSkillServImpl");
-        UUID currentUser = getUserUtil.getCurrentUser().getId();
-        EmpAttitudeSkill empAttitudeSkill = empAttitudeSkillRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Emp Attitude Skill not found"));
-        empAttitudeSkill.setUser(userRepo.findById(empAttitudeSkillDto.getUserId()).orElseThrow(() -> new RuntimeException("User not found")));    
-        empAttitudeSkill.setAttitudeSkill(attitudeSkillRepo.findById(empAttitudeSkillDto.getAttitudeSkillId()).orElseThrow(() -> new RuntimeException("Attitude Skill not found")));
-        empAttitudeSkill.setScore(empAttitudeSkillDto.getScore());
-        empAttitudeSkill.setAssessmentYear(empAttitudeSkillDto.getAssessmentYear());
-        empAttitudeSkill.setUpdatedBy(currentUser);
-        empAttitudeSkill.setUpdatedAt(new java.util.Date());
-        empAttitudeSkillRepo.save(empAttitudeSkill);
-        Log.info("End updateEmpAttitudeSkill in EmpAttitudeSkillServImpl");
-        return EmpAttitudeSkillReqDto.fromEntity(empAttitudeSkillRepo.save(empAttitudeSkill));
+    public List<EmpAttitudeSkillReqDto> getEmpAttitudeSkillByUserId(UUID userId) {
+        Log.info("Start getEmpAttitudeSkillByUserId in EmpAttitudeSkillServImpl");
+
+        // Ambil semua data berdasarkan userId
+        List<EmpAttitudeSkill> empAttitudeSkillList = empAttitudeSkillRepo.findByUserId(userId);
+
+        // Konversi ke DTO
+        List<EmpAttitudeSkillReqDto> empAttitudeSkillDtos = empAttitudeSkillList.stream()
+            .map(EmpAttitudeSkillReqDto::fromEntity)
+            .collect(Collectors.toList());
+
+        Log.info("End getEmpAttitudeSkillByUserId in EmpAttitudeSkillServImpl");
+        return empAttitudeSkillDtos;
     }
 
-    @Override
-        public Boolean deleteEmpAttitudeSkill(UUID id) {
-            Log.info("Start deleteEmpAttitudeSkill in EmpAttitudeSkillServImpl");
 
-            if (empAttitudeSkillRepo.existsById(id)) {
-                empAttitudeSkillRepo.deleteById(id);  // hanya menghapus Attitude berdasarkan id
-                Log.info("End deleteEmpAttitudeSkill in EmpAttitudeSkillServImpl");
-                return true;
+
+    @Override
+    public List<EmpAttitudeSkillReqDto> createAllEmpAttitudeSkill(List<EmpAttitudeSkillDto> empAttitudeSkillDtos) {
+        List<EmpAttitudeSkill> empAttitudeSkills = empAttitudeSkillDtos.stream().map(empAttitudeSkillDto -> {
+            // Mengambil AttitudeSkill berdasarkan ID yang diberikan
+            Optional<AttitudeSkill> attitudeSkillOpt = attitudeSkillRepo.findById(empAttitudeSkillDto.getAttitudeSkillId());
+            Optional<User> userOpt = userRepo.findById(empAttitudeSkillDto.getUserId());
+            // Mendapatkan user_id dari current user
+            UUID currentUser = getUserUtil.getCurrentUser().getId();
+
+            // Memeriksa jika attitude skill tidak ditemukan
+            if (attitudeSkillOpt.isEmpty()) {
+                throw new RuntimeException("Attitude Skill not found with ID: " + empAttitudeSkillDto.getAttitudeSkillId());
             }
-            throw new RuntimeException("EmpAttitudeSkill not found");
-        }
+            if (userOpt.isEmpty()) {
+                    throw new RuntimeException("User not found with ID: " + empAttitudeSkillDto.getUserId());
+            }
+
+            // Menggunakan currentUser sebagai user_id
+            return empAttitudeSkillDto.toEntity(
+                empAttitudeSkillDto,
+                attitudeSkillOpt.get(),
+                userOpt.get(), 
+                null,
+                null,
+                currentUser,
+                new java.util.Date() 
+            );
+        }).collect(Collectors.toList());
+
+        // Simpan semua EmpAttitudeSkill
+        List<EmpAttitudeSkill> savedSkills = empAttitudeSkillRepo.saveAll(empAttitudeSkills);
+
+        // Kembalikan hasil sebagai DTO
+        return savedSkills.stream()
+                        .map(EmpAttitudeSkillReqDto::fromEntity)
+                        .collect(Collectors.toList());
+    }
+
+
+
 }
+// @Override
+// public EmpAttitudeSkillReqDto updateEmpAttitudeSkill(UUID id, EmpAttitudeSkillDto empAttitudeSkillDto) {
+//     Log.info("Start updateEmpAttitudeSkill in EmpAttitudeSkillServImpl");
+//     UUID currentUser = getUserUtil.getCurrentUser().getId();
+//     EmpAttitudeSkill empAttitudeSkill = empAttitudeSkillRepo.findById(id)
+//             .orElseThrow(() -> new RuntimeException("Emp Attitude Skill not found"));
+//     empAttitudeSkill.setUser(userRepo.findById(empAttitudeSkillDto.getUserId()).orElseThrow(() -> new RuntimeException("User not found")));    
+//     empAttitudeSkill.setAttitudeSkill(attitudeSkillRepo.findById(empAttitudeSkillDto.getAttitudeSkillId()).orElseThrow(() -> new RuntimeException("Attitude Skill not found")));
+//     empAttitudeSkill.setScore(empAttitudeSkillDto.getScore());
+//     empAttitudeSkill.setAssessmentYear(empAttitudeSkillDto.getAssessmentYear());
+//     empAttitudeSkill.setUpdatedBy(currentUser);
+//     empAttitudeSkill.setUpdatedAt(new java.util.Date());
+//     empAttitudeSkillRepo.save(empAttitudeSkill);
+//     Log.info("End updateEmpAttitudeSkill in EmpAttitudeSkillServImpl");
+//     return EmpAttitudeSkillReqDto.fromEntity(empAttitudeSkillRepo.save(empAttitudeSkill));
+// }
+
+// @Override
+//     public Boolean deleteEmpAttitudeSkill(UUID id) {
+//         Log.info("Start deleteEmpAttitudeSkill in EmpAttitudeSkillServImpl");
+
+//         if (empAttitudeSkillRepo.existsById(id)) {
+//             empAttitudeSkillRepo.deleteById(id);  // hanya menghapus Attitude berdasarkan id
+//             Log.info("End deleteEmpAttitudeSkill in EmpAttitudeSkillServImpl");
+//             return true;
+//         }
+//         throw new RuntimeException("EmpAttitudeSkill not found");
+//     }

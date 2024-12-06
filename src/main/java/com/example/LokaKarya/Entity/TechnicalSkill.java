@@ -19,7 +19,7 @@ public class TechnicalSkill {
     @Column(name = "ID",nullable = false)
     private UUID id;
 
-    @Column(name = "TECHNICAL_SKILL", length = 100, nullable = false)
+    @Column(name = "TECHNICAL_SKILL", length = 200, nullable = false)
     private String technicalSkill;
 
     @Column(name = "ENABLED", length = 1)

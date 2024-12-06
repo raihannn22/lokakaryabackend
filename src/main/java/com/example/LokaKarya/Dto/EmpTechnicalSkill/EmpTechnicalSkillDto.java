@@ -21,6 +21,8 @@ public class EmpTechnicalSkillDto {
     private UUID userId;
     @JsonProperty("technical_skill_id")
     private UUID technicalSkillId;
+    @JsonProperty("criteria")
+    private String criteria;
     @JsonProperty("score")
     private Integer score;
     @JsonProperty("assessment_year")
@@ -33,6 +35,7 @@ public class EmpTechnicalSkillDto {
         empTechnicalSkill.setId(empTechnicalSkillDto.getId());
         empTechnicalSkill.setUser(user);
         empTechnicalSkill.setTechnicalSkill(technicalSkill);
+        empTechnicalSkill.setCriteria(empTechnicalSkillDto.getCriteria());
         empTechnicalSkill.setScore(empTechnicalSkillDto.getScore());
         empTechnicalSkill.setAssessmentYear(empTechnicalSkillDto.getAssessmentYear());
         empTechnicalSkill.setCreatedAt(createdAt);
@@ -41,16 +44,5 @@ public class EmpTechnicalSkillDto {
         empTechnicalSkill.setUpdatedBy(updateBy);
         return empTechnicalSkill;
     }
-
-
-    // public static EmpTechnicalSkillDto fromEntity(EmpTechnicalSkill empTechnicalSkill) {
-    //     EmpTechnicalSkillDto empTechnicalSkillDto = new EmpTechnicalSkillDto();
-    //     empTechnicalSkillDto.setId(empTechnicalSkill.getId());
-    //     empTechnicalSkillDto.setUserId(empTechnicalSkill.getUserId());
-    //     empTechnicalSkillDto.setTechnicalSkillId(empTechnicalSkill.getTechnicalSkillId());
-    //     empTechnicalSkillDto.setScore(empTechnicalSkill.getScore());
-    //     empTechnicalSkillDto.setAssessmentYear(empTechnicalSkill.getAssessmentYear());
-    //     return empTechnicalSkillDto;
-    // }
 }
 

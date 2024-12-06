@@ -18,10 +18,10 @@ public class EmpTechnicalSkillReqDto {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonProperty("user_id")
     private UUID userId;
-    @JsonProperty("notes")
-    private String notes;
     @JsonProperty("technical_skill_id")
     private UUID technicalSkillId;
+    @JsonProperty("criteria")
+    private String criteria;
     @JsonProperty("score")
     private Integer score;
     @JsonProperty("assessment_year")
@@ -33,6 +33,7 @@ public class EmpTechnicalSkillReqDto {
         empTechnicalSkillReqDto.setUserId(empTechnicalSkill.getUser().getId());
         empTechnicalSkillReqDto.setTechnicalSkillId(empTechnicalSkill.getTechnicalSkill().getId());
         empTechnicalSkillReqDto.setScore(empTechnicalSkill.getScore());
+        empTechnicalSkillReqDto.setCriteria(empTechnicalSkill.getCriteria());
         empTechnicalSkillReqDto.setAssessmentYear(empTechnicalSkill.getAssessmentYear());
         return empTechnicalSkillReqDto;
     }

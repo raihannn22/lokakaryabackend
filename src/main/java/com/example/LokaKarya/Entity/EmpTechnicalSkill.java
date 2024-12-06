@@ -28,8 +28,9 @@ public class EmpTechnicalSkill {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "TECHNICAL_SKILL_ID", nullable = false)
     private TechnicalSkill technicalSkill;
-    // @Column(name = "TECHNICAL_SKILL_ID", length = 32, nullable = false)
-    // private UUID technicalSkillId;
+    
+    @Column(name = "CRITERIA", length = 100, nullable = false)
+    private String criteria;
 
     @Column(name = "SCORE", length = 3, nullable = false)
     private Integer score;
