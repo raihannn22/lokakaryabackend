@@ -61,8 +61,9 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
         Log.info("Start createEmpDevPlans in EmpDevPlanServImpl");
 
         UUID currentUserId = getUserUtil.getCurrentUser().getId();
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         // Batch delete existing plans for the current user (if needed)
-        empDevPlanRepo.deleteByUserId(currentUserId);
+        empDevPlanRepo.deleteByUserIdAndAssessmentYear(currentUserId, currentYear);
         entityManager.flush();  // Clear the entity manager to avoid persistence context issues
 
         List<EmpDevPlan> empDevPlans = new ArrayList<>();
