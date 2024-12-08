@@ -6,6 +6,7 @@ import com.example.LokaKarya.Dto.ManagerDto;
 import com.example.LokaKarya.Dto.User.UserDto;
 import com.example.LokaKarya.Dto.User.UserReqDto;
 import com.example.LokaKarya.Dto.User.UserReqUpdateDto;
+import com.example.LokaKarya.Dto.User.UserResetPassDto;
 import com.example.LokaKarya.Entity.User;
 import com.example.LokaKarya.Services.UserServ;
 import com.example.LokaKarya.util.ServerResponseList;
@@ -110,6 +111,21 @@ public class UserController extends ServerResponseList {
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success delete data", executionTime));
         Log.info("End deleteUser in UserController");
+        return new ResponseEntity<>(response, HttpStatus.OK) ;
+    }
+
+    @PatchMapping("/reset-password/{id}")
+    public ResponseEntity<ManagerDto<UserDto>>  resetPassword(@PathVariable("id") UUID id, @RequestBody UserResetPassDto userDto) {
+        Log.info("Start resetPassword in UserController");
+        long startTime = System.currentTimeMillis();
+        ManagerDto<UserDto> response = new ManagerDto<>();
+        UserDto content = userServ.resetPassword(id, userDto);
+        response.setContent(content);
+        response.setTotalRows(1);
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success reset password", executionTime));
+        Log.info("End resetPassword in UserController");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 

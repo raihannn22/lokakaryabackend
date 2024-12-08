@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.example.LokaKarya.Dto.User.UserReqUpdateDto;
+import com.example.LokaKarya.Dto.User.UserResetPassDto;
 import jakarta.persistence.EntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -188,6 +189,15 @@ public class UserServImpl implements UserServ {
         userRepo.delete(findUser);
 //        Log.info("End deleteUser in UserServImpl");
         return true;
+    }
+
+    @Override
+    public UserDto resetPassword(UUID id, UserResetPassDto userDto) {
+        UUID currentUserId = getUserUtil.getCurrentUser().getId();
+        User findUser = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User  not found"));
+        User user = UserResetPassDto.toEntity(userDto, findUser.getCreatedBy(), findUser.getCreatedAt(), currentUserId, new java.util.Date());
+        findUser = userRepo.save(user);
+        return UserDto.fromEntity(findUser);
     }
 
     private void updateUserFields(User existingUser, UserReqDto userDto) {
