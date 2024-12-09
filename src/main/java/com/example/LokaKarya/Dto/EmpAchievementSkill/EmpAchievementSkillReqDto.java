@@ -26,8 +26,10 @@ public class EmpAchievementSkillReqDto {
     private String notes;
     @JsonProperty("achievement_id")
     private UUID achievementId;
-    @JsonProperty("achievement")
+    @JsonProperty("achievement_name")
     private String achievement;
+        @JsonProperty("group_achievement_name")
+    private String groupAchievement;
     @JsonProperty("score")
     private Integer score;
     @JsonProperty("assessment_year")
@@ -41,6 +43,7 @@ public class EmpAchievementSkillReqDto {
             empAchievementSkillReqDto.setNotes(empAchievementSkill.getNotes());
             empAchievementSkillReqDto.setAchievementId(empAchievementSkill.getAchievement().getId());
             empAchievementSkillReqDto.setAchievement(empAchievementSkill.getAchievement().getAchievement());
+            empAchievementSkillReqDto.setGroupAchievement(empAchievementSkill.getAchievement().getGroupAchievement().getGroupName());
             empAchievementSkillReqDto.setScore(empAchievementSkill.getScore());
             empAchievementSkillReqDto.setAssessmentYear(empAchievementSkill.getAssessmentYear());
             return empAchievementSkillReqDto;

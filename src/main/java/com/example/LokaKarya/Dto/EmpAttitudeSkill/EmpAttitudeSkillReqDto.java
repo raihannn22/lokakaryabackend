@@ -20,6 +20,10 @@ public class EmpAttitudeSkillReqDto {
     private UUID userId;
     @JsonProperty("attitude_skill_id")
     private UUID attitudeSkillId;
+        @JsonProperty("attitude_skill_name")
+    private String attitudeSkillName;
+            @JsonProperty("goup_attitude_skill_name")
+    private String groupAttitudeSkillName;
     @JsonProperty("score")
     private Integer score;
     @JsonProperty("assessment_year")
@@ -29,6 +33,8 @@ public class EmpAttitudeSkillReqDto {
             EmpAttitudeSkillReqDto empAttitudeSkillReqDto = new EmpAttitudeSkillReqDto();
             empAttitudeSkillReqDto.setUserId(empAttitudeSkill.getUser().getId());
             empAttitudeSkillReqDto.setAttitudeSkillId(empAttitudeSkill.getAttitudeSkill().getId());
+             empAttitudeSkillReqDto.setAttitudeSkillName(empAttitudeSkill.getAttitudeSkill().getAttitudeSkill());
+             empAttitudeSkillReqDto.setGroupAttitudeSkillName(empAttitudeSkill.getAttitudeSkill().getGroupAttitudeSkill().getGroupName());
             empAttitudeSkillReqDto.setScore(empAttitudeSkill.getScore());
             empAttitudeSkillReqDto.setAssessmentYear(empAttitudeSkill.getAssessmentYear());
             return empAttitudeSkillReqDto;
