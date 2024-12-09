@@ -26,6 +26,9 @@ public class EmpDevPlanReqDto {
     @JsonProperty("DEV_PLAN_ID")
     private UUID devPlan;
 
+    @JsonProperty("DEV_PLAN_NAME")
+    private String devPlanName;
+
     @JsonProperty("ASSESSMENT_YEAR")
     private Integer assessmentYear;
 
@@ -49,6 +52,7 @@ public class EmpDevPlanReqDto {
         empDevPlanReqDto.setId(empDevPlan.getId());
         empDevPlanReqDto.setUser(empDevPlan.getUser().getId());
         empDevPlanReqDto.setDevPlan(empDevPlan.getDevPlan().getId());
+        empDevPlanReqDto.setDevPlanName(empDevPlan.getDevPlan().getPlan());
         empDevPlanReqDto.setAssessmentYear(empDevPlan.getAssessmentYear());
         empDevPlanReqDto.setDetail(empDevPlan.getDetail());
         empDevPlanReqDto.setCreatedBy(empDevPlan.getCreatedBy());
