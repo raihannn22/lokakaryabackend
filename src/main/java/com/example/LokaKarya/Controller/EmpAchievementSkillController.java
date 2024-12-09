@@ -128,6 +128,23 @@ public class EmpAchievementSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
+    @GetMapping("/get/user/{id}")
+    public ResponseEntity<ManagerDto<List<EmpAchievementSkillReqDto>>>  getEmpAchievementSkillByEmpId(@PathVariable("id") UUID id) {
+        Log.info("Start getEmpAchievementSkillByEmpId in EmpAchievementSkillController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<List<EmpAchievementSkillReqDto>> response = new ManagerDto<>();
+        List<EmpAchievementSkillReqDto> content = empAchievementSkillServ.getAllEmpAchievementSkillByUser(id);
+
+        response.setContent(content);
+        response.setTotalRows(content.size());
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+        Log.info("End getEmpAchievementSkillByEmpId in EmpAchievementSkillController");
+        return new ResponseEntity<>(response, HttpStatus.OK) ;
+    }
+
 
 
 }

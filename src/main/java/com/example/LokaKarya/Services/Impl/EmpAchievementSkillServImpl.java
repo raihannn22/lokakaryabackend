@@ -151,4 +151,17 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
             }
             throw new RuntimeException("EmpAchievementSkill not found");
         }
+
+    @Override
+    public List<EmpAchievementSkillReqDto> getAllEmpAchievementSkillByUser(UUID id) {
+        Log.info("Start getAllEmpAchievementSkill in EmpAchievementSkillServImpl");
+        List<EmpAchievementSkill> response = empAchievementSkillRepo.findByUserId(id);
+        List<EmpAchievementSkillReqDto> empAchievementSkillReqDto = new ArrayList<>();
+
+        for (EmpAchievementSkill empAchievementSkill : response) {
+            empAchievementSkillReqDto.add(EmpAchievementSkillReqDto.fromEntity(empAchievementSkill));
+        }
+        Log.info("End getAllEmpAchievementSkill in EmpAchievementSkillServImpl");
+        return empAchievementSkillReqDto;
+    }
 }
