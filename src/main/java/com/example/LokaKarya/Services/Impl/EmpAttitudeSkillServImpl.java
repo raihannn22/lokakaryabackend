@@ -118,6 +118,22 @@ public class EmpAttitudeSkillServImpl implements EmpAttitudeSkillServ {
         return empAttitudeSkillDtos;
     }
 
+    @Override
+    public List<EmpAttitudeSkillReqDto> getEmpAttitudeSkillsByUserIdAndYear(UUID userId, Integer assessmentYear) {
+        Log.info("Start getEmpAttitudeSkillByUserIdAndYear in EmpAttitudeSkillServImpl");
+
+        // Ambil semua data berdasarkan userId
+        List<EmpAttitudeSkill> empAttitudeSkillList = empAttitudeSkillRepo.findByUserIdAndAssessmentYear(userId, assessmentYear);
+
+        // Konversi ke DTO
+        List<EmpAttitudeSkillReqDto> empAttitudeSkillDtos = empAttitudeSkillList.stream()
+            .map(EmpAttitudeSkillReqDto::fromEntity)
+            .collect(Collectors.toList());
+
+        Log.info("End getEmpAttitudeSkillByUserIdAndYear in EmpAttitudeSkillServImpl");
+        return empAttitudeSkillDtos;
+    }
+
 
 
     @Override
