@@ -28,8 +28,10 @@ public class EmpAchievementSkillReqDto {
     private UUID achievementId;
     @JsonProperty("achievement_name")
     private String achievement;
-        @JsonProperty("group_achievement_name")
+    @JsonProperty("group_achievement_name")
     private String groupAchievement;
+    @JsonProperty("group_achievement_percentage")
+    private Integer groupAchievementPercentage;
     @JsonProperty("score")
     private Integer score;
     @JsonProperty("assessment_year")
@@ -44,6 +46,7 @@ public class EmpAchievementSkillReqDto {
             empAchievementSkillReqDto.setAchievementId(empAchievementSkill.getAchievement().getId());
             empAchievementSkillReqDto.setAchievement(empAchievementSkill.getAchievement().getAchievement());
             empAchievementSkillReqDto.setGroupAchievement(empAchievementSkill.getAchievement().getGroupAchievement().getGroupName());
+        empAchievementSkillReqDto.setGroupAchievementPercentage(empAchievementSkill.getAchievement().getGroupAchievement().getPercentage());
             empAchievementSkillReqDto.setScore(empAchievementSkill.getScore());
             empAchievementSkillReqDto.setAssessmentYear(empAchievementSkill.getAssessmentYear());
             return empAchievementSkillReqDto;
