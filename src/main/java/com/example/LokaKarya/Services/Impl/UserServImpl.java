@@ -112,6 +112,7 @@ public class UserServImpl implements UserServ {
             }
         }
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+
         user = userRepo.save(user);
 
         if (userDto.getAppRole() !=null) {
@@ -144,6 +145,8 @@ public class UserServImpl implements UserServ {
         User findUser  = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User  not found"));
 
         updateUserFields2(findUser, userDto);
+        findUser.setUpdatedBy(currentUserId);
+        findUser.setUpdatedAt(new java.util.Date());
 
 
 
@@ -195,8 +198,11 @@ public class UserServImpl implements UserServ {
     public UserDto resetPassword(UUID id, UserResetPassDto userDto) {
         UUID currentUserId = getUserUtil.getCurrentUser().getId();
         User findUser = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User  not found"));
-        User user = UserResetPassDto.toEntity(userDto, findUser.getCreatedBy(), findUser.getCreatedAt(), currentUserId, new java.util.Date());
-        findUser = userRepo.save(user);
+        findUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        findUser.setUpdatedAt(new java.util.Date());
+        findUser.setUpdatedBy(currentUserId);
+//
+        findUser = userRepo.save(findUser);
         return UserDto.fromEntity(findUser);
     }
 
