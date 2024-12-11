@@ -119,6 +119,28 @@ public class EmpAttitudeSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/user/{userId}/year/{assessmentYear}")
+public ResponseEntity<ManagerDto<List<EmpAttitudeSkillReqDto>>> getEmpAttitudeSkillsByUserIdAndYear(
+        @PathVariable UUID userId, 
+        @PathVariable Integer assessmentYear) {
+    Log.info("Start getEmpAttitudeSkillsByUserIdAndYear in EmpAttitudeSkillController");
+    long startTime = System.currentTimeMillis();
+
+    ManagerDto<List<EmpAttitudeSkillReqDto>> response = new ManagerDto<>();
+    List<EmpAttitudeSkillReqDto> content = empAttitudeSkillServ.getEmpAttitudeSkillsByUserIdAndYear(userId, assessmentYear);
+
+    response.setContent(content);
+    response.setTotalRows(content.size());
+    long endTime = System.currentTimeMillis();
+    long executionTime = endTime - startTime;
+    response.setInfo(getInfoOk("Success get data", executionTime));
+
+    Log.info("End getEmpAttitudeSkillsByUserIdAndYear in EmpAttitudeSkillController");
+    return new ResponseEntity<>(response, HttpStatus.OK);
+}
+
+
+
 
     
     
