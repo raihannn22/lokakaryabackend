@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,11 @@ import org.springframework.stereotype.Service;
 
 import com.example.LokaKarya.Dto.EmpSuggestion.EmpSuggestionDto;
 import com.example.LokaKarya.Dto.EmpSuggestion.EmpSuggestionReqDto;
+import com.example.LokaKarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillDto;
+import com.example.LokaKarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillReqDto;
 import com.example.LokaKarya.Entity.EmpSuggestion;
+import com.example.LokaKarya.Entity.EmpTechnicalSkill;
+import com.example.LokaKarya.Entity.TechnicalSkill;
 import com.example.LokaKarya.Entity.User;
 import com.example.LokaKarya.Repository.EmpSuggestionRepo;
 import com.example.LokaKarya.Repository.UserRepo;
@@ -82,6 +87,63 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
     }
 
     @Override
+    public List<EmpSuggestionReqDto> getEmpSuggestionByUserId(UUID userId) {
+        Log.info("Start getEmpSuggestionByUserId in EmpSuggestionServImpl");
+
+        // Ambil semua data berdasarkan userId
+        List<EmpSuggestion> empSuggestionList = empSuggestionRepo.findByUserId(userId);
+
+        // Konversi ke DTO
+        List<EmpSuggestionReqDto> empSuggestionDtos = empSuggestionList.stream()
+            .map(EmpSuggestionReqDto::fromEntity)
+            .collect(Collectors.toList());
+
+        Log.info("End getEmpSuggestionByUserId in EmpSuggestionServImpl");
+        return empSuggestionDtos;
+    }
+
+    @Override
+    public List<EmpSuggestionReqDto> getEmpSuggestionsByUserIdAndYear(UUID userId, Integer assessmentYear) {
+        Log.info("Start getEmpSuggestionByUserIdAndYear in EmpSuggestionServImpl");
+
+        // Ambil semua data berdasarkan userId
+        List<EmpSuggestion> empSuggestionList = empSuggestionRepo.findByUserIdAndAssessmentYear(userId, assessmentYear);
+
+        // Konversi ke DTO
+        List<EmpSuggestionReqDto> empSuggestionDtos = empSuggestionList.stream()
+            .map(EmpSuggestionReqDto::fromEntity)
+            .collect(Collectors.toList());
+
+        Log.info("End getEmpSuggestionByUserIdAndYear in EmpSuggestionServImpl");
+        return empSuggestionDtos;
+    }
+        @Override
+        public List<EmpSuggestionReqDto> createAllEmpSuggestion(List<EmpSuggestionDto> empSuggestionDtos) {
+            List<EmpSuggestion> empSuggestions = empSuggestionDtos.stream().map(empSuggestionDto -> {
+
+                Optional<User> userOpt = userRepo.findById(empSuggestionDto.getUserId());
+                UUID currentUser = getUserUtil.getCurrentUser().getId();
+
+                if (userOpt.isEmpty()) {
+                        throw new RuntimeException("Suggestion not found with ID: " + empSuggestionDto.getUserId());
+                }
+
+                return empSuggestionDto.toEntity(
+                    empSuggestionDto,
+                    userOpt.get(), 
+                    null,
+                    null,
+                    currentUser,
+                    new java.util.Date() 
+                );
+            }).collect(Collectors.toList());
+            List<EmpSuggestion> savedSkills = empSuggestionRepo.saveAll(empSuggestions);
+            return savedSkills.stream()
+                            .map(EmpSuggestionReqDto::fromEntity)
+                            .collect(Collectors.toList());
+        
+        }
+    @Override
     public EmpSuggestionReqDto updateEmpSuggestion(UUID id, EmpSuggestionDto empSuggestionDto) {
         Log.info("Start updateEmpSuggestion in EmpSuggestionServImpl");
         UUID currentUser = getUserUtil.getCurrentUser().getId();
@@ -108,5 +170,5 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
             }
             throw new RuntimeException("EmpSuggestion not found");
         }
+    }
 
-}

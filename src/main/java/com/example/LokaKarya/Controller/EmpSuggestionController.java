@@ -4,6 +4,8 @@ package com.example.LokaKarya.Controller;
 import com.example.LokaKarya.Dto.ManagerDto;
 import com.example.LokaKarya.Dto.EmpSuggestion.EmpSuggestionDto;
 import com.example.LokaKarya.Dto.EmpSuggestion.EmpSuggestionReqDto;
+import com.example.LokaKarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillDto;
+import com.example.LokaKarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillReqDto;
 import com.example.LokaKarya.Services.EmpSuggestionServ;
 import com.example.LokaKarya.util.ServerResponseList;
 import lombok.extern.java.Log;
@@ -43,7 +45,7 @@ public class EmpSuggestionController extends ServerResponseList {
 
     @PutMapping("/save")
     public ResponseEntity<ManagerDto<EmpSuggestionReqDto>> saveEmpSuggestion(@RequestBody EmpSuggestionDto empSuggestionDto) {
-        Log.info("Start saveGroupAchievement in GroupAchievementController");
+        Log.info("Start saveEmpSuggestion in EmpSuggestionController");
         long startTime = System.currentTimeMillis();
 
         ManagerDto<EmpSuggestionReqDto> response = new ManagerDto<>();
@@ -56,6 +58,25 @@ public class EmpSuggestionController extends ServerResponseList {
         response.setInfo(getInfoOk("Success save data", executionTime));
         Log.info("End saveEmpSuggestion in EmpSuggestionController");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
+    }
+
+    @PostMapping("/save-all")
+    public ResponseEntity<ManagerDto<List<EmpSuggestionReqDto>>> createAllEmpSuggestions(@RequestBody List<EmpSuggestionDto> empSuggestions) {
+        Log.info("Start saveAllEmpSuggestions in EmpSuggestionController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<List<EmpSuggestionReqDto>> response = new ManagerDto<>();
+        List<EmpSuggestionReqDto> content = empSuggestionServ.createAllEmpSuggestion(empSuggestions);
+
+        response.setContent(content);
+        response.setTotalRows(content.size());
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success save all data", executionTime));
+
+        Log.info("End saveAllEmpSuggestions in EmpSuggestionController");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/get/{id}")
@@ -107,6 +128,44 @@ public class EmpSuggestionController extends ServerResponseList {
         response.setInfo(getInfoOk("Success delete data", executionTime));
         Log.info("End deleteEmpSuggestion in EmpSuggestionController");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<ManagerDto<List<EmpSuggestionReqDto>>> getEmpSuggestionsByUserId(@PathVariable UUID userId) {
+        Log.info("Start getEmpSuggestionsByUserId in EmpSuggestionController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<List<EmpSuggestionReqDto>> response = new ManagerDto<>();
+        List<EmpSuggestionReqDto> content = empSuggestionServ.getEmpSuggestionByUserId(userId);
+
+        response.setContent(content);
+        response.setTotalRows(content.size());
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+
+        Log.info("End getEmpSuggestionsByUserId in EmpSuggestionController");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{userId}/year/{assessmentYear}")
+    public ResponseEntity<ManagerDto<List<EmpSuggestionReqDto>>> getEmpSuggestionsByUserIdAndYear(
+            @PathVariable UUID userId, 
+            @PathVariable Integer assessmentYear) {
+        Log.info("Start getEmpSuggestionsByUserIdAndYear in EmpSuggestionController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<List<EmpSuggestionReqDto>> response = new ManagerDto<>();
+        List<EmpSuggestionReqDto> content = empSuggestionServ.getEmpSuggestionsByUserIdAndYear(userId, assessmentYear);
+
+        response.setContent(content);
+        response.setTotalRows(content.size());
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+
+        Log.info("End getEmpSuggestionsByUserIdAndYear in EmpSuggestionController");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 

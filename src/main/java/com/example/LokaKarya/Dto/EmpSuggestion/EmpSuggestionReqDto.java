@@ -3,6 +3,7 @@ package com.example.LokaKarya.Dto.EmpSuggestion;
 import com.example.LokaKarya.Dto.EmpSuggestion.EmpSuggestionDto;
 import com.example.LokaKarya.Dto.EmpSuggestion.EmpSuggestionReqDto;
 import com.example.LokaKarya.Entity.EmpSuggestion;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.*;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Data
 @ToString
 public class EmpSuggestionReqDto {
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonProperty("user_id")
     private UUID userId;
     @JsonProperty("suggestion")
