@@ -16,5 +16,6 @@ public interface EmpAchievementSkillServ {
     Boolean deleteEmpAchievementSkill(UUID id);
 
     List<EmpAchievementSkillReqDto> getAllEmpAchievementSkillByUser(UUID id);
+    List<EmpAchievementSkillReqDto> getAllEmpAchievementSkillByUserAndYear(UUID id, Integer year);
 }
 

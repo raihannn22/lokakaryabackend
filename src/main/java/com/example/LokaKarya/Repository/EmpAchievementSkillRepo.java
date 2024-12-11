@@ -11,4 +11,5 @@ import com.example.LokaKarya.Entity.EmpAchievementSkill;
 @Repository
 public interface EmpAchievementSkillRepo extends JpaRepository<EmpAchievementSkill, UUID> {
  List<EmpAchievementSkill> findByUserId(UUID userId);
+ List<EmpAchievementSkill> findByUserIdAndAssessmentYear(UUID userId, Integer assessmentYear);
 }
