@@ -1,11 +1,10 @@
 package com.example.LokaKarya.Services.Impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +36,9 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
 
     @Autowired
     GetUserUtil getUserUtil;
+
+    @Autowired
+    EntityManager entityManager;
 
     @Override
     public List<EmpSuggestionReqDto> getAllEmpSuggestion() {
@@ -117,17 +119,23 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
         Log.info("End getEmpSuggestionByUserIdAndYear in EmpSuggestionServImpl");
         return empSuggestionDtos;
     }
+
+        @Transactional
         @Override
         public List<EmpSuggestionReqDto> createAllEmpSuggestion(List<EmpSuggestionDto> empSuggestionDtos) {
             List<EmpSuggestion> empSuggestions = empSuggestionDtos.stream().map(empSuggestionDto -> {
 
                 Optional<User> userOpt = userRepo.findById(empSuggestionDto.getUserId());
                 UUID currentUser = getUserUtil.getCurrentUser().getId();
+                Integer currentYear = Calendar.getInstance().get(Calendar.YEAR);
 
                 if (userOpt.isEmpty()) {
                         throw new RuntimeException("Suggestion not found with ID: " + empSuggestionDto.getUserId());
                 }
 
+                empSuggestionRepo.deleteByAssessmentYearAndUserId( currentYear, currentUser);
+
+                entityManager.flush();
                 return empSuggestionDto.toEntity(
                     empSuggestionDto,
                     userOpt.get(), 

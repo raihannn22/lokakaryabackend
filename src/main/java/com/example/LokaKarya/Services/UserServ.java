@@ -15,5 +15,5 @@ public interface UserServ {
     UserDto createUser(UserReqDto userDto);
     UserDto updateUser(UUID id, UserReqUpdateDto userDto);
     Boolean deleteUser(UUID id);
-    UserDto resetPassword(UUID id, UserResetPassDto userDto);
+    String resetPassword(UUID id, UserResetPassDto userDto);
 }

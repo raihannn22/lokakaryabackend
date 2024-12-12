@@ -15,4 +15,6 @@ public interface EmpSuggestionRepo extends JpaRepository<EmpSuggestion, UUID> {
     List<EmpSuggestion> findByUserId(UUID userId);
     List<EmpSuggestion> findByUserIdAndAssessmentYear(UUID userId, Integer assessmentYear);
 
+    void deleteByAssessmentYearAndUserId(Integer assessmentYear, UUID id);
+
 }
