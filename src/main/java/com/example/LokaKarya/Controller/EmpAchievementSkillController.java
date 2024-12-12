@@ -162,6 +162,23 @@ public class EmpAchievementSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
+    @GetMapping("/get/year/{year}")
+    public ResponseEntity<ManagerDto<List<EmpAchievementSkillReqDto>>>  getEmpAchievementSkillByYear(@PathVariable("year") Integer year) {
+        Log.info("Start getEmpAchievementSkillByYear in EmpAchievementSkillController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<List<EmpAchievementSkillReqDto>> response = new ManagerDto<>();
+        List<EmpAchievementSkillReqDto> content = empAchievementSkillServ.getEmpAchievementSkillByYear(year);
+
+        response.setContent(content);
+        response.setTotalRows(content.size());
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+        Log.info("End getEmpAchievementSkillByYear in EmpAchievementSkillController");
+        return new ResponseEntity<>(response, HttpStatus.OK) ;
+    }
+
 
 
 }
