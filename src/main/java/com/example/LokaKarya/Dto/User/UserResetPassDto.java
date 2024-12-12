@@ -1,6 +1,7 @@
 package com.example.LokaKarya.Dto.User;
 
 import com.example.LokaKarya.Entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.data.annotation.ReadOnlyProperty;
@@ -17,6 +18,7 @@ public class UserResetPassDto {
 
     @ReadOnlyProperty
     @JsonIgnoreProperties
+    @JsonIgnore
     private String password = "ogya123";
 
     public static User toEntity(UserResetPassDto userDto, UUID createdBy, Date createdAt , UUID updatedBy, Date updatedAt) {
