@@ -177,4 +177,17 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
         Log.info("End getAllEmpAchievementSkill in EmpAchievementSkillServImpl");
         return empAchievementSkillReqDto;
     }
+
+    @Override
+    public List<EmpAchievementSkillReqDto> getEmpAchievementSkillByYear(Integer year) {
+        Log.info("Start getEmpAchievementSkillByYear in EmpAchievementSkillServImpl");
+        List<EmpAchievementSkill> response = empAchievementSkillRepo.findByAssessmentYear(year);
+        List<EmpAchievementSkillReqDto> empAchievementSkillReqDto = new ArrayList<>();
+
+        for (EmpAchievementSkill empAchievementSkill : response) {
+            empAchievementSkillReqDto.add(EmpAchievementSkillReqDto.fromEntity(empAchievementSkill));
+        }
+        Log.info("End getEmpAchievementSkillByYear in EmpAchievementSkillServImpl");
+        return empAchievementSkillReqDto;
+    }
 }

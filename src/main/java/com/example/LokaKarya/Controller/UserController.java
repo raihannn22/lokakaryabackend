@@ -115,11 +115,11 @@ public class UserController extends ServerResponseList {
     }
 
     @PatchMapping("/reset-password/{id}")
-    public ResponseEntity<ManagerDto<UserDto>>  resetPassword(@PathVariable("id") UUID id, @RequestBody UserResetPassDto userDto) {
+    public ResponseEntity<ManagerDto<String>>  resetPassword(@PathVariable("id") UUID id, @RequestBody UserResetPassDto userDto) {
         Log.info("Start resetPassword in UserController");
         long startTime = System.currentTimeMillis();
-        ManagerDto<UserDto> response = new ManagerDto<>();
-        UserDto content = userServ.resetPassword(id, userDto);
+        ManagerDto<String> response = new ManagerDto<>();
+        String content = userServ.resetPassword(id, userDto);
         response.setContent(content);
         response.setTotalRows(1);
         long endTime = System.currentTimeMillis();

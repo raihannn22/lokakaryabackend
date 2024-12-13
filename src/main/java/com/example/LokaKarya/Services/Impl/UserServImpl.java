@@ -9,6 +9,7 @@ import java.util.UUID;
 import com.example.LokaKarya.Dto.User.UserReqUpdateDto;
 import com.example.LokaKarya.Dto.User.UserResetPassDto;
 import jakarta.persistence.EntityManager;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -195,15 +196,16 @@ public class UserServImpl implements UserServ {
     }
 
     @Override
-    public UserDto resetPassword(UUID id, UserResetPassDto userDto) {
+    public String resetPassword(UUID id, UserResetPassDto userDto) {
         UUID currentUserId = getUserUtil.getCurrentUser().getId();
+        String genPassword = RandomStringUtils.randomAlphanumeric(8);
         User findUser = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User  not found"));
-        findUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        findUser.setPassword(passwordEncoder.encode(genPassword));
         findUser.setUpdatedAt(new java.util.Date());
         findUser.setUpdatedBy(currentUserId);
 //
         findUser = userRepo.save(findUser);
-        return UserDto.fromEntity(findUser);
+        return genPassword;
     }
 
     private void updateUserFields(User existingUser, UserReqDto userDto) {
