@@ -3,6 +3,7 @@ package com.example.LokaKarya.Controller;
 
 import com.example.LokaKarya.Dto.AssessmentSummary.AssessmentSummaryDto;
 import com.example.LokaKarya.Dto.AssessmentSummary.AssessmentSummaryReqDto;
+import com.example.LokaKarya.Dto.AssessmentSummary.TotalScoreDto;
 import com.example.LokaKarya.Dto.ManagerDto;
 import com.example.LokaKarya.Dto.User.UserDto;
 import com.example.LokaKarya.Services.AssessmentSummaryServ;
@@ -111,5 +112,11 @@ public class AssessmentSummaryController extends ServerResponseList {
         response.setInfo(getInfoOk("Success delete data", executionTime));
         Log.info("End deleteAssessmentSummary in AssessmentSummaryController");
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/total/{year}")
+    public ResponseEntity<List<TotalScoreDto>> getTotalScoresForAllUsers(@PathVariable("year") int year) {
+        List<TotalScoreDto> totalScores = assessmentSummaryServ.calculateTotalScoresForAllUsers(year);
+        return ResponseEntity.ok(totalScores);
     }
 }

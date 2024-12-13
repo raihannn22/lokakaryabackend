@@ -1,12 +1,11 @@
 package com.example.LokaKarya.Services.Impl;
 
+import com.example.LokaKarya.Dto.AssessmentSummary.TotalScoreDto;
+import com.example.LokaKarya.Entity.*;
+import com.example.LokaKarya.Repository.*;
 import com.example.LokaKarya.util.GetUserUtil;
 import com.example.LokaKarya.Dto.AssessmentSummary.AssessmentSummaryDto;
 import com.example.LokaKarya.Dto.AssessmentSummary.AssessmentSummaryReqDto;
-import com.example.LokaKarya.Entity.AssessmentSummary;
-import com.example.LokaKarya.Entity.User;
-import com.example.LokaKarya.Repository.AssessmentSummaryRepo;
-import com.example.LokaKarya.Repository.UserRepo;
 import com.example.LokaKarya.Services.AssessmentSummaryServ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
@@ -24,6 +24,12 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
 
     @Autowired
     UserRepo userRepo;
+
+    @Autowired
+    EmpAchievementSkillRepo achievementRepo;
+
+    @Autowired
+    EmpAttitudeSkillRepo attitudeSkillRepo;
 
     @Autowired
     GetUserUtil getUserUtil;
@@ -79,5 +85,66 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
             return true;
         }
         throw new RuntimeException("AssessmentSummary not found");
+    }
+
+    @Override
+    public List<TotalScoreDto> calculateTotalScoresForAllUsers(int year) {
+        List<User> users = userRepo.findAll();
+
+        List<TotalScoreDto> userScores = new ArrayList<>();
+        for (User user : users) {
+            // Ambil data attitude skill dan achievement untuk user ini
+            List<EmpAttitudeSkill> attitudeSkills = attitudeSkillRepo.findByUserIdAndAssessmentYear(user.getId(), year);
+            List<EmpAchievementSkill> achievements = achievementRepo.findByUserIdAndAssessmentYear(user.getId(),year);
+
+            // Hitung total score untuk user ini
+            double totalScore = calculateUserTotalScore(attitudeSkills, achievements);
+
+            // Tambahkan hasil ke response
+            userScores.add(new TotalScoreDto(user.getId(), user.getUsername(), totalScore));
+        }
+        return userScores;
+    }
+
+    private double calculateUserTotalScore(List<EmpAttitudeSkill> attitudeSkills, List<EmpAchievementSkill> achievements) {
+        double score = 0.0;
+
+        // Hitung score dari attitude skills
+        Map<GroupAttitudeSkill, List<EmpAttitudeSkill>> groupedAttitudes = attitudeSkills.stream()
+                .collect(Collectors.groupingBy(skill -> skill.getAttitudeSkill().getGroupAttitudeSkill()));
+
+        for (Map.Entry<GroupAttitudeSkill, List<EmpAttitudeSkill>> entry : groupedAttitudes.entrySet()) {
+            GroupAttitudeSkill group = entry.getKey();
+            List<EmpAttitudeSkill> skillsInGroup = entry.getValue();
+
+            // Hitung rata-rata score dalam grup
+            double groupAverageScore = skillsInGroup.stream()
+                    .mapToDouble(EmpAttitudeSkill::getScore)
+                    .average()
+                    .orElse(0.0);
+
+            // Kalikan rata-rata score dengan persen grupnya
+            score += groupAverageScore * (group.getPercentage() / 100.0);
+        }
+
+        // Hitung score dari achievements
+        Map<GroupAchievement, List<EmpAchievementSkill>> groupedAchievements = achievements.stream()
+                .collect(Collectors.groupingBy(achievement -> achievement.getAchievement().getGroupAchievement()));
+
+        for (Map.Entry<GroupAchievement, List<EmpAchievementSkill>> entry : groupedAchievements.entrySet()) {
+            GroupAchievement group = entry.getKey();
+            List<EmpAchievementSkill> achievementsInGroup = entry.getValue();
+
+            // Hitung rata-rata score dalam grup
+            double groupAverageScore = achievementsInGroup.stream()
+                    .mapToDouble(EmpAchievementSkill::getScore)
+                    .average()
+                    .orElse(0.0);
+
+            // Kalikan rata-rata score dengan persen grupnya
+            score += groupAverageScore * (group.getPercentage() / 100.0);
+        }
+
+        return score;
     }
 }
