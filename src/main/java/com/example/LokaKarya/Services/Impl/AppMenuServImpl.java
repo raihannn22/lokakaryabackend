@@ -82,6 +82,20 @@ public class AppMenuServImpl implements AppMenuServ {
         return appMenuByUserDto;
     }
 
+    @Override
+    public List<AppMenuByUserDto> getAllAppMenuByUsername(String username) {
+        List<Object[]> menuList = appMenuRepo.getAppMenuByUsername(username);
+        List<AppMenuByUserDto> appMenuByUserDto = new ArrayList<>();
+        for (Object[] e : menuList) {
+            AppMenuByUserDto appMenuByUserDto1 = new AppMenuByUserDto();
+            appMenuByUserDto1.setId(bytesToUUID((byte[]) e[0]));
+            appMenuByUserDto1.setMenuName((String) e[1]);
+            appMenuByUserDto1.setRoleName((String) e[2]);
+            appMenuByUserDto.add(appMenuByUserDto1);
+        }
+        return appMenuByUserDto;
+    }
+
     private UUID bytesToUUID(byte[] bytes) {
         ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
         long high = byteBuffer.getLong();
