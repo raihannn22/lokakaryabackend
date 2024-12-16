@@ -11,4 +11,6 @@ import com.example.LokaKarya.Entity.EmpTechnicalSkill;
 @Repository
 public interface EmpTechnicalSkillRepo extends JpaRepository<EmpTechnicalSkill, UUID> {
     List<EmpTechnicalSkill> findByUserId(UUID userId);
+    List<EmpTechnicalSkill> findByUserIdAndAssessmentYear(UUID userId, Integer assessmentYear);
+
 }
