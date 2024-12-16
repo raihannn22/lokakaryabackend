@@ -105,4 +105,17 @@ public class AppMenuController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/get/byUsername/{username}")
+    public ResponseEntity<ManagerDto<List<AppMenuByUserDto>>> getAppMenuByUsername(@PathVariable("username") String username) {
+        Log.info("Start getAppMenuByUserId in AppMenuController");
+        long startTime = System.currentTimeMillis();
+        ManagerDto<List<AppMenuByUserDto>> response = new ManagerDto<>();
+        List<AppMenuByUserDto> content = appMenuServ.getAllAppMenuByUsername(username);
+        response.setContent(content);
+        long endTime = System.currentTimeMillis();
+        response.setInfo(getInfoOk("Success Get data", endTime - startTime));
+        Log.info("End getAppMenuByUserId in AppMenuController, time: " + (endTime - startTime) + "ms");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }

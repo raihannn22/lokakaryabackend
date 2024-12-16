@@ -16,4 +16,5 @@ public interface AppMenuServ {
     Boolean deleteAppMenu(UUID id);
 
     List<AppMenuByUserDto> getAllAppMenuByUser(UUID id);
+    List<AppMenuByUserDto> getAllAppMenuByUsername(String username);
 }

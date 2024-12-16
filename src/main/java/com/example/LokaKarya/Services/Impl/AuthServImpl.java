@@ -33,7 +33,7 @@ public class AuthServImpl implements AuthServ {
 
     @Override
     public LoginResponseDto login(LoginDto data) {
-        User user = userRepo.findByEmail(data.getEmail());
+        User user = userRepo.findByEmailOrUsername(data.getEmail(), data.getEmail());
         if (user == null) {
             throw new RuntimeException("User not found");
         }
