@@ -11,8 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.LokaKarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillReqDto;
 import com.example.LokaKarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillDto;
 import com.example.LokaKarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillReqDto;
+import com.example.LokaKarya.Entity.EmpAttitudeSkill;
 import com.example.LokaKarya.Entity.EmpTechnicalSkill;
 import com.example.LokaKarya.Entity.TechnicalSkill;
 import com.example.LokaKarya.Entity.User;
@@ -110,6 +112,22 @@ public class EmpTechnicalSkillServImpl implements EmpTechnicalSkillServ {
         Log.info("End getEmpTechnicalSkillByUserId in EmpTechnicalSkillServImpl");
         return empTechnicalSkillDtos;
     }
+
+        @Override
+        public List<EmpTechnicalSkillReqDto> getEmpTechnicalSkillsByUserIdAndYear(UUID userId, Integer assessmentYear) {
+            Log.info("Start getEmpTechnicalSkillByUserIdAndYear in EmpTechnicalSkillServImpl");
+
+            // Ambil semua data berdasarkan userId
+            List<EmpTechnicalSkill> empTechnicalSkillList = empTechnicalSkillRepo.findByUserIdAndAssessmentYear(userId, assessmentYear);
+
+            // Konversi ke DTO
+            List<EmpTechnicalSkillReqDto> empTechnicalSkillDtos = empTechnicalSkillList.stream()
+                .map(EmpTechnicalSkillReqDto::fromEntity)
+                .collect(Collectors.toList());
+
+            Log.info("End getEmpTechnicalSkillByUserIdAndYear in EmpTechnicalSkillServImpl");
+            return empTechnicalSkillDtos;
+        }
         @Override
         public List<EmpTechnicalSkillReqDto> createAllEmpTechnicalSkill(List<EmpTechnicalSkillDto> empTechnicalSkillDtos) {
             List<EmpTechnicalSkill> empTechnicalSkills = empTechnicalSkillDtos.stream().map(empTechnicalSkillDto -> {

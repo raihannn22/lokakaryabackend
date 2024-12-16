@@ -11,7 +11,6 @@ import com.example.LokaKarya.Entity.EmpAttitudeSkill;
 @Repository
 public interface EmpAttitudeSkillRepo extends JpaRepository<EmpAttitudeSkill, UUID> {
     List<EmpAttitudeSkill> findByUserId(UUID userId);
-    // List<EmpAttitudeSkill> findByUserIdandAssesmentYear(UUID userId, Integer assessmentYear);
     List<EmpAttitudeSkill> findByUserIdAndAssessmentYear(UUID userId, Integer assessmentYear);
     List<EmpAttitudeSkill> findByAssessmentYear(Integer assessmentYear);
 

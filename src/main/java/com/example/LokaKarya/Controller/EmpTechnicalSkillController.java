@@ -123,16 +123,35 @@ public class EmpTechnicalSkillController extends ServerResponseList {
     
     
     
-}
 
+
+@GetMapping("/user/{userId}/year/{assessmentYear}")
+    public ResponseEntity<ManagerDto<List<EmpTechnicalSkillReqDto>>> getEmpTechnicalSkillsByUserIdAndYear(
+            @PathVariable UUID userId, 
+            @PathVariable Integer assessmentYear) {
+        Log.info("Start getEmpTechnicalSkillsByUserIdAndYear in EmpTechnicalSkillController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<List<EmpTechnicalSkillReqDto>> response = new ManagerDto<>();
+        List<EmpTechnicalSkillReqDto> content = empTechnicalSkillServ.getEmpTechnicalSkillsByUserIdAndYear(userId, assessmentYear);
+
+        response.setContent(content);
+        response.setTotalRows(content.size());
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+
+        Log.info("End getEmpTechnicalSkillsByUserIdAndYear in EmpTechnicalSkillController");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+}
 // @PatchMapping("/update/{id}")
 // public ResponseEntity<ManagerDto<EmpTechnicalSkillReqDto>>  updateEmpTechnicalSkill(@PathVariable("id") UUID id, @RequestBody EmpTechnicalSkillDto empTechnicalSkillDto) {
 //     Log.info("Start updateEmpTechnicalSkill in EmpTechnicalSkillController");
 //     long startTime = System.currentTimeMillis();
-
 //     ManagerDto<EmpTechnicalSkillReqDto> response = new ManagerDto<>();
 //     EmpTechnicalSkillReqDto content = empTechnicalSkillServ.updateEmpTechnicalSkill(id, empTechnicalSkillDto);
-
 //     response.setContent(content);
 //     response.setTotalRows(1);
 //     long endTime = System.currentTimeMillis();
@@ -146,10 +165,8 @@ public class EmpTechnicalSkillController extends ServerResponseList {
 // public ResponseEntity<ManagerDto<Boolean>> deleteEmpTechnicalSkill(@PathVariable("id") UUID id) {
 //     Log.info("Start deleteEmpTechnicalSkill in EmpTechnicalSkillController");
 //     long startTime = System.currentTimeMillis();
-
 //     ManagerDto<Boolean> response = new ManagerDto<>();
 //     Boolean content = empTechnicalSkillServ.deleteEmpTechnicalSkill(id);
-
 //     response.setContent(content);
 //     response.setTotalRows(1);
 //     long endTime = System.currentTimeMillis();
