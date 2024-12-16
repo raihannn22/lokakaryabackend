@@ -36,11 +36,13 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
 
     @Override
     public List<AssessmentSummaryReqDto> getAllAssessmentSummary() {
+        Log.info("Start getAllAssessmentSummary in AssessmentSummaryServImpl");
         List<AssessmentSummary> response = assessmentSummaryRepo.findAll();
         List<AssessmentSummaryReqDto> assessmentSummaryReqDto = new ArrayList<>();
         for (AssessmentSummary assessmentSummary : response) {
             assessmentSummaryReqDto.add(AssessmentSummaryReqDto.fromEntity(assessmentSummary));
         }
+        Log.info("End getAllAssessmentSummary in AssessmentSummaryServImpl");
         return assessmentSummaryReqDto;
     }
 
@@ -54,11 +56,13 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
 
     @Override
     public AssessmentSummaryReqDto createAssessmentSummary(AssessmentSummaryDto assessmentSummaryDto) {
+        Log.info("Start createAssessmentSummary in AssessmentSummaryServImpl");
         UUID currentUserEntity = getUserUtil.getCurrentUser().getId();
         Optional<User> user = userRepo.findById(assessmentSummaryDto.getUserId());
         if (user.isPresent()) {
             AssessmentSummary assessmentSummary = assessmentSummaryDto.toEntity(assessmentSummaryDto, user.get(), null, null, currentUserEntity, new java.util.Date());
             assessmentSummaryRepo.save(assessmentSummary);
+            Log.info("End createAssessmentSummary in AssessmentSummaryServImpl");
             return AssessmentSummaryReqDto.fromEntity(assessmentSummaryRepo.save(assessmentSummary));
         }else {
             throw new RuntimeException("User not found");
@@ -89,6 +93,7 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
 
     @Override
     public List<TotalScoreDto> calculateTotalScoresForAllUsers(int year) {
+        Log.info("Start calculateTotalScoresForAllUsers in AssessmentSummaryServImpl");
         List<User> users = userRepo.findAll();
 
         List<TotalScoreDto> userScores = new ArrayList<>();
@@ -103,10 +108,12 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
             // Tambahkan hasil ke response
             userScores.add(new TotalScoreDto(user.getId(), user.getUsername(), totalScore));
         }
+        Log.info("End calculateTotalScoresForAllUsers in AssessmentSummaryServImpl");
         return userScores;
     }
 
     private double calculateUserTotalScore(List<EmpAttitudeSkill> attitudeSkills, List<EmpAchievementSkill> achievements) {
+        Log.info("Start calculateUserTotalScore in AssessmentSummaryServImpl");
         double score = 0.0;
 
         // Hitung score dari attitude skills
@@ -144,7 +151,7 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
             // Kalikan rata-rata score dengan persen grupnya
             score += groupAverageScore * (group.getPercentage() / 100.0);
         }
-
+        Log.info("End calculateUserTotalScore in AssessmentSummaryServImpl");
         return score;
     }
 }

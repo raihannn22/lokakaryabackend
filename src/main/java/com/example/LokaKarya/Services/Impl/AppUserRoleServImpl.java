@@ -25,6 +25,7 @@ public class AppUserRoleServImpl implements AppUserRoleServ {
 
     @Override
     public List<AppUserRoleReqDto> getAllAppUserRoleMenu() {
+        Log.info("Start getAllAppUserRoleMenu in AppUserRoleServImpl");
         List<AppUserRole> response = appUserRoleRepo.findAll();
         List<AppUserRoleReqDto> appUserRoleReqDto = new ArrayList<>();
         for (AppUserRole appUserRole : response) {
@@ -32,12 +33,15 @@ public class AppUserRoleServImpl implements AppUserRoleServ {
             Hibernate.initialize(appUserRole.getUser());
             appUserRoleReqDto.add(AppUserRoleReqDto.fromEntity(appUserRole));
         }
+        Log.info("End getAllAppUserRoleMenu in AppUserRoleServImpl");
         return appUserRoleReqDto;
     }
 
     @Override
     public AppUserRoleReqDto getAppUserRoleById(UUID id) {
+        Log.info("Start getAppUserRoleById in AppUserRoleServImpl");
         AppUserRole appUserRole = appUserRoleRepo.findById(id).orElseThrow(() -> new RuntimeException("AppUserRole not found"));
+        Log.info("End getAppUserRoleById in AppUserRoleServImpl");
         return AppUserRoleReqDto.fromEntity(appUserRole);
     }
 }
