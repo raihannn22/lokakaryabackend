@@ -39,23 +39,28 @@ public class AppRoleMenuServImpl implements AppRoleMenuServ {
 
     @Override
     public List<AppRoleMenuReqDto> getAllAppRoleMenu() {
+        Log.info("Start getAllAppRoleMenu in AppRoleMenuServImpl");
         List<AppRoleMenu> response = appRoleMenuRepo.findAll();
         List<AppRoleMenuReqDto> appRoleMenuReqDto = new ArrayList<>();
         for (AppRoleMenu appRoleMenu : response) {
             appRoleMenuReqDto.add(AppRoleMenuReqDto.fromEntity(appRoleMenu));
         }
+        Log.info("End getAllAppRoleMenu in AppRoleMenuServImpl");
         return appRoleMenuReqDto;
     }
 
     @Override
     public AppRoleMenuReqDto getAppRoleMenuById(UUID id) {
+        Log.info("Start getAppRoleMenuById in AppRoleMenuServImpl");
         AppRoleMenu appRoleMenu = appRoleMenuRepo.findById(id).orElseThrow(() -> new RuntimeException("AppRoleMenu not found"));
+        Log.info("End getAppRoleMenuById in AppRoleMenuServImpl");
         return AppRoleMenuReqDto.fromEntity(appRoleMenu);
     }
 
     @Transactional
     @Override
     public void createAppRoleMenu(Map<UUID, List<UUID>> appRoleMenuDto) {
+        Log.info("Start createAppRoleMenu in AppRoleMenuServImpl");
         appRoleMenuRepo.deleteAll();
         entityManager.flush();
         for (Map.Entry<UUID, List<UUID>> entry : appRoleMenuDto.entrySet()) {
@@ -65,6 +70,7 @@ public class AppRoleMenuServImpl implements AppRoleMenuServ {
                 AppRoleMenu appRoleMenu = new AppRoleMenu();
                 appRoleMenu.setAppMenu(appMenu);
                 appRoleMenu.setAppRole(appRole);
+                Log.info("End createAppRoleMenu in AppRoleMenuServImpl");
                 appRoleMenuRepo.save(appRoleMenu);
             }
         }

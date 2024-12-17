@@ -28,41 +28,51 @@ public class DevPlanServImpl implements DevPlanServ {
 
     @Override
     public List<DevPlanReqDto> getAllDevPlan() {
+        Log.info("Start getAllDevPlan in DevPlanServImpl");
         List<DevPlan> response = devPlanRepo.findAll();
         List<DevPlanReqDto> devPlanReqDto = new ArrayList<>();
         for (DevPlan devPlan : response) {
             devPlanReqDto.add(DevPlanReqDto.fromEntity(devPlan));
         }
+        Log.info("End getAllDevPlan in DevPlanServImpl");
         return devPlanReqDto;
     }
 
     @Override
     public DevPlanReqDto getDevPlanById(UUID id) {
+        Log.info("Start getDevPlanById in DevPlanServImpl");
         DevPlan devPlan = devPlanRepo.findById(id).orElseThrow(()-> new RuntimeException("DevPlan not found"));
+        Log.info("End getDevPlanById in DevPlanServImpl");
         return DevPlanReqDto.fromEntity(devPlan);
     }
 
     @Override
     public DevPlanReqDto createDevPlan(DevPlanDto devPlanDto) {
+        Log.info("Start createDevPlan in DevPlanServImpl");
         UUID currentUserId = getUserUtil.getCurrentUser().getId();
         DevPlan devPlan = devPlanDto.toEntity(devPlanDto,  currentUserId, new java.util.Date() , null, null);
         devPlanRepo.save(devPlan);
+        Log.info("End createDevPlan in DevPlanServImpl");
         return DevPlanReqDto.fromEntity(devPlan);
     }
 
     @Override
     public DevPlanReqDto updateDevPlan(UUID id, DevPlanDto devPlanDto) {
+        Log.info("Start updateDevPlan in DevPlanServImpl");
         UUID currentUserId = getUserUtil.getCurrentUser().getId();
         DevPlan devPlan = devPlanRepo.findById(id).orElseThrow(()-> new RuntimeException("DevPlan not found"));
         DevPlan devPlan1 = devPlanDto.toEntity(devPlanDto, devPlan.getCreatedBy(), devPlan.getCreatedAt() , currentUserId, new Date());
         devPlan1.setId(id);
+        Log.info("End updateDevPlan in DevPlanServImpl");
         return DevPlanReqDto.fromEntity(devPlanRepo.save(devPlan1));
     }
 
     @Override
     public Boolean deleteDevPlan(UUID id) {
+        Log.info("Start deleteDevPlan in DevPlanServImpl");
         if(!devPlanRepo.existsById(id)) throw new RuntimeException("DevPlan not found");
         devPlanRepo.deleteById(id);
+        Log.info("End deleteDevPlan in DevPlanServImpl");
         return true;
     }
 }

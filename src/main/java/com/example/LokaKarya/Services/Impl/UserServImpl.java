@@ -187,53 +187,54 @@ public class UserServImpl implements UserServ {
     @Override
     @Transactional
     public Boolean deleteUser(UUID id) {
-//        Log.info("Start deleteUser in UserServImpl");
+        Log.info("Start deleteUser in UserServImpl");
         User findUser = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User  not found"));
         appUserRoleRepo.deleteByUserId(id);
         userRepo.delete(findUser);
-//        Log.info("End deleteUser in UserServImpl");
+        Log.info("End deleteUser in UserServImpl");
         return true;
     }
 
     @Override
     public String resetPassword(UUID id, UserResetPassDto userDto) {
+        Log.info("Start resetPassword in UserServImpl");
         UUID currentUserId = getUserUtil.getCurrentUser().getId();
         String genPassword = RandomStringUtils.randomAlphanumeric(8);
         User findUser = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User  not found"));
         findUser.setPassword(passwordEncoder.encode(genPassword));
         findUser.setUpdatedAt(new java.util.Date());
         findUser.setUpdatedBy(currentUserId);
-//
         findUser = userRepo.save(findUser);
+        Log.info("End resetPassword in UserServImpl");
         return genPassword;
     }
 
-    private void updateUserFields(User existingUser, UserReqDto userDto) {
-        if (userDto.getUsername() != null) {
-            existingUser.setUsername(userDto.getUsername());
-        }
-        if (userDto.getFullName() != null) {
-            existingUser.setFullName(userDto.getFullName());
-        }
-        if (userDto.getPosition() != null) {
-            existingUser.setPosition(userDto.getPosition());
-        }
-        if (userDto.getEmailAddress() != null) {
-            existingUser.setEmail(userDto.getEmailAddress());
-        }
-        if (userDto.getEmployeeStatus() != null) {
-            existingUser.setEmployeeStatus(userDto.getEmployeeStatus());
-        }
-        if (userDto.getJoinDate() != null) {
-            existingUser.setJoinDate(Date.valueOf(userDto.getJoinDate().toLocalDate()));
-        }
-        if (userDto.getEnabled() != null) {
-            existingUser.setEnabled(userDto.getEnabled());
-        }
-        if (userDto.getPassword() != null) {
-            existingUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        }
-    }
+//    private void updateUserFields(User existingUser, UserReqDto userDto) {
+//        if (userDto.getUsername() != null) {
+//            existingUser.setUsername(userDto.getUsername());
+//        }
+//        if (userDto.getFullName() != null) {
+//            existingUser.setFullName(userDto.getFullName());
+//        }
+//        if (userDto.getPosition() != null) {
+//            existingUser.setPosition(userDto.getPosition());
+//        }
+//        if (userDto.getEmailAddress() != null) {
+//            existingUser.setEmail(userDto.getEmailAddress());
+//        }
+//        if (userDto.getEmployeeStatus() != null) {
+//            existingUser.setEmployeeStatus(userDto.getEmployeeStatus());
+//        }
+//        if (userDto.getJoinDate() != null) {
+//            existingUser.setJoinDate(Date.valueOf(userDto.getJoinDate().toLocalDate()));
+//        }
+//        if (userDto.getEnabled() != null) {
+//            existingUser.setEnabled(userDto.getEnabled());
+//        }
+//        if (userDto.getPassword() != null) {
+//            existingUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+//        }
+//    }
 
     private void updateUserFields2(User existingUser, UserReqUpdateDto userDto) {
         if (userDto.getUsername() != null) {

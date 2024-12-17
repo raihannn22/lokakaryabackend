@@ -9,6 +9,9 @@ import com.example.LokaKarya.Repository.UserRepo;
 import com.example.LokaKarya.Services.AuthServ;
 import com.example.LokaKarya.util.GetUserUtil;
 import com.example.LokaKarya.util.JwtUtil;
+import lombok.extern.java.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,9 +33,12 @@ public class AuthServImpl implements AuthServ {
     @Autowired
     private GetUserUtil getUserUtil;
 
+    private static final Logger Log = LoggerFactory.getLogger(AuthServImpl.class);
+
 
     @Override
     public LoginResponseDto login(LoginDto data) {
+        Log.info("Start login in AuthServImpl");
         User user = userRepo.findByEmailOrUsername(data.getEmail(), data.getEmail());
         if (user == null) {
             throw new RuntimeException("User not found");
@@ -41,13 +47,12 @@ public class AuthServImpl implements AuthServ {
         if (!passwordEncoder.matches(data.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
-
         String token = jwtUtil.generateToken(user);
-
         // Konversi User ke UserDto
         UserDto userDto = UserDto.fromEntity(user);
-
         // Buat LoginResponseDto dan kembalikan
+
+        Log.info("End login in AuthServImpl");
         return   LoginResponseDto.builder()
                 .user(userDto)
                 .token(token)
@@ -55,7 +60,7 @@ public class AuthServImpl implements AuthServ {
     }
 
     public UserDto changePassword(ChangePassDto data){
-
+        Log.info("Start changePassword in AuthServImpl");
         UUID currentUser = getUserUtil.getCurrentUser().getId();
         Optional<User> user = userRepo.findById(currentUser);
         if (!passwordEncoder.matches(data.getCurrentPassword(), user.get().getPassword())) {
@@ -70,7 +75,7 @@ public class AuthServImpl implements AuthServ {
         user.get().setUpdatedBy(currentUser);
 
         userRepo.save(user.get());
-
+        Log.info("End changePassword in AuthServImpl");
         return UserDto.fromEntity(user.get());
     }
 }

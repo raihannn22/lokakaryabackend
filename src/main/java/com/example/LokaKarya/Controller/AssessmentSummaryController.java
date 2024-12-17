@@ -116,7 +116,9 @@ public class AssessmentSummaryController extends ServerResponseList {
 
     @GetMapping("/total/{year}")
     public ResponseEntity<List<TotalScoreDto>> getTotalScoresForAllUsers(@PathVariable("year") int year) {
+        Log.info("Start getTotalScoresForAllUsers in AssessmentSummaryController");
         List<TotalScoreDto> totalScores = assessmentSummaryServ.calculateTotalScoresForAllUsers(year);
+        Log.info("End getTotalScoresForAllUsers in AssessmentSummaryController");
         return ResponseEntity.ok(totalScores);
     }
 }

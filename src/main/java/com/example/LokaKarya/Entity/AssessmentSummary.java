@@ -42,15 +42,13 @@ public class AssessmentSummary {
     @Column(name = "CREATED_BY", nullable = false)
     private UUID createdBy;
 
-    @Column(name = "CREATED_AT", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Column(name = "CREATED_AT", nullable = false)
     private Date createdAt;
 
     @Column(name = "UPDATED_BY")
     private UUID updatedBy;
 
     @Column(name = "UPDATED_AT")
-    @Temporal(TemporalType.DATE)
     private Date updatedAt;
 
 }

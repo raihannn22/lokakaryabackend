@@ -90,7 +90,6 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
         entityManager.flush();  // Ensure changes are persisted
 
         Log.info("End createEmpDevPlans in EmpDevPlanServImpl");
-
         // Convert and return the result DTOs
         return empDevPlans.stream()
                 .map(EmpDevPlanReqDto::fromEntity)
@@ -124,18 +123,22 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
 
     @Override
     public Boolean deleteEmpDevPlan(UUID id) {
+        Log.info("Start deleteEmpDevPlan in EmpDevPlanServImpl");
         if (!empDevPlanRepo.existsById(id)) throw new RuntimeException("EmpDevPlan not found");
         empDevPlanRepo.deleteById(id);
+        Log.info("End deleteEmpDevPlan in EmpDevPlanServImpl");
         return true;
     }
 
     @Override
     public List<EmpDevPlanReqDto> getByUserIdAndYear(UUID userId, Integer year) {
+        Log.info("Start getByUserIdAndYear in EmpDevPlanServImpl");
         List<EmpDevPlan> response = empDevPlanRepo.findEmpDevPlanByUserIdAndAssessmentYear(userId, year);
         List<EmpDevPlanReqDto> empDevPlanReqDto = new ArrayList<>();
         for (EmpDevPlan empDevPlan : response) {
             empDevPlanReqDto.add(EmpDevPlanReqDto.fromEntity(empDevPlan));
         }
+        Log.info("End getByUserIdAndYear in EmpDevPlanServImpl");
         return empDevPlanReqDto;
     }
 }

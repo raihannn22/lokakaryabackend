@@ -58,18 +58,18 @@ public class UserReqDto {
         return user;
     }
 
-    public static User toEntity2(UserReqDto userDto) {
-        User user = new User();
-        user.setUsername(userDto.getUsername());
-        user.setFullName(userDto.getFullName());
-        user.setPosition(userDto.getPosition());
-        user.setEmail(userDto.getEmailAddress());
-        user.setEmployeeStatus(userDto.getEmployeeStatus());
-        user.setJoinDate(userDto.getJoinDate() != null ? java.sql.Date.valueOf(userDto.getJoinDate().toLocalDate()) : null);
-        user.setEnabled(userDto.getEnabled());
-        user.setPassword(userDto.getPassword());
-        return user;
-    }
+//    public static User toEntity2(UserReqDto userDto) {
+//        User user = new User();
+//        user.setUsername(userDto.getUsername());
+//        user.setFullName(userDto.getFullName());
+//        user.setPosition(userDto.getPosition());
+//        user.setEmail(userDto.getEmailAddress());
+//        user.setEmployeeStatus(userDto.getEmployeeStatus());
+//        user.setJoinDate(userDto.getJoinDate() != null ? java.sql.Date.valueOf(userDto.getJoinDate().toLocalDate()) : null);
+//        user.setEnabled(userDto.getEnabled());
+//        user.setPassword(userDto.getPassword());
+//        return user;
+//    }
 
 //    public static UserReqDto fromEntity(User user) {
 //        UserReqDto userDto = new UserReqDto();
