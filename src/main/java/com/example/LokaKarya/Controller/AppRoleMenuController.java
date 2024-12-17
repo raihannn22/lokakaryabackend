@@ -20,46 +20,46 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/appRoleMenu")
 public class AppRoleMenuController extends ServerResponseList {
-    private Logger Logger = LoggerFactory.getLogger(AppRoleMenuController.class);
+    private Logger Log = LoggerFactory.getLogger(AppRoleMenuController.class);
 
     @Autowired
     private AppRoleMenuServ appRoleMenuServ;
 
     @GetMapping("/get/all")
     public ResponseEntity<ManagerDto<List<AppRoleMenuReqDto>>> getAllAppRoleMenu() {
-        Logger.info("Start getAllAppRoleMenu in AppRoleMenuController");
+        Log.info("Start getAllAppRoleMenu in AppRoleMenuController");
         long startTime = System.currentTimeMillis();
         ManagerDto<List<AppRoleMenuReqDto>> response = new ManagerDto<>();
         List<AppRoleMenuReqDto> content = appRoleMenuServ.getAllAppRoleMenu();
         response.setContent(content);
         long endTime = System.currentTimeMillis();
         response.setInfo(getInfoOk("Success Get data", endTime - startTime));
-        Logger.info("End getAllAppRoleMenu in AppRoleMenuController, time: " + (endTime - startTime) + "ms");
+        Log.info("End getAllAppRoleMenu in AppRoleMenuController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/get/{id}")
     public ResponseEntity<ManagerDto<AppRoleMenuReqDto>> getAppRoleMenuDetail(@PathVariable("id") UUID id) {
-        Logger.info("Start getAppRoleMenuDetail in AppRoleMenuController");
+        Log.info("Start getAppRoleMenuDetail in AppRoleMenuController");
         long startTime = System.currentTimeMillis();
         ManagerDto<AppRoleMenuReqDto> response = new ManagerDto<>();
         AppRoleMenuReqDto content = appRoleMenuServ.getAppRoleMenuById(id);
         response.setContent(content);
         long endTime = System.currentTimeMillis();
         response.setInfo(getInfoOk("Success Get data", endTime - startTime));
-        Logger.info("End getAppRoleMenuDetail in AppRoleMenuController, time: " + (endTime - startTime) + "ms");
+        Log.info("End getAppRoleMenuDetail in AppRoleMenuController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping ("/create")
     public ResponseEntity<ManagerDto<Void>> createAppRoleMenu(@RequestBody Map<UUID, List<UUID>> appRoleMenuReqDto) {
-        Logger.info("Start createAppRoleMenu in AppRoleMenuController");
+        Log.info("Start createAppRoleMenu in AppRoleMenuController");
         long startTime = System.currentTimeMillis();
         ManagerDto<Void> response = new ManagerDto<>();
          appRoleMenuServ.createAppRoleMenu(appRoleMenuReqDto);
         long endTime = System.currentTimeMillis();
         response.setInfo(getInfoOk("Success Create data", endTime - startTime));
-        Logger.info("End createAppRoleMenu in AppRoleMenuController, time: " + (endTime - startTime) + "ms");
+        Log.info("End createAppRoleMenu in AppRoleMenuController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
