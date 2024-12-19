@@ -1,5 +1,6 @@
 package com.example.lokakarya.Dto.EmpTechnicalSkill;
 
+import com.example.lokakarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillDto;
 import com.example.lokakarya.Entity.EmpTechnicalSkill;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

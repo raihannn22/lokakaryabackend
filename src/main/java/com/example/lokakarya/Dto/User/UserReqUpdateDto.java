@@ -1,8 +1,10 @@
 package com.example.lokakarya.Dto.User;
 
 import com.example.lokakarya.Entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.springframework.data.annotation.ReadOnlyProperty;
 
 import java.util.Date;
 import java.util.Set;
@@ -49,19 +51,4 @@ public class UserReqUpdateDto {
         user.setUpdatedAt(updatedAt);
         return user;
     }
-
-//    public static UserReqDto fromEntity(User user) {
-//        UserReqDto userDto = new UserReqDto();
-//        userDto.setUsername(user.getUsername());
-//        userDto.setFullName(user.getFullName());
-//        userDto.setPosition(user.getPosition());
-//        userDto.setEmailAddress(user.getEmail());
-//        userDto.setEmployeeStatus(user.getEmployeeStatus());
-//        userDto.setDivision(user.getDivision().getId());
-//        userDto.setJoinDate(Date.valueOf(user.getJoinDate().toLocalDate()));
-//        userDto.setEnabled(user.getEnabled());
-//        userDto.setPassword(user.getPassword());
-//        userDto.setDivision(user.getDivision().getId());
-//        return userDto;
-//    }
 }

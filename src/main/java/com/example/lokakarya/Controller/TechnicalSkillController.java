@@ -1,16 +1,18 @@
 package com.example.lokakarya.Controller;
 
-import com.example.lokakarya.Dto.ManagerDto;
-import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillDto;
-import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
-import com.example.lokakarya.Services.TechnicalSkillServ;
-import com.example.lokakarya.util.ServerResponseList;
+import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.lokakarya.Dto.ManagerDto;
+import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillDto;
+import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
+import com.example.lokakarya.Services.TechnicalSkillServ;
+import com.example.lokakarya.util.ServerResponseList;
 
 import java.util.List;
 import java.util.UUID;
@@ -36,7 +38,7 @@ public class TechnicalSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAllTechnicalSkill in TechnicalSkillController");
+        Log.info("End getAllTechnicalSkill in TechnicalSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -53,7 +55,7 @@ public class TechnicalSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success save data", executionTime));
-        Log.info("End saveTechnicalSkill in TechnicalSkillController");
+        Log.info("End saveTechnicalSkill in TechnicalSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -70,7 +72,7 @@ public class TechnicalSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getTechnicalSkillDetail in TechnicalSkillController");
+        Log.info("End getTechnicalSkillDetail in TechnicalSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -87,7 +89,7 @@ public class TechnicalSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success update data", executionTime));
-        Log.info("End updateTechnicalSkill in TechnicalSkillController");
+        Log.info("End updateTechnicalSkill in TechnicalSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -104,7 +106,7 @@ public class TechnicalSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success delete data", executionTime));
-        Log.info("End deleteTechnicalSkill in TechnicalSkillController");
+        Log.info("End deleteTechnicalSkill in TechnicalSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -1,17 +1,18 @@
 package com.example.lokakarya.Controller;
 
 
-import com.example.lokakarya.Dto.DevPlan.DevPlanDto;
-import com.example.lokakarya.Dto.DevPlan.DevPlanReqDto;
-import com.example.lokakarya.Dto.ManagerDto;
-import com.example.lokakarya.Services.Impl.DevPlanServImpl;
-import com.example.lokakarya.util.ServerResponseList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.lokakarya.Dto.ManagerDto;
+import com.example.lokakarya.Dto.DevPlan.DevPlanDto;
+import com.example.lokakarya.Dto.DevPlan.DevPlanReqDto;
+import com.example.lokakarya.Services.Impl.DevPlanServImpl;
+import com.example.lokakarya.util.ServerResponseList;
 
 import java.util.List;
 import java.util.UUID;
@@ -37,7 +38,7 @@ public class DevPlanController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAllDevPlan in DevPlanController");
+        Log.info("End getAllDevPlan in DevPlanController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -54,7 +55,7 @@ public class DevPlanController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getDevPlanDetail in DevPlanController");
+        Log.info("End getDevPlanDetail in DevPlanController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -71,7 +72,7 @@ public class DevPlanController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success save data", executionTime));
-        Log.info("End saveDevPlan in DevPlanController");
+        Log.info("End saveDevPlan in DevPlanController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

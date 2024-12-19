@@ -6,7 +6,9 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.example.lokakarya.Entity.EmpAttitudeSkill;
 import com.example.lokakarya.Entity.EmpSuggestion;
+import com.example.lokakarya.Entity.EmpTechnicalSkill;
 
 @Repository
 public interface EmpSuggestionRepo extends JpaRepository<EmpSuggestion, UUID> {

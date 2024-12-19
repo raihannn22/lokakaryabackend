@@ -1,11 +1,11 @@
 package com.example.lokakarya.Services;
 
+import java.util.List;
+import java.util.UUID;
+
 import com.example.lokakarya.Dto.AssessmentSummary.AssessmentSummaryDto;
 import com.example.lokakarya.Dto.AssessmentSummary.AssessmentSummaryReqDto;
 import com.example.lokakarya.Dto.AssessmentSummary.TotalScoreDto;
-
-import java.util.List;
-import java.util.UUID;
 
 public interface AssessmentSummaryServ {
     List<AssessmentSummaryReqDto> getAllAssessmentSummary();

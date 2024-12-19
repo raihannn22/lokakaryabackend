@@ -62,6 +62,7 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
 
     @Override
     public EmpAchievementSkillReqDto createEmpAchievementSkill(EmpAchievementSkillDto empAchievementSkillDto) {
+        Log.info("Start createEmpAchievementSkill in EmpAchievementSkillServImpl");
         Optional<Achievement> achievementOpt = achievementRepo.findById(empAchievementSkillDto.getAchievementId());
         Optional<User> userOpt = userRepo.findById(empAchievementSkillDto.getUserId());
         UUID currentUser = getUserUtil.getCurrentUser().getId();
@@ -80,16 +81,14 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
             currentUser, 
             new java.util.Date() 
         );
-
-        // Simpan ke repository
         empAchievementSkill = empAchievementSkillRepo.save(empAchievementSkill);
-
-        // Return sebagai DTO
+        Log.info("End createEmpAchievementSkill in EmpAchievementSkillServImpl");
         return EmpAchievementSkillReqDto.fromEntity(empAchievementSkill);
     }
 
      @Override
     public List<EmpAchievementSkillReqDto> createAllEmpAchievementSkill(List<EmpAchievementSkillDto> empAchievementSkillDtos) {
+        Log.info("Start createAllEmpAchievementSkill in EmpAchievementSkillServImpl");
         List<EmpAchievementSkill> empAchievementSkills = empAchievementSkillDtos.stream().map(empAchievementSkillDto -> {
             Optional<Achievement> achievementOpt = achievementRepo.findById(empAchievementSkillDto.getAchievementId());
             Optional<User> userOpt = userRepo.findById(empAchievementSkillDto.getUserId());
@@ -111,11 +110,8 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
                 new java.util.Date()
             );
         }).collect(Collectors.toList());
-
-        // Save all at once
         List<EmpAchievementSkill> savedSkills = empAchievementSkillRepo.saveAll(empAchievementSkills);
-
-        // Return as DTOs
+        Log.info("End createAllEmpAchievementSkill in EmpAchievementSkillServImpl");
         return savedSkills.stream()
                           .map(EmpAchievementSkillReqDto::fromEntity)
                           .collect(Collectors.toList());
@@ -145,7 +141,7 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
             Log.info("Start deleteEmpAchievementSkill in EmpAchievementSkillServImpl");
 
             if (empAchievementSkillRepo.existsById(id)) {
-                empAchievementSkillRepo.deleteById(id);  // hanya menghapus achievement berdasarkan id
+                empAchievementSkillRepo.deleteById(id); 
                 Log.info("End deleteEmpAchievementSkill in EmpAchievementSkillServImpl");
                 return true;
             }

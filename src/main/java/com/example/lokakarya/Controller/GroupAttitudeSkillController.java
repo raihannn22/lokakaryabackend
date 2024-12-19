@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.lokakarya.Dto.ManagerDto;
 import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
 import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
 import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillWithDetailsDto;
-import com.example.lokakarya.Dto.ManagerDto;
 import com.example.lokakarya.Services.GroupAttitudeSkillServ;
 import com.example.lokakarya.util.ServerResponseList;
 
@@ -45,7 +45,7 @@ public class GroupAttitudeSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAllGroupAttitudeSkill in GroupAttitudeSkillController");
+        Log.info("End getAllGroupAttitudeSkill in GroupAttitudeSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -63,7 +63,7 @@ public class GroupAttitudeSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAllGroupAttitudeSkillsWithDetails in GroupAttitudeSkillController");
+        Log.info("End getAllGroupAttitudeSkillsWithDetails in GroupAttitudeSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -83,7 +83,7 @@ public class GroupAttitudeSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success save data", executionTime));
-        Log.info("End saveGroupAttitudeSkill in GroupAttitudeSkillController");
+        Log.info("End saveGroupAttitudeSkill in GroupAttitudeSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -100,7 +100,7 @@ public class GroupAttitudeSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getGroupAttitudeSkillDetail in GroupAttitudeSkillController");
+        Log.info("End getGroupAttitudeSkillDetail in GroupAttitudeSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -117,7 +117,7 @@ public class GroupAttitudeSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success update data", executionTime));
-        Log.info("End updateGroupAttitudeSkill in GroupAttitudeSkillController");
+        Log.info("End updateGroupAttitudeSkill in GroupAttitudeSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -134,7 +134,7 @@ public class GroupAttitudeSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success delete data", executionTime));
-        Log.info("End deleteGroupAttitudeSkill in GroupAttitudeSkillController");
+        Log.info("End deleteGroupAttitudeSkill in GroupAttitudeSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -21,9 +21,6 @@ public class EmpSuggestion {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
-    
-    // @Column(name = "USER_ID", length = 32, nullable = false)
-    // private UUID userId;
 
     @Column(name = "SUGGESTION", length = 200)
     private String suggestion;

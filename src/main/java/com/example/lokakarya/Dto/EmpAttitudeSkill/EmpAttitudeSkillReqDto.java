@@ -1,10 +1,12 @@
 package com.example.lokakarya.Dto.EmpAttitudeSkill;
 
+import com.example.lokakarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillReqDto;
 import com.example.lokakarya.Entity.EmpAttitudeSkill;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -33,9 +35,9 @@ public class EmpAttitudeSkillReqDto {
             EmpAttitudeSkillReqDto empAttitudeSkillReqDto = new EmpAttitudeSkillReqDto();
             empAttitudeSkillReqDto.setUserId(empAttitudeSkill.getUser().getId());
             empAttitudeSkillReqDto.setAttitudeSkillId(empAttitudeSkill.getAttitudeSkill().getId());
-             empAttitudeSkillReqDto.setAttitudeSkillName(empAttitudeSkill.getAttitudeSkill().getAttitudeSkill());
-             empAttitudeSkillReqDto.setGroupAttitudeSkillName(empAttitudeSkill.getAttitudeSkill().getGroupAttitudeSkill().getGroupName());
-             empAttitudeSkillReqDto.setGroupAttitudeSkillPercentage(empAttitudeSkill.getAttitudeSkill().getGroupAttitudeSkill().getPercentage());
+            empAttitudeSkillReqDto.setAttitudeSkillName(empAttitudeSkill.getAttitudeSkill().getAttitudeSkill());
+            empAttitudeSkillReqDto.setGroupAttitudeSkillName(empAttitudeSkill.getAttitudeSkill().getGroupAttitudeSkill().getGroupName());
+            empAttitudeSkillReqDto.setGroupAttitudeSkillPercentage(empAttitudeSkill.getAttitudeSkill().getGroupAttitudeSkill().getPercentage());
             empAttitudeSkillReqDto.setScore(empAttitudeSkill.getScore());
             empAttitudeSkillReqDto.setAssessmentYear(empAttitudeSkill.getAssessmentYear());
             return empAttitudeSkillReqDto;

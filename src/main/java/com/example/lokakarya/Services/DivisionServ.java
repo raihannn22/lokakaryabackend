@@ -1,10 +1,12 @@
 package com.example.lokakarya.Services;
 
-import com.example.lokakarya.Dto.Division.DivisionDto;
-import com.example.lokakarya.Dto.Division.DivisionReqDto;
-
 import java.util.List;
 import java.util.UUID;
+
+import com.example.lokakarya.Dto.AssessmentSummary.AssessmentSummaryDto;
+import com.example.lokakarya.Dto.AssessmentSummary.AssessmentSummaryReqDto;
+import com.example.lokakarya.Dto.Division.DivisionDto;
+import com.example.lokakarya.Dto.Division.DivisionReqDto;
 
 public interface DivisionServ {
     List<DivisionReqDto> getAllDivision();

@@ -2,7 +2,6 @@ package com.example.lokakarya.Services.Impl;
 
 import java.util.*;
 
-import com.example.lokakarya.util.GetUserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import com.example.lokakarya.Entity.GroupAttitudeSkill;
 import com.example.lokakarya.Repository.AttitudeSkillRepo;
 import com.example.lokakarya.Repository.GroupAttitudeSkillRepo;
 import com.example.lokakarya.Services.AttitudeSkillServ;
+import com.example.lokakarya.util.GetUserUtil;
 
 @Service
 public class AttitudeSkillServImpl implements AttitudeSkillServ {
@@ -31,11 +31,13 @@ public class AttitudeSkillServImpl implements AttitudeSkillServ {
 
     @Override
     public List<AttitudeSkillReqDto> getAllAttitudeSkill() {
+        Log.info("Start getAllAttitudeSkill in AttitudeSkillServImpl");
         List<AttitudeSkill> response = attitudeSkillRepo.findAll();
         List<AttitudeSkillReqDto> attitudeSkillReqDto = new ArrayList<>();
         for (AttitudeSkill attitudeSkill : response) {
             attitudeSkillReqDto.add(AttitudeSkillReqDto.fromEntity(attitudeSkill));
         }
+        Log.info("End getAllAttitudeSkill in AttitudeSkillServImpl");
         return attitudeSkillReqDto;
     }
 

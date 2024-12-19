@@ -1,10 +1,10 @@
 package com.example.lokakarya.Services;
 
-import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementDto;
-import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementReqDto;
-
 import java.util.List;
 import java.util.UUID;
+
+import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementDto;
+import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementReqDto;
 
 public interface GroupAchievementServ {
     List<GroupAchievementReqDto> getAllGroupAchievement();

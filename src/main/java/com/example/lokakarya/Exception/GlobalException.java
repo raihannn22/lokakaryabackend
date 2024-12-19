@@ -1,4 +1,2 @@
-//package com.example.LokaKarya.util;
-//
-//public class GlobalException {
-//}
+package com.example.lokakarya.Exception;
+

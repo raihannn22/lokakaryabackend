@@ -2,8 +2,13 @@ package com.example.lokakarya.Dto.AppUserRole;
 
 import com.example.lokakarya.Dto.AppRole.AppRoleReqDto;
 import com.example.lokakarya.Dto.User.UserDto;
+import com.example.lokakarya.Dto.User.UserReqDto;
+import com.example.lokakarya.Entity.AppRole;
 import com.example.lokakarya.Entity.AppUserRole;
+import com.example.lokakarya.Entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;

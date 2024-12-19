@@ -1,7 +1,10 @@
 package com.example.lokakarya.Dto.EmpDevPlan;
 
+import com.example.lokakarya.Entity.DevPlan;
 import com.example.lokakarya.Entity.EmpDevPlan;
+import com.example.lokakarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;

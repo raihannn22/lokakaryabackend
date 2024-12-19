@@ -58,8 +58,6 @@ public class UserDto {
         }else{
             userDto.setAppRole(null);
         }
-//        userDto.setAppRole(user.getAppRoles().stream().map(AppUserRole::getAppRole).toList());
-//        userDto.setAppRole(user.getAppRoles().stream().map(AppUserRole::getAppRole).toList());
         if (user.getDivision() != null) {
             userDto.setDivision(user.getDivision().getId());
             userDto.setDivisionName(user.getDivision().getDivisionName());

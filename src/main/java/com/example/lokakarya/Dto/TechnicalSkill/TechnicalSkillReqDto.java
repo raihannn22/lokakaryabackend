@@ -1,9 +1,11 @@
 package com.example.lokakarya.Dto.TechnicalSkill;
 
+import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
 import com.example.lokakarya.Entity.TechnicalSkill;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor

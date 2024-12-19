@@ -1,10 +1,12 @@
 package com.example.lokakarya.Services;
 
-import com.example.lokakarya.Dto.AppRole.AppRoleDto;
-import com.example.lokakarya.Dto.AppRole.AppRoleReqDto;
-
 import java.util.List;
 import java.util.UUID;
+
+import com.example.lokakarya.Dto.AppRole.AppRoleDto;
+import com.example.lokakarya.Dto.AppRole.AppRoleReqDto;
+import com.example.lokakarya.Dto.AssessmentSummary.AssessmentSummaryDto;
+import com.example.lokakarya.Dto.AssessmentSummary.AssessmentSummaryReqDto;
 
 public interface AppRoleServ {
     List<AppRoleReqDto> getAllAppRole();
