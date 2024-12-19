@@ -1,11 +1,12 @@
-package com.example.LokaKarya.util;
+package com.example.lokakarya.util;
 
-import com.example.LokaKarya.Entity.User;
-import com.example.LokaKarya.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+
+import com.example.lokakarya.Entity.User;
+import com.example.lokakarya.Repository.UserRepo;
 
 @Component
 public class GetUserUtil {

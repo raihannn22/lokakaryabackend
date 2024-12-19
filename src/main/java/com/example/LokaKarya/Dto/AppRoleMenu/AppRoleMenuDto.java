@@ -1,8 +1,8 @@
-package com.example.LokaKarya.Dto.AppRoleMenu;
+package com.example.lokakarya.Dto.AppRoleMenu;
 
-import com.example.LokaKarya.Entity.AppMenu;
-import com.example.LokaKarya.Entity.AppRole;
-import com.example.LokaKarya.Entity.AppRoleMenu;
+import com.example.lokakarya.Entity.AppMenu;
+import com.example.lokakarya.Entity.AppRole;
+import com.example.lokakarya.Entity.AppRoleMenu;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 

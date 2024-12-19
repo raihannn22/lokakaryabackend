@@ -1,4 +1,4 @@
-package com.example.LokaKarya.util;
+package com.example.lokakarya.util;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;

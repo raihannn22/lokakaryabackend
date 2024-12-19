@@ -1,10 +1,10 @@
-package com.example.LokaKarya.Services;
-
-import com.example.LokaKarya.Dto.AttitudeSkill.AttitudeSkillDto;
-import com.example.LokaKarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
+package com.example.lokakarya.Services;
 
 import java.util.List;
 import java.util.UUID;
+
+import com.example.lokakarya.Dto.AttitudeSkill.AttitudeSkillDto;
+import com.example.lokakarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
 
 public interface AttitudeSkillServ {
     List<AttitudeSkillReqDto> getAllAttitudeSkill();

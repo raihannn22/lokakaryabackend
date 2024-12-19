@@ -1,17 +1,16 @@
-package com.example.LokaKarya.Dto.Achievement;
+package com.example.lokakarya.Dto.Achievement;
 
-import com.example.LokaKarya.Dto.AssessmentSummary.AssessmentSummaryDto;
-import com.example.LokaKarya.Entity.Achievement;
-import com.example.LokaKarya.Entity.AssessmentSummary;
-import com.example.LokaKarya.Entity.User;
+import com.example.lokakarya.Dto.AssessmentSummary.AssessmentSummaryDto;
+import com.example.lokakarya.Entity.Achievement;
+import com.example.lokakarya.Entity.AssessmentSummary;
+import com.example.lokakarya.Entity.GroupAchievement;
+import com.example.lokakarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.*;
 
 import java.util.Date;
 import java.util.UUID;
-
-import com.example.LokaKarya.Entity.GroupAchievement;
 
 @AllArgsConstructor
 @NoArgsConstructor

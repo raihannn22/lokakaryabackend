@@ -1,7 +1,8 @@
-package com.example.LokaKarya.Repository;
+package com.example.lokakarya.Repository;
 
-import com.example.LokaKarya.Entity.AppUserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.lokakarya.Entity.AppUserRole;
 
 import java.util.List;
 import java.util.UUID;

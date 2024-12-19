@@ -1,4 +1,4 @@
-package com.example.LokaKarya.Dto.AssessmentSummary;
+package com.example.lokakarya.Dto.AssessmentSummary;
 
 import lombok.*;
 

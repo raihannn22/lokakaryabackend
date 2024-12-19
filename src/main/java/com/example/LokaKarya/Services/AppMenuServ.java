@@ -1,11 +1,11 @@
-package com.example.LokaKarya.Services;
-
-import com.example.LokaKarya.Dto.AppMenu.AppMenuByUserDto;
-import com.example.LokaKarya.Dto.AppMenu.AppMenuDto;
-import com.example.LokaKarya.Dto.AppMenu.AppMenuReqDto;
+package com.example.lokakarya.Services;
 
 import java.util.List;
 import java.util.UUID;
+
+import com.example.lokakarya.Dto.AppMenu.AppMenuByUserDto;
+import com.example.lokakarya.Dto.AppMenu.AppMenuDto;
+import com.example.lokakarya.Dto.AppMenu.AppMenuReqDto;
 
 
 public interface AppMenuServ {

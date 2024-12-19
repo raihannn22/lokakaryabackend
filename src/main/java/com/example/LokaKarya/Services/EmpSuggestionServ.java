@@ -1,13 +1,13 @@
-package com.example.LokaKarya.Services;
+package com.example.lokakarya.Services;
 
 import java.util.List;
 import java.util.UUID;
 
-import com.example.LokaKarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillReqDto;
-import com.example.LokaKarya.Dto.EmpSuggestion.EmpSuggestionDto;
-import com.example.LokaKarya.Dto.EmpSuggestion.EmpSuggestionReqDto;
-import com.example.LokaKarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillDto;
-import com.example.LokaKarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillReqDto;
+import com.example.lokakarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillReqDto;
+import com.example.lokakarya.Dto.EmpSuggestion.EmpSuggestionDto;
+import com.example.lokakarya.Dto.EmpSuggestion.EmpSuggestionReqDto;
+import com.example.lokakarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillDto;
+import com.example.lokakarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillReqDto;
 
 public interface EmpSuggestionServ {
     List<EmpSuggestionReqDto> getAllEmpSuggestion();

@@ -1,8 +1,8 @@
-package com.example.LokaKarya.Dto.EmpAchievementSkill;
+package com.example.lokakarya.Dto.EmpAchievementSkill;
 
-import com.example.LokaKarya.Entity.Achievement;
-import com.example.LokaKarya.Entity.EmpAchievementSkill;
-import com.example.LokaKarya.Entity.User;
+import com.example.lokakarya.Entity.Achievement;
+import com.example.lokakarya.Entity.EmpAchievementSkill;
+import com.example.lokakarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 

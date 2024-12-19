@@ -1,12 +1,12 @@
-package com.example.LokaKarya.Services;
-
-import com.example.LokaKarya.Dto.AssessmentSummary.AssessmentSummaryDto;
-import com.example.LokaKarya.Dto.AssessmentSummary.AssessmentSummaryReqDto;
-import com.example.LokaKarya.Dto.Division.DivisionDto;
-import com.example.LokaKarya.Dto.Division.DivisionReqDto;
+package com.example.lokakarya.Services;
 
 import java.util.List;
 import java.util.UUID;
+
+import com.example.lokakarya.Dto.AssessmentSummary.AssessmentSummaryDto;
+import com.example.lokakarya.Dto.AssessmentSummary.AssessmentSummaryReqDto;
+import com.example.lokakarya.Dto.Division.DivisionDto;
+import com.example.lokakarya.Dto.Division.DivisionReqDto;
 
 public interface DivisionServ {
     List<DivisionReqDto> getAllDivision();

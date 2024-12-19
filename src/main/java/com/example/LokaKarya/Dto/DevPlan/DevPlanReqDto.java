@@ -1,6 +1,6 @@
-package com.example.LokaKarya.Dto.DevPlan;
+package com.example.lokakarya.Dto.DevPlan;
 
-import com.example.LokaKarya.Entity.DevPlan;
+import com.example.lokakarya.Entity.DevPlan;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 

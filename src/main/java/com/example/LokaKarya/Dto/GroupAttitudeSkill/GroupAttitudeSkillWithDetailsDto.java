@@ -1,7 +1,7 @@
-package com.example.LokaKarya.Dto.GroupAttitudeSkill;
+package com.example.lokakarya.Dto.GroupAttitudeSkill;
 
-import com.example.LokaKarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
-import com.example.LokaKarya.Entity.GroupAttitudeSkill;
+import com.example.lokakarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
+import com.example.lokakarya.Entity.GroupAttitudeSkill;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 

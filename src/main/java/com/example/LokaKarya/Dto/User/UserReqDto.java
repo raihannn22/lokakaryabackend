@@ -1,7 +1,7 @@
-package com.example.LokaKarya.Dto.User;
+package com.example.lokakarya.Dto.User;
 
-import com.example.LokaKarya.Entity.Division;
-import com.example.LokaKarya.Entity.User;
+import com.example.lokakarya.Entity.Division;
+import com.example.lokakarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,4 +1,4 @@
-package com.example.LokaKarya.Services.Impl;
+package com.example.lokakarya.Services.Impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,14 +10,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.LokaKarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
-import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
-import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
-import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillWithDetailsDto;
-import com.example.LokaKarya.Entity.GroupAttitudeSkill;
-import com.example.LokaKarya.Repository.GroupAttitudeSkillRepo;
-import com.example.LokaKarya.Services.GroupAttitudeSkillServ;
-import com.example.LokaKarya.util.GetUserUtil;
+import com.example.lokakarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
+import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
+import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
+import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillWithDetailsDto;
+import com.example.lokakarya.Entity.GroupAttitudeSkill;
+import com.example.lokakarya.Repository.GroupAttitudeSkillRepo;
+import com.example.lokakarya.Services.GroupAttitudeSkillServ;
+import com.example.lokakarya.util.GetUserUtil;
 
 @Service
 public class GroupAttitudeSkillServImpl implements GroupAttitudeSkillServ {

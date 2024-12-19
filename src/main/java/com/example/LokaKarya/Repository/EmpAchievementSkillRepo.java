@@ -1,4 +1,4 @@
-package com.example.LokaKarya.Repository;
+package com.example.lokakarya.Repository;
 
 import java.util.List;
 import java.util.UUID;
@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.LokaKarya.Entity.EmpAchievementSkill;
+import com.example.lokakarya.Entity.EmpAchievementSkill;
 
 @Repository
 public interface EmpAchievementSkillRepo extends JpaRepository<EmpAchievementSkill, UUID> {

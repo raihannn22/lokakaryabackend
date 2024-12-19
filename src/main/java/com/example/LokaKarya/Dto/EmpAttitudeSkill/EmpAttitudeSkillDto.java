@@ -1,15 +1,14 @@
-package com.example.LokaKarya.Dto.EmpAttitudeSkill;
+package com.example.lokakarya.Dto.EmpAttitudeSkill;
 
-import com.example.LokaKarya.Entity.EmpAttitudeSkill;
-import com.example.LokaKarya.Entity.User;
+import com.example.lokakarya.Entity.AttitudeSkill;
+import com.example.lokakarya.Entity.EmpAttitudeSkill;
+import com.example.lokakarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.*;
 
 import java.util.Date;
 import java.util.UUID;
-
-import com.example.LokaKarya.Entity.AttitudeSkill;
 
 @AllArgsConstructor
 @NoArgsConstructor

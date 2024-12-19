@@ -1,8 +1,8 @@
-package com.example.LokaKarya.Dto.EmpSuggestion;
+package com.example.lokakarya.Dto.EmpSuggestion;
 
-import com.example.LokaKarya.Dto.EmpSuggestion.EmpSuggestionDto;
-import com.example.LokaKarya.Dto.EmpSuggestion.EmpSuggestionReqDto;
-import com.example.LokaKarya.Entity.EmpSuggestion;
+import com.example.lokakarya.Dto.EmpSuggestion.EmpSuggestionDto;
+import com.example.lokakarya.Dto.EmpSuggestion.EmpSuggestionReqDto;
+import com.example.lokakarya.Entity.EmpSuggestion;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

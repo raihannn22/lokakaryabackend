@@ -1,11 +1,11 @@
-package com.example.LokaKarya.Services;
-
-import com.example.LokaKarya.Dto.AppRoleMenu.AppRoleMenuDto;
-import com.example.LokaKarya.Dto.AppRoleMenu.AppRoleMenuReqDto;
+package com.example.lokakarya.Services;
 
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import com.example.lokakarya.Dto.AppRoleMenu.AppRoleMenuDto;
+import com.example.lokakarya.Dto.AppRoleMenu.AppRoleMenuReqDto;
 
 public interface AppRoleMenuServ {
     List<AppRoleMenuReqDto> getAllAppRoleMenu();

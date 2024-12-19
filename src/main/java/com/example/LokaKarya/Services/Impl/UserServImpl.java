@@ -1,4 +1,4 @@
-package com.example.LokaKarya.Services.Impl;
+package com.example.lokakarya.Services.Impl;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.example.LokaKarya.Dto.User.UserReqUpdateDto;
-import com.example.LokaKarya.Dto.User.UserResetPassDto;
 import jakarta.persistence.EntityManager;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
@@ -16,19 +14,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.LokaKarya.util.GetUserUtil;
-import com.example.LokaKarya.Dto.AppUserRole.AppUserRoleReqDto;
-import com.example.LokaKarya.Dto.User.UserDto;
-import com.example.LokaKarya.Dto.User.UserReqDto;
-import com.example.LokaKarya.Entity.AppRole;
-import com.example.LokaKarya.Entity.AppUserRole;
-import com.example.LokaKarya.Entity.Division;
-import com.example.LokaKarya.Entity.User;
-import com.example.LokaKarya.Repository.AppRoleRepo;
-import com.example.LokaKarya.Repository.AppUserRoleRepo;
-import com.example.LokaKarya.Repository.DivisionRepo;
-import com.example.LokaKarya.Repository.UserRepo;
-import com.example.LokaKarya.Services.UserServ;
+import com.example.lokakarya.Dto.AppUserRole.AppUserRoleReqDto;
+import com.example.lokakarya.Dto.User.UserDto;
+import com.example.lokakarya.Dto.User.UserReqDto;
+import com.example.lokakarya.Dto.User.UserReqUpdateDto;
+import com.example.lokakarya.Dto.User.UserResetPassDto;
+import com.example.lokakarya.Entity.AppRole;
+import com.example.lokakarya.Entity.AppUserRole;
+import com.example.lokakarya.Entity.Division;
+import com.example.lokakarya.Entity.User;
+import com.example.lokakarya.Repository.AppRoleRepo;
+import com.example.lokakarya.Repository.AppUserRoleRepo;
+import com.example.lokakarya.Repository.DivisionRepo;
+import com.example.lokakarya.Repository.UserRepo;
+import com.example.lokakarya.Services.UserServ;
+import com.example.lokakarya.util.GetUserUtil;
 
 import jakarta.transaction.Transactional;
 

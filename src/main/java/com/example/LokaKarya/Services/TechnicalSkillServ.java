@@ -1,10 +1,10 @@
-package com.example.LokaKarya.Services;
-
-import com.example.LokaKarya.Dto.TechnicalSkill.TechnicalSkillDto;
-import com.example.LokaKarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
+package com.example.lokakarya.Services;
 
 import java.util.List;
 import java.util.UUID;
+
+import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillDto;
+import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
 
 public interface TechnicalSkillServ {
     List<TechnicalSkillReqDto> getAllTechnicalSkill();

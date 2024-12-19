@@ -1,6 +1,6 @@
-package com.example.LokaKarya.Dto.Division;
+package com.example.lokakarya.Dto.Division;
 
-import com.example.LokaKarya.Entity.Division;
+import com.example.lokakarya.Entity.Division;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 

@@ -1,8 +1,8 @@
-package com.example.LokaKarya.Dto.AssessmentSummary;
+package com.example.lokakarya.Dto.AssessmentSummary;
 
 
-import com.example.LokaKarya.Entity.AssessmentSummary;
-import com.example.LokaKarya.Entity.User;
+import com.example.lokakarya.Entity.AssessmentSummary;
+import com.example.lokakarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 

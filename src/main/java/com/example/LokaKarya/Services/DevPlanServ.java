@@ -1,12 +1,12 @@
-package com.example.LokaKarya.Services;
-
-import com.example.LokaKarya.Dto.DevPlan.DevPlanDto;
-import com.example.LokaKarya.Dto.DevPlan.DevPlanReqDto;
-import com.example.LokaKarya.Dto.Division.DivisionDto;
-import com.example.LokaKarya.Dto.Division.DivisionReqDto;
+package com.example.lokakarya.Services;
 
 import java.util.List;
 import java.util.UUID;
+
+import com.example.lokakarya.Dto.DevPlan.DevPlanDto;
+import com.example.lokakarya.Dto.DevPlan.DevPlanReqDto;
+import com.example.lokakarya.Dto.Division.DivisionDto;
+import com.example.lokakarya.Dto.Division.DivisionReqDto;
 
 public interface DevPlanServ {
     List<DevPlanReqDto> getAllDevPlan();

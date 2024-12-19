@@ -1,4 +1,4 @@
-package com.example.LokaKarya.Services.Impl;
+package com.example.lokakarya.Services.Impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,18 +11,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.LokaKarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillReqDto;
-import com.example.LokaKarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillDto;
-import com.example.LokaKarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillReqDto;
-import com.example.LokaKarya.Entity.EmpAttitudeSkill;
-import com.example.LokaKarya.Entity.EmpTechnicalSkill;
-import com.example.LokaKarya.Entity.TechnicalSkill;
-import com.example.LokaKarya.Entity.User;
-import com.example.LokaKarya.Repository.EmpTechnicalSkillRepo;
-import com.example.LokaKarya.Repository.TechnicalSkillRepo;
-import com.example.LokaKarya.Repository.UserRepo;
-import com.example.LokaKarya.Services.EmpTechnicalSkillServ;
-import com.example.LokaKarya.util.GetUserUtil;
+import com.example.lokakarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillReqDto;
+import com.example.lokakarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillDto;
+import com.example.lokakarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillReqDto;
+import com.example.lokakarya.Entity.EmpAttitudeSkill;
+import com.example.lokakarya.Entity.EmpTechnicalSkill;
+import com.example.lokakarya.Entity.TechnicalSkill;
+import com.example.lokakarya.Entity.User;
+import com.example.lokakarya.Repository.EmpTechnicalSkillRepo;
+import com.example.lokakarya.Repository.TechnicalSkillRepo;
+import com.example.lokakarya.Repository.UserRepo;
+import com.example.lokakarya.Services.EmpTechnicalSkillServ;
+import com.example.lokakarya.util.GetUserUtil;
 
 @Service
 public class EmpTechnicalSkillServImpl implements EmpTechnicalSkillServ {

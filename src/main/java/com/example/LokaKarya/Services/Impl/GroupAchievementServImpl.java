@@ -1,4 +1,4 @@
-package com.example.LokaKarya.Services.Impl;
+package com.example.lokakarya.Services.Impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,12 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.LokaKarya.Dto.GroupAchievement.GroupAchievementDto;
-import com.example.LokaKarya.Dto.GroupAchievement.GroupAchievementReqDto;
-import com.example.LokaKarya.Entity.GroupAchievement;
-import com.example.LokaKarya.Repository.GroupAchievementRepo;
-import com.example.LokaKarya.Services.GroupAchievementServ;
-import com.example.LokaKarya.util.GetUserUtil;
+import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementDto;
+import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementReqDto;
+import com.example.lokakarya.Entity.GroupAchievement;
+import com.example.lokakarya.Repository.GroupAchievementRepo;
+import com.example.lokakarya.Services.GroupAchievementServ;
+import com.example.lokakarya.util.GetUserUtil;
 
 @Service
 public class GroupAchievementServImpl implements GroupAchievementServ {

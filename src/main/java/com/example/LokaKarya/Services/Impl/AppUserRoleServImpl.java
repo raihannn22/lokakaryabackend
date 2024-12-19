@@ -1,9 +1,5 @@
-package com.example.LokaKarya.Services.Impl;
+package com.example.lokakarya.Services.Impl;
 
-import com.example.LokaKarya.Dto.AppUserRole.AppUserRoleReqDto;
-import com.example.LokaKarya.Entity.AppUserRole;
-import com.example.LokaKarya.Repository.AppUserRoleRepo;
-import com.example.LokaKarya.Services.AppUserRoleServ;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.hibernate.Hibernate;
@@ -11,6 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.lokakarya.Dto.AppUserRole.AppUserRoleReqDto;
+import com.example.lokakarya.Entity.AppUserRole;
+import com.example.lokakarya.Repository.AppUserRoleRepo;
+import com.example.lokakarya.Services.AppUserRoleServ;
 
 import java.util.ArrayList;
 import java.util.List;
