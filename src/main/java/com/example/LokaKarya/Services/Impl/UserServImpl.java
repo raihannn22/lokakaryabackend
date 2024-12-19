@@ -62,9 +62,6 @@ public class UserServImpl implements UserServ {
     @Override
     public List<UserDto> getAllUsers() {
         Log.info("Start getAllUsers in UserServImpl");
-//       UUID currentUserEntity = getUserUtil.getCurrentUser().getId();
-//       System.out.println(currentUserEntity + "akunoin");
-
         List<User> response = userRepo.findAll();
         List<UserDto> userList = new ArrayList<>();
 
@@ -78,10 +75,9 @@ public class UserServImpl implements UserServ {
 
     @Override
     public UserDto getUserById(UUID id) {
-//        Log.info("Start getUserById in UserServImpl");
+       Log.info("Start getUserById in UserServImpl");
         Optional<User> user = userRepo.findById(id);
-//        System.out.println("coba ini "+user);
-//        Log.info("End getUserById in UserServImpl");
+       Log.info("End getUserById in UserServImpl");
         return user.map(UserDto::fromEntity).orElse(null);
     }
 
@@ -91,19 +87,12 @@ public class UserServImpl implements UserServ {
         Log.info("Start createUser in UserServImpl");
         UUID currentUserId = getUserUtil.getCurrentUser().getId();
         User user = UserReqDto.toEntity(userDto, currentUserId, new java.util.Date(), null, null);
-
-
-        // Validasi Username Unik
         if (userRepo.existsByUsername(userDto.getUsername())) {
             throw new IllegalArgumentException("Username already exists: " + userDto.getUsername());
         }
-        // Validasi Email Unik
         if (userRepo.existsByEmail(userDto.getEmailAddress())) {
             throw new IllegalArgumentException("Email already exists: " + userDto.getEmailAddress());
         }
-
-
-        // Validasi apakah ada id divisi
         if (userDto.getDivision() !=null) {
             Optional<Division> idDivision =  divisionRepo.findById(userDto.getDivision());
             if (idDivision.isEmpty()) {
@@ -148,16 +137,11 @@ public class UserServImpl implements UserServ {
         updateUserFields2(findUser, userDto);
         findUser.setUpdatedBy(currentUserId);
         findUser.setUpdatedAt(new java.util.Date());
-
-
-
         appUserRoleRepo.deleteByUserId(id);
         if (userDto.getDivision() != null) {
             Division division = divisionRepo.findById(userDto.getDivision()).orElseThrow(() -> new RuntimeException("Division not found"));
             findUser.setDivision(division);
         }
-
-
         findUser = userRepo.save(findUser);
 
         if (userDto.getAppRole() !=null) {
@@ -208,33 +192,6 @@ public class UserServImpl implements UserServ {
         Log.info("End resetPassword in UserServImpl");
         return genPassword;
     }
-
-//    private void updateUserFields(User existingUser, UserReqDto userDto) {
-//        if (userDto.getUsername() != null) {
-//            existingUser.setUsername(userDto.getUsername());
-//        }
-//        if (userDto.getFullName() != null) {
-//            existingUser.setFullName(userDto.getFullName());
-//        }
-//        if (userDto.getPosition() != null) {
-//            existingUser.setPosition(userDto.getPosition());
-//        }
-//        if (userDto.getEmailAddress() != null) {
-//            existingUser.setEmail(userDto.getEmailAddress());
-//        }
-//        if (userDto.getEmployeeStatus() != null) {
-//            existingUser.setEmployeeStatus(userDto.getEmployeeStatus());
-//        }
-//        if (userDto.getJoinDate() != null) {
-//            existingUser.setJoinDate(Date.valueOf(userDto.getJoinDate().toLocalDate()));
-//        }
-//        if (userDto.getEnabled() != null) {
-//            existingUser.setEnabled(userDto.getEnabled());
-//        }
-//        if (userDto.getPassword() != null) {
-//            existingUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
-//        }
-//    }
 
     private void updateUserFields2(User existingUser, UserReqUpdateDto userDto) {
         if (userDto.getUsername() != null) {

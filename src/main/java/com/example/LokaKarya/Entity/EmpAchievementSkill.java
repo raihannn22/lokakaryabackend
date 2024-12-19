@@ -22,18 +22,12 @@ public class EmpAchievementSkill {
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
-    // @Column(name = "USER_ID", length = 32, nullable = false)
-    // private UUID userId;
-
     @Column(name = "NOTES", length = 100, nullable = false)
     private String notes;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ACHIEVEMENT_ID", nullable = false)
     private Achievement achievement;
-
-    // @Column(name = "ACHIEVEMENT_ID", length = 32, nullable = false)
-    // private UUID achievementId;
 
     @Column(name = "SCORE", length = 3, nullable = false)
     private Integer score;

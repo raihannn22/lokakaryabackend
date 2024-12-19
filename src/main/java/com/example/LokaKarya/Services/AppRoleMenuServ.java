@@ -11,6 +11,4 @@ public interface AppRoleMenuServ {
     List<AppRoleMenuReqDto> getAllAppRoleMenu();
     AppRoleMenuReqDto getAppRoleMenuById(UUID id);
      void createAppRoleMenu(Map<UUID, List<UUID>> appRoleMenuDto);
-//    AppMenuReqDto updateAppMenu(UUID id, AppMenuDto appMenuDto);
-//    Boolean deleteAppMenu(UUID id);
 }

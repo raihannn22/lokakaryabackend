@@ -63,15 +63,12 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
 
     @Override
     public EmpSuggestionReqDto createEmpSuggestion (EmpSuggestionDto empSuggestionDto) {
-        // Cari user berdasarkan ID
+        Log.info("Start createEmpSuggestion in EmpSuggestionServImpl");
         Optional<User> userOpt = userRepo.findById(empSuggestionDto.getUserId());
         UUID currentUser = getUserUtil.getCurrentUser().getId();
-        // Validasi keberadaan dan user
         if (userOpt.isEmpty()) {
             throw new RuntimeException("User not found with ID: " + empSuggestionDto.getUserId());
         }
-
-        // Konversi DTO ke entity
         EmpSuggestion empSuggestion = empSuggestionDto.toEntity(
             empSuggestionDto,
             userOpt.get(),
@@ -80,26 +77,18 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
             currentUser, 
             new java.util.Date() 
         );
-
-        // Simpan ke repository
         empSuggestion = empSuggestionRepo.save(empSuggestion);
-
-        // Return sebagai DTO
+        Log.info("End createEmpSuggestion in EmpSuggestionServImpl");
         return EmpSuggestionReqDto.fromEntity(empSuggestion);
     }
 
     @Override
     public List<EmpSuggestionReqDto> getEmpSuggestionByUserId(UUID userId) {
         Log.info("Start getEmpSuggestionByUserId in EmpSuggestionServImpl");
-
-        // Ambil semua data berdasarkan userId
         List<EmpSuggestion> empSuggestionList = empSuggestionRepo.findByUserId(userId);
-
-        // Konversi ke DTO
         List<EmpSuggestionReqDto> empSuggestionDtos = empSuggestionList.stream()
             .map(EmpSuggestionReqDto::fromEntity)
             .collect(Collectors.toList());
-
         Log.info("End getEmpSuggestionByUserId in EmpSuggestionServImpl");
         return empSuggestionDtos;
     }
@@ -107,11 +96,7 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
     @Override
     public List<EmpSuggestionReqDto> getEmpSuggestionsByUserIdAndYear(UUID userId, Integer assessmentYear) {
         Log.info("Start getEmpSuggestionByUserIdAndYear in EmpSuggestionServImpl");
-
-        // Ambil semua data berdasarkan userId
         List<EmpSuggestion> empSuggestionList = empSuggestionRepo.findByUserIdAndAssessmentYear(userId, assessmentYear);
-
-        // Konversi ke DTO
         List<EmpSuggestionReqDto> empSuggestionDtos = empSuggestionList.stream()
             .map(EmpSuggestionReqDto::fromEntity)
             .collect(Collectors.toList());
@@ -123,6 +108,7 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
         @Transactional
         @Override
         public List<EmpSuggestionReqDto> createAllEmpSuggestion(List<EmpSuggestionDto> empSuggestionDtos) {
+            Log.info("Start createAllEmpSuggestion in EmpSuggestionServImpl");
             List<EmpSuggestion> empSuggestions = empSuggestionDtos.stream().map(empSuggestionDto -> {
 
                 Optional<User> userOpt = userRepo.findById(empSuggestionDto.getUserId());
@@ -146,6 +132,7 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
                 );
             }).collect(Collectors.toList());
             List<EmpSuggestion> savedSkills = empSuggestionRepo.saveAll(empSuggestions);
+            Log.info("End createAllEmpSuggestion in EmpSuggestionServImpl");
             return savedSkills.stream()
                             .map(EmpSuggestionReqDto::fromEntity)
                             .collect(Collectors.toList());
@@ -172,7 +159,7 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
             Log.info("Start deleteEmpSuggestion in EmpSuggestionServImpl");
 
             if (empSuggestionRepo.existsById(id)) {
-                empSuggestionRepo.deleteById(id);  // hanya menghapus achievement berdasarkan id
+                empSuggestionRepo.deleteById(id);
                 Log.info("End deleteEmpSuggestion in EmpSuggestionServImpl");
                 return true;
             }

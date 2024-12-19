@@ -19,15 +19,9 @@ public class EmpAttitudeSkill {
     @Column(name = "ID",nullable = false)
     private UUID id;
 
-    // @Column(name = "USER_ID", length = 32, nullable = false)
-    // private UUID userId;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
-
-    // @Column(name = "ATTITUDE_SKILL_ID", length = 32, nullable = false)
-    // private UUID attitudeSkillId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ATTITUDE_SKILL_ID", nullable = false)

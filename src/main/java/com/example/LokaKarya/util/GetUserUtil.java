@@ -13,21 +13,8 @@ public class GetUserUtil {
     private UserRepo userRepo;
 
     public User getCurrentUser() {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        // String username = (String) auth.getPrincipal();
-//
-//        // return userOpt.get();
-//        String username = (String) auth.getPrincipal();
-//        System.out.println(username + " INIIIIIIIIIIIIII");
-//         User user = userRepo.findByUsername(username);
-//         if (user == null) {
-//         throw new RuntimeException("Current User Couldn't be found!");
-//         }
-//
-//        return user;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        // Mengambil principal sebagai objek User (bukan String)
-        User user = (User) auth.getPrincipal();  // Casting principal menjadi User
+        User user = (User) auth.getPrincipal();
         if (user == null) {
             throw new RuntimeException("Current User Couldn't be found!");
         }

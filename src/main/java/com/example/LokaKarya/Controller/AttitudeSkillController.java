@@ -44,7 +44,7 @@ public class AttitudeSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAllAttitudeSkill in AttitudeSkillController");
+        Log.info("End getAllAttitudeSkill in AttitudeSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -61,7 +61,7 @@ public class AttitudeSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success save data", executionTime));
-        Log.info("End saveAttitudeSkill in AttitudeSkillController");
+        Log.info("End saveAttitudeSkill in AttitudeSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -78,7 +78,7 @@ public class AttitudeSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAttitudeSkillDetail in AttitudeSkillController");
+        Log.info("End getAttitudeSkillDetail in AttitudeSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -95,7 +95,7 @@ public class AttitudeSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success update data", executionTime));
-        Log.info("End updateAttitudeSkill in AttitudeSkillController");
+        Log.info("End updateAttitudeSkill in AttitudeSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -112,11 +112,7 @@ public class AttitudeSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success delete data", executionTime));
-        Log.info("End deleteAttitudeSKill in AttitudeController");
+        Log.info("End deleteAttitudeSKill in AttitudeController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-
-
-
 }

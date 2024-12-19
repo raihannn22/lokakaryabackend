@@ -36,15 +36,5 @@ public class GroupAchievementDto {
         groupAchievement.setUpdatedBy(updateBy);
         return groupAchievement;
     }
-
-
-    // public static GroupAchievementDto fromEntity(GroupAchievement groupAchievement) {
-    //     GroupAchievementDto groupAchievementDto = new GroupAchievementDto();
-    //     groupAchievementDto.setId(groupAchievement.getId());
-    //     groupAchievementDto.setGroupName(groupAchievement.getGroupName());
-    //     groupAchievementDto.setPercentage(groupAchievement.getPercentage());
-    //     groupAchievementDto.setEnabled(groupAchievement.getEnabled());
-    //     return groupAchievementDto;
-    // }
 }
 

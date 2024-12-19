@@ -37,7 +37,7 @@ public class DevPlanController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAllDevPlan in DevPlanController");
+        Log.info("End getAllDevPlan in DevPlanController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -54,7 +54,7 @@ public class DevPlanController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getDevPlanDetail in DevPlanController");
+        Log.info("End getDevPlanDetail in DevPlanController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -71,7 +71,7 @@ public class DevPlanController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success save data", executionTime));
-        Log.info("End saveDevPlan in DevPlanController");
+        Log.info("End saveDevPlan in DevPlanController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

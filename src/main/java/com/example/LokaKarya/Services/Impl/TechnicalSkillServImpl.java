@@ -51,22 +51,20 @@ public class TechnicalSkillServImpl implements TechnicalSkillServ {
 
     @Override
     public TechnicalSkillReqDto createTechnicalSkill(TechnicalSkillDto technicalSkillDto) {
-        // UUID currentUser = getUserUtil.getCurrentUser().getId();
-        
+        Log.info("Start createAttitudeSkill in AttitudeSkillServImpl");
             TechnicalSkill technicalSkill = technicalSkillDto.toEntity(technicalSkillDto, null, null, null, new java.util.Date());
             technicalSkillRepo.save(technicalSkill);
+            Log.info("End createAttitudeSkill in AttitudeSkillServImpl");
             return TechnicalSkillReqDto.fromEntity(technicalSkillRepo.save(technicalSkill));
     }
 
     @Override
     public TechnicalSkillReqDto updateTechnicalSkill(UUID id, TechnicalSkillDto technicalSkillDto) {
         Log.info("Start updateAttitudeSkill in AttitudeSkillServImpl");
-        // UUID currentUser = getUserUtil.getCurrentUser().getId();
         TechnicalSkill technicalSkill = technicalSkillRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("TechnicalSkill not found"));
         technicalSkill.setTechnicalSkill(technicalSkillDto.getTechnicalSkill());
         technicalSkill.setEnabled(technicalSkillDto.getEnabled());
-        // technicalSkill.setUpdatedBy(currentUser);
         technicalSkill.setUpdatedAt(new java.util.Date());
         technicalSkillRepo.save(technicalSkill);
         Log.info("End updateAttitudeSkill in AttitudeSkillServImpl");
@@ -76,9 +74,8 @@ public class TechnicalSkillServImpl implements TechnicalSkillServ {
     @Override
     public Boolean deleteTechnicalSkill(UUID id) {
         Log.info("Start deleteTechnicalSkill in TechnicalSkillServImpl");
-
         if (technicalSkillRepo.existsById(id)) {
-            technicalSkillRepo.deleteById(id);  // hanya menghapus TechnicalSkill berdasarkan id
+            technicalSkillRepo.deleteById(id);  
             Log.info("End deleteTechnicalSkill in TechnicalSkillServImpl");
             return true;
         }

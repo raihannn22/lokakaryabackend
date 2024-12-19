@@ -11,10 +11,8 @@ public interface EmpAchievementSkillServ {
     EmpAchievementSkillReqDto getEmpAchievementSkillById(UUID id);
     EmpAchievementSkillReqDto createEmpAchievementSkill(EmpAchievementSkillDto empAchievementSkillDto);
     List<EmpAchievementSkillReqDto> createAllEmpAchievementSkill(List<EmpAchievementSkillDto> empAchievementSkillDtos);
-
     EmpAchievementSkillReqDto updateEmpAchievementSkill(UUID id, EmpAchievementSkillDto empAchievementSkillDto);
     Boolean deleteEmpAchievementSkill(UUID id);
-
     List<EmpAchievementSkillReqDto> getAllEmpAchievementSkillByUser(UUID id);
     List<EmpAchievementSkillReqDto> getAllEmpAchievementSkillByUserAndYear(UUID id, Integer year);
     List<EmpAchievementSkillReqDto> getEmpAchievementSkillByYear(Integer year);

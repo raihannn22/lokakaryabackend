@@ -36,7 +36,7 @@ public class DivisionController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAllDivision in DivisionController");
+        Log.info("End getAllDivision in DivisionController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -51,7 +51,7 @@ public class DivisionController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getDivisionDetail in DivisionController");
+        Log.info("End getDivisionDetail in DivisionController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -66,7 +66,7 @@ public class DivisionController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success save data", executionTime));
-        Log.info("End saveDivision in DivisionController");
+        Log.info("End saveDivision in DivisionController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -81,7 +81,7 @@ public class DivisionController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success update data", executionTime));
-        Log.info("End updateDivision in DivisionController");
+        Log.info("End updateDivision in DivisionController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -96,7 +96,7 @@ public class DivisionController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success delete data", executionTime));
-        Log.info("End deleteDivision in DivisionController");
+        Log.info("End deleteDivision in DivisionController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

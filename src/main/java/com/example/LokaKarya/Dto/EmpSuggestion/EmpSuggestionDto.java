@@ -38,15 +38,5 @@ public class EmpSuggestionDto {
         empSuggestion.setUpdatedBy(updateBy);
         return empSuggestion;
     }
-
-
-    // public static EmpSuggestionDto fromEntity(EmpSuggestion empSuggestion) {
-    //     EmpSuggestionDto empSuggestionDto = new EmpSuggestionDto();
-    //     empSuggestionDto.setId(empSuggestion.getId());
-    //     empSuggestionDto.setUserId(empSuggestion.getUserId());
-    //     empSuggestionDto.setSuggestion(empSuggestion.getSuggestion());
-    //     empSuggestionDto.setAssessmentYear(empSuggestion.getAssessmentYear());
-    //     return empSuggestionDto;
-    // }
 }
 
