@@ -42,5 +42,15 @@ public class AchievementDto {
         achievement.setUpdatedBy(updateBy);
         return achievement;
     }
+
+
+    //     public static AchievementDto fromEntity(Achievement achievement) {
+    //     AchievementDto achievementDto = new AchievementDto();
+    //     achievementDto.setId(achievement.getId());
+    //     achievementDto.setAchievement(achievement.getAchievement());
+    //     achievementDto.setGroupAchievement(GroupAchievement);
+    //     achievementDto.setEnabled(achievement.getEnabled());
+    //     return achievementDto;
+    // }
 }
 

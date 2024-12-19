@@ -1,4 +1,4 @@
-package com.example.LokaKarya;
+package com.example.lokakarya;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

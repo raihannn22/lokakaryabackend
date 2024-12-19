@@ -2,7 +2,6 @@ package com.example.lokakarya.Dto.AppRole;
 
 import com.example.lokakarya.Entity.AppRole;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
 import lombok.*;
 
 import java.util.Date;

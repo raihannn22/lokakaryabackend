@@ -1,5 +1,8 @@
 package com.example.lokakarya.Services.Impl;
 
+import com.example.lokakarya.Dto.Auth.ChangePassDto;
+import com.example.lokakarya.Dto.Auth.LoginDto;
+import com.example.lokakarya.Dto.Auth.LoginResponseDto;
 import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.lokakarya.Dto.ChangePassDto;
-import com.example.lokakarya.Dto.LoginDto;
-import com.example.lokakarya.Dto.LoginResponseDto;
+import com.example.lokakarya.Dto.Auth.ChangePassDto;
+import com.example.lokakarya.Dto.Auth.LoginDto;
+import com.example.lokakarya.Dto.Auth.LoginResponseDto;
 import com.example.lokakarya.Dto.User.UserDto;
 import com.example.lokakarya.Entity.User;
 import com.example.lokakarya.Repository.UserRepo;
@@ -57,6 +60,8 @@ public class AuthServImpl implements AuthServ {
                 .build();
     }
 
+
+
     public UserDto changePassword(ChangePassDto data){
         Log.info("Start changePassword in AuthServImpl");
         UUID currentUser = getUserUtil.getCurrentUser().getId();
@@ -76,4 +81,5 @@ public class AuthServImpl implements AuthServ {
         Log.info("End changePassword in AuthServImpl");
         return UserDto.fromEntity(user.get());
     }
+
 }

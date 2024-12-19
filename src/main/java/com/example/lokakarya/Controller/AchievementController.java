@@ -1,4 +1,4 @@
-package com.example.lokakarya.Controller;
+package com.example.LokaKarya.Controller;
 
 
 import java.util.List;
@@ -45,7 +45,7 @@ public class AchievementController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAllAchievement in AchievementControllerController, time: " + (endTime - startTime) + "ms");
+        Log.info("End getAllAchievement in AchievementControllerController");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -63,7 +63,7 @@ public class AchievementController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAchievementDetail in AchievementController, time: " + (endTime - startTime) + "ms");
+        Log.info("End getAchievementDetail in AchievementController");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -80,7 +80,7 @@ public class AchievementController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAchievementsByGroup in AchievementController, time: " + (endTime - startTime) + "ms");
+        Log.info("End getAchievementsByGroup in AchievementController");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

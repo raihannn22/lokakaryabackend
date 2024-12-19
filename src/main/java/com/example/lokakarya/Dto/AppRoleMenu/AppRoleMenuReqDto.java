@@ -7,7 +7,6 @@ import com.example.lokakarya.Entity.AppRoleMenu;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.lokakarya.Dto.ChangePassDto;
-import com.example.lokakarya.Dto.LoginDto;
-import com.example.lokakarya.Dto.LoginResponseDto;
+import com.example.lokakarya.Dto.Auth.ChangePassDto;
+import com.example.lokakarya.Dto.Auth.LoginDto;
+import com.example.lokakarya.Dto.Auth.LoginResponseDto;
 import com.example.lokakarya.Dto.ManagerDto;
 import com.example.lokakarya.Dto.User.UserDto;
 import com.example.lokakarya.Services.AuthServ;

@@ -1,4 +1,4 @@
-package com.example.lokakarya.Dto;
+package com.example.lokakarya.Dto.Auth;
 
 import com.example.lokakarya.Dto.User.UserDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
