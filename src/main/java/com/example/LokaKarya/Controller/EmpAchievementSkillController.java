@@ -37,7 +37,7 @@ public class EmpAchievementSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAllEmpAchievementSkill in EmpAchievementSkillController");
+        Log.info("End getAllEmpAchievementSkill in EmpAchievementSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -54,7 +54,7 @@ public class EmpAchievementSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success save data", executionTime));
-        Log.info("End saveEmpAchievementSkill in EmpAchievementSkillController");
+        Log.info("End saveEmpAchievementSkill in EmpAchievementSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -73,7 +73,7 @@ public class EmpAchievementSkillController extends ServerResponseList {
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success save all data", executionTime));
 
-        Log.info("End saveAllEmpAchievementSkills in EmpAchievementSkillController");
+        Log.info("End saveAllEmpAchievementSkills in EmpAchievementSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -90,7 +90,7 @@ public class EmpAchievementSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getEmpAchievementSkillDetail in EmpAchievementSkillController");
+        Log.info("End getEmpAchievementSkillDetail in EmpAchievementSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -107,7 +107,7 @@ public class EmpAchievementSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success update data", executionTime));
-        Log.info("End updateEmpAchievementSkill in EmpAchievementSkillController");
+        Log.info("End updateEmpAchievementSkill in EmpAchievementSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -124,7 +124,7 @@ public class EmpAchievementSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success delete data", executionTime));
-        Log.info("End deleteEmpAchievementSkill in EmpAchievementSkillController");
+        Log.info("End deleteEmpAchievementSkill in EmpAchievementSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -141,7 +141,7 @@ public class EmpAchievementSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getEmpAchievementSkillByEmpId in EmpAchievementSkillController");
+        Log.info("End getEmpAchievementSkillByEmpId in EmpAchievementSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -158,7 +158,7 @@ public class EmpAchievementSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getEmpAchievementSkillByEmpId in EmpAchievementSkillController");
+        Log.info("End getEmpAchievementSkillByEmpId in EmpAchievementSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -175,7 +175,7 @@ public class EmpAchievementSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getEmpAchievementSkillByYear in EmpAchievementSkillController");
+        Log.info("End getEmpAchievementSkillByYear in EmpAchievementSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 

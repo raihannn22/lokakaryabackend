@@ -41,7 +41,7 @@ public class UserController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAllUsers in UserController");
+        Log.info("End getAllUsers in UserController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -58,7 +58,7 @@ public class UserController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success save data", executionTime));
-        Log.info("End saveUsers in UserController");
+        Log.info("End saveUsers in UserController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -75,7 +75,7 @@ public class UserController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getUserDetail in UserController");
+        Log.info("End getUserDetail in UserController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -93,7 +93,7 @@ public class UserController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success update data", executionTime));
-        Log.info("End updateUser in UserController");
+        Log.info("End updateUser in UserController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -110,7 +110,7 @@ public class UserController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success delete data", executionTime));
-        Log.info("End deleteUser in UserController");
+        Log.info("End deleteUser in UserController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -125,7 +125,7 @@ public class UserController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success reset password", executionTime));
-        Log.info("End resetPassword in UserController");
+        Log.info("End resetPassword in UserController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 

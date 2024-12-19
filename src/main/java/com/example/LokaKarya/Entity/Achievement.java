@@ -23,13 +23,9 @@ public class Achievement {
     @Column(name = "ACHIEVEMENT", length = 100, nullable = false)
     private String achievement;
 
-    // @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "GROUP_ID", nullable = false)
     private GroupAchievement groupAchievement;
-
-    // @Column(name = "GROUP_ID", length = 32, nullable = false)
-    // private UUID groupId;
 
     @Column(name = "ENABLED", length = 1)
     private Integer enabled = 1;

@@ -65,11 +65,13 @@ public class AchievementServImpl implements AchievementServ {
 
     @Override
     public AchievementReqDto createAchievement(AchievementDto achievementDto) {
+        Log.info("Start createAchievement in AchievementServImpl");
         Optional<GroupAchievement> groupAchievement = groupAchievementRepo.findById(achievementDto.getGroupId());
         UUID currentUser = getUserUtil.getCurrentUser().getId();
         if (groupAchievement.isPresent()) {
             Achievement achievement = achievementDto.toEntity(achievementDto, groupAchievement.get(), null, null, currentUser, new java.util.Date());
             achievementRepo.save(achievement);
+            Log.info("End createAchievement in AchievementServImpl");
             return AchievementReqDto.fromEntity(achievementRepo.save(achievement));
         }else {
             throw new RuntimeException("Achievement not found");
@@ -97,7 +99,7 @@ public Boolean deleteAchievement(UUID id) {
     Log.info("Start deleteAchievement in AchievementServImpl");
 
     if (achievementRepo.existsById(id)) {
-        achievementRepo.deleteById(id);  // hanya menghapus achievement berdasarkan id
+        achievementRepo.deleteById(id); 
         Log.info("End deleteAchievement in AchievementServImpl");
         return true;
     }

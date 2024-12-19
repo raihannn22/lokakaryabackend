@@ -17,8 +17,6 @@
     import org.springframework.web.cors.CorsConfiguration;
 
     import lombok.RequiredArgsConstructor;
-    //import ogya.training.homework.config.filter.JwtValidationFilter;
-
     @RequiredArgsConstructor
     @EnableWebSecurity
     @Configuration
@@ -46,27 +44,12 @@
                         }))
 
                     .csrf(csrf -> csrf.disable())
-
-    //                .authorizeHttpRequests(auth -> auth
-    //                        .requestMatchers(HttpMethod.POST, "/employee/create").permitAll() // Ijinkan akses ke /employee/create tanpa autentikasi
-    //                        .anyRequest().authenticated());
-
                     .authorizeHttpRequests(
                             auth -> auth.requestMatchers("/users/**").hasAuthority("HR")
                                     .anyRequest().permitAll())
-//                            auth -> auth.requestMatchers("/user/**").authenticated().anyRequest().permitAll())
                     .csrf(csrf -> csrf.ignoringRequestMatchers("/**")
                             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                     .addFilterBefore(jwtValidationFilter, UsernamePasswordAuthenticationFilter.class);
-
-
-
-
-
-//                    .csrf(csrf -> csrf.ignoringRequestMatchers("/**")
-//                            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-//                    .addFilterBefore(jwtValidationFilter, UsernamePasswordAuthenticationFilter.class);
-
             return http.build();
         }
 

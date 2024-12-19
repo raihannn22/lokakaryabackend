@@ -41,17 +41,21 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
 
     @Override
     public List<EmpDevPlanReqDto> getAllEmpDevPlan() {
+        Log.info("Start getAllEmpDevPlan in EmpDevPlanServImpl");
         List<EmpDevPlan> response = empDevPlanRepo.findAll();
         List<EmpDevPlanReqDto> empDevPlanReqDto = new ArrayList<>();
         for (EmpDevPlan empDevPlan : response) {
             empDevPlanReqDto.add(EmpDevPlanReqDto.fromEntity(empDevPlan));
         }
+        Log.info("End getAllEmpDevPlan in EmpDevPlanServImpl");
         return empDevPlanReqDto;
     }
 
     @Override
     public EmpDevPlanReqDto getEmpDevPlanById(UUID id) {
+        Log.info("Start getEmpDevPlanById in EmpDevPlanServImpl");
         EmpDevPlan empDevPlan = empDevPlanRepo.findById(id).orElseThrow(() -> new RuntimeException("EmpDevPlan not found"));
+        Log.info("End getEmpDevPlanById in EmpDevPlanServImpl");
         return EmpDevPlanReqDto.fromEntity(empDevPlan);
     }
 
@@ -59,12 +63,10 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
     @Override
     public List<EmpDevPlanReqDto> createEmpDevPlans(List<EmpDevPlanDto> empDevPlanDtos) {
         Log.info("Start createEmpDevPlans in EmpDevPlanServImpl");
-
         UUID currentUserId = getUserUtil.getCurrentUser().getId();
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-        // Batch delete existing plans for the current user (if needed)
         empDevPlanRepo.deleteByUserIdAndAssessmentYear(currentUserId, currentYear);
-        entityManager.flush();  // Clear the entity manager to avoid persistence context issues
+        entityManager.flush();
 
         List<EmpDevPlan> empDevPlans = new ArrayList<>();
         for (EmpDevPlanDto empDevPlanDto : empDevPlanDtos) {
@@ -84,13 +86,10 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
                 throw new RuntimeException("User or DevPlan not found for ID: " + empDevPlanDto.getUser() + " or " + empDevPlanDto.getDevPlan());
             }
         }
-
-        // Save all EmpDevPlans at once
-        empDevPlanRepo.saveAll(empDevPlans);  // Using batch insert to save multiple entities
-        entityManager.flush();  // Ensure changes are persisted
+        empDevPlanRepo.saveAll(empDevPlans); 
+        entityManager.flush(); 
 
         Log.info("End createEmpDevPlans in EmpDevPlanServImpl");
-        // Convert and return the result DTOs
         return empDevPlans.stream()
                 .map(EmpDevPlanReqDto::fromEntity)
                 .collect(Collectors.toList());

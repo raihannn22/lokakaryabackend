@@ -35,9 +35,9 @@ public class EmpAttitudeSkillReqDto {
             EmpAttitudeSkillReqDto empAttitudeSkillReqDto = new EmpAttitudeSkillReqDto();
             empAttitudeSkillReqDto.setUserId(empAttitudeSkill.getUser().getId());
             empAttitudeSkillReqDto.setAttitudeSkillId(empAttitudeSkill.getAttitudeSkill().getId());
-             empAttitudeSkillReqDto.setAttitudeSkillName(empAttitudeSkill.getAttitudeSkill().getAttitudeSkill());
-             empAttitudeSkillReqDto.setGroupAttitudeSkillName(empAttitudeSkill.getAttitudeSkill().getGroupAttitudeSkill().getGroupName());
-             empAttitudeSkillReqDto.setGroupAttitudeSkillPercentage(empAttitudeSkill.getAttitudeSkill().getGroupAttitudeSkill().getPercentage());
+            empAttitudeSkillReqDto.setAttitudeSkillName(empAttitudeSkill.getAttitudeSkill().getAttitudeSkill());
+            empAttitudeSkillReqDto.setGroupAttitudeSkillName(empAttitudeSkill.getAttitudeSkill().getGroupAttitudeSkill().getGroupName());
+            empAttitudeSkillReqDto.setGroupAttitudeSkillPercentage(empAttitudeSkill.getAttitudeSkill().getGroupAttitudeSkill().getPercentage());
             empAttitudeSkillReqDto.setScore(empAttitudeSkill.getScore());
             empAttitudeSkillReqDto.setAssessmentYear(empAttitudeSkill.getAssessmentYear());
             return empAttitudeSkillReqDto;

@@ -37,7 +37,7 @@ public class GroupAchievementController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAllGroupAchievement in GroupAchievementController");
+        Log.info("End getAllGroupAchievement in GroupAchievementController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -54,7 +54,7 @@ public class GroupAchievementController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success save data", executionTime));
-        Log.info("End saveGroupAchievement in GroupAchievementController");
+        Log.info("End saveGroupAchievement in GroupAchievementController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -71,7 +71,7 @@ public class GroupAchievementController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getGroupAchievementDetail in GroupAchievementController");
+        Log.info("End getGroupAchievementDetail in GroupAchievementController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -88,7 +88,7 @@ public class GroupAchievementController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success update data", executionTime));
-        Log.info("End updateGroupAchievement in GroupAchievementController");
+        Log.info("End updateGroupAchievement in GroupAchievementController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -105,7 +105,7 @@ public class GroupAchievementController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success delete data", executionTime));
-        Log.info("End deleteGroupAchievement in GroupAchievementController");
+        Log.info("End deleteGroupAchievement in GroupAchievementController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 

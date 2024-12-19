@@ -14,8 +14,5 @@ public interface GroupAttitudeSkillServ {
     GroupAttitudeSkillReqDto createGroupAttitudeSkill(GroupAttitudeSkillDto GroupAttitudeSkillDto);
     GroupAttitudeSkillReqDto updateGroupAttitudeSkill(UUID id, GroupAttitudeSkillDto GroupAttitudeSkillDto);
     Boolean deleteGroupAttitudeSkill(UUID id);
-
-    // List<GroupAttitudeSkillWithDetailsDto> getAllGroupAttitudeSkillsWithDetails();
-
 }
 

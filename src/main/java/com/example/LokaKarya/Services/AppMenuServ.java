@@ -14,7 +14,6 @@ public interface AppMenuServ {
     AppMenuReqDto createAppMenu(AppMenuDto appMenuDto);
     AppMenuReqDto updateAppMenu(UUID id, AppMenuDto appMenuDto);
     Boolean deleteAppMenu(UUID id);
-
     List<AppMenuByUserDto> getAllAppMenuByUser(UUID id);
     List<AppMenuByUserDto> getAllAppMenuByUsername(String username);
 }

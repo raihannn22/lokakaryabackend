@@ -39,7 +39,7 @@ public class EmpSuggestionController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAllEmpAchievementSkill in EmpAchievementSkillController");
+        Log.info("End getAllEmpAchievementSkill in EmpAchievementSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -56,7 +56,7 @@ public class EmpSuggestionController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success save data", executionTime));
-        Log.info("End saveEmpSuggestion in EmpSuggestionController");
+        Log.info("End saveEmpSuggestion in EmpSuggestionController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -75,7 +75,7 @@ public class EmpSuggestionController extends ServerResponseList {
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success save all data", executionTime));
 
-        Log.info("End saveAllEmpSuggestions in EmpSuggestionController");
+        Log.info("End saveAllEmpSuggestions in EmpSuggestionController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -92,7 +92,7 @@ public class EmpSuggestionController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getEmpSuggestionDetail in EmpSuggestionController");
+        Log.info("End getEmpSuggestionDetail in EmpSuggestionController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -109,7 +109,7 @@ public class EmpSuggestionController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success update data", executionTime));
-        Log.info("End updateEmpSuggestion in EmpAchievementSkillController");
+        Log.info("End updateEmpSuggestion in EmpAchievementSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -126,7 +126,7 @@ public class EmpSuggestionController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success delete data", executionTime));
-        Log.info("End deleteEmpSuggestion in EmpSuggestionController");
+        Log.info("End deleteEmpSuggestion in EmpSuggestionController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -144,7 +144,7 @@ public class EmpSuggestionController extends ServerResponseList {
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
 
-        Log.info("End getEmpSuggestionsByUserId in EmpSuggestionController");
+        Log.info("End getEmpSuggestionsByUserId in EmpSuggestionController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -164,7 +164,7 @@ public class EmpSuggestionController extends ServerResponseList {
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
 
-        Log.info("End getEmpSuggestionsByUserIdAndYear in EmpSuggestionController");
+        Log.info("End getEmpSuggestionsByUserIdAndYear in EmpSuggestionController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

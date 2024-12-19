@@ -31,11 +31,13 @@ public class AttitudeSkillServImpl implements AttitudeSkillServ {
 
     @Override
     public List<AttitudeSkillReqDto> getAllAttitudeSkill() {
+        Log.info("Start getAllAttitudeSkill in AttitudeSkillServImpl");
         List<AttitudeSkill> response = attitudeSkillRepo.findAll();
         List<AttitudeSkillReqDto> attitudeSkillReqDto = new ArrayList<>();
         for (AttitudeSkill attitudeSkill : response) {
             attitudeSkillReqDto.add(AttitudeSkillReqDto.fromEntity(attitudeSkill));
         }
+        Log.info("End getAllAttitudeSkill in AttitudeSkillServImpl");
         return attitudeSkillReqDto;
     }
 

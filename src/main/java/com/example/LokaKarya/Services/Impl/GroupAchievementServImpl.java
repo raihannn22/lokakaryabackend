@@ -50,10 +50,12 @@ public class GroupAchievementServImpl implements GroupAchievementServ {
 
     @Override
     public GroupAchievementReqDto createGroupAchievement(GroupAchievementDto groupAchievementDto) {
+        Log.info("Start createGroupAchievement in GroupAchievementServImpl");
         UUID currentUser = getUserUtil.getCurrentUser().getId();
         
             GroupAchievement groupAchievement = groupAchievementDto.toEntity(groupAchievementDto, null, null, currentUser, new java.util.Date());
             groupAchievementRepo.save(groupAchievement);
+            Log.info("End createGroupAchievement in GroupAchievementServImpl");
             return GroupAchievementReqDto.fromEntity(groupAchievementRepo.save(groupAchievement));
     }
 
@@ -78,7 +80,7 @@ public class GroupAchievementServImpl implements GroupAchievementServ {
         Log.info("Start deleteGroupAchievement in GroupAchievementServImpl");
 
         if (groupAchievementRepo.existsById(id)) {
-            groupAchievementRepo.deleteById(id);  // hanya menghapus Achievement berdasarkan id
+            groupAchievementRepo.deleteById(id); 
             Log.info("End deleteGroupAchievement in GroupAchievementServImpl");
             return true;
         }

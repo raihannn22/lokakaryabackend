@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -45,7 +47,7 @@ public class EmpTechnicalSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getAllEmpTechnicalSkill in EmpTechnicalSkillController");
+        Log.info("End getAllEmpTechnicalSkill in EmpTechnicalSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -62,7 +64,7 @@ public class EmpTechnicalSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success save data", executionTime));
-        Log.info("End saveEmpTechnicalSkill in EmpTechnicalSkillController");
+        Log.info("End saveEmpTechnicalSkill in EmpTechnicalSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -81,7 +83,7 @@ public class EmpTechnicalSkillController extends ServerResponseList {
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success save all data", executionTime));
 
-        Log.info("End saveAllEmpTechnicalSkills in EmpTechnicalSkillController");
+        Log.info("End saveAllEmpTechnicalSkills in EmpTechnicalSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -98,7 +100,7 @@ public class EmpTechnicalSkillController extends ServerResponseList {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
-        Log.info("End getEmpTechnicalSkillDetail in EmpTechnicalSkillController");
+        Log.info("End getEmpTechnicalSkillDetail in EmpTechnicalSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
@@ -116,7 +118,7 @@ public class EmpTechnicalSkillController extends ServerResponseList {
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
 
-        Log.info("End getEmpTechnicalSkillsByUserId in EmpTechnicalSkillController");
+        Log.info("End getEmpTechnicalSkillsByUserId in EmpTechnicalSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -141,37 +143,37 @@ public class EmpTechnicalSkillController extends ServerResponseList {
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
 
-        Log.info("End getEmpTechnicalSkillsByUserIdAndYear in EmpTechnicalSkillController");
+        Log.info("End getEmpTechnicalSkillsByUserIdAndYear in EmpTechnicalSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<ManagerDto<EmpTechnicalSkillReqDto>>  updateEmpTechnicalSkill(@PathVariable("id") UUID id, @RequestBody EmpTechnicalSkillDto empTechnicalSkillDto) {
+        Log.info("Start updateEmpTechnicalSkill in EmpTechnicalSkillController");
+        long startTime = System.currentTimeMillis();
+        ManagerDto<EmpTechnicalSkillReqDto> response = new ManagerDto<>();
+        EmpTechnicalSkillReqDto content = empTechnicalSkillServ.updateEmpTechnicalSkill(id, empTechnicalSkillDto);
+        response.setContent(content);
+        response.setTotalRows(1);
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success update data", executionTime));
+        Log.info("End updateEmpTechnicalSkill in EmpTechnicalSkillController");
+        return new ResponseEntity<>(response, HttpStatus.OK) ;
+    }
+    
+    @DeleteMapping
+    public ResponseEntity<ManagerDto<Boolean>> deleteEmpTechnicalSkill(@PathVariable("id") UUID id) {
+        Log.info("Start deleteEmpTechnicalSkill in EmpTechnicalSkillController");
+        long startTime = System.currentTimeMillis();
+        ManagerDto<Boolean> response = new ManagerDto<>();
+        Boolean content = empTechnicalSkillServ.deleteEmpTechnicalSkill(id);
+        response.setContent(content);
+        response.setTotalRows(1);
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success delete data", executionTime));
+        Log.info("End deleteEmpTechnicalSkill in EmpTechnicalSkillController");
+        return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
 }
-// @PatchMapping("/update/{id}")
-// public ResponseEntity<ManagerDto<EmpTechnicalSkillReqDto>>  updateEmpTechnicalSkill(@PathVariable("id") UUID id, @RequestBody EmpTechnicalSkillDto empTechnicalSkillDto) {
-//     Log.info("Start updateEmpTechnicalSkill in EmpTechnicalSkillController");
-//     long startTime = System.currentTimeMillis();
-//     ManagerDto<EmpTechnicalSkillReqDto> response = new ManagerDto<>();
-//     EmpTechnicalSkillReqDto content = empTechnicalSkillServ.updateEmpTechnicalSkill(id, empTechnicalSkillDto);
-//     response.setContent(content);
-//     response.setTotalRows(1);
-//     long endTime = System.currentTimeMillis();
-//     long executionTime = endTime - startTime;
-//     response.setInfo(getInfoOk("Success update data", executionTime));
-//     Log.info("End updateEmpTechnicalSkill in EmpTechnicalSkillController");
-//     return new ResponseEntity<>(response, HttpStatus.OK) ;
-// }
-
-// @DeleteMapping
-// public ResponseEntity<ManagerDto<Boolean>> deleteEmpTechnicalSkill(@PathVariable("id") UUID id) {
-//     Log.info("Start deleteEmpTechnicalSkill in EmpTechnicalSkillController");
-//     long startTime = System.currentTimeMillis();
-//     ManagerDto<Boolean> response = new ManagerDto<>();
-//     Boolean content = empTechnicalSkillServ.deleteEmpTechnicalSkill(id);
-//     response.setContent(content);
-//     response.setTotalRows(1);
-//     long endTime = System.currentTimeMillis();
-//     long executionTime = endTime - startTime;
-//     response.setInfo(getInfoOk("Success delete data", executionTime));
-//     Log.info("End deleteEmpTechnicalSkill in EmpTechnicalSkillController");
-//     return new ResponseEntity<>(response, HttpStatus.OK) ;
-// }

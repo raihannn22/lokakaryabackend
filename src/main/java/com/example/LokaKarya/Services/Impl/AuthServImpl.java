@@ -48,10 +48,7 @@ public class AuthServImpl implements AuthServ {
             throw new RuntimeException("Invalid password");
         }
         String token = jwtUtil.generateToken(user);
-        // Konversi User ke UserDto
         UserDto userDto = UserDto.fromEntity(user);
-        // Buat LoginResponseDto dan kembalikan
-
         Log.info("End login in AuthServImpl");
         return   LoginResponseDto.builder()
                 .user(userDto)
