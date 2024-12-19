@@ -1,4 +1,4 @@
-package com.example.LokaKarya.Services.Impl;
+package com.example.lokakarya.Services.Impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +11,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillDto;
-import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillReqDto;
-import com.example.LokaKarya.Entity.Achievement;
-import com.example.LokaKarya.Entity.EmpAchievementSkill;
-import com.example.LokaKarya.Entity.User;
-import com.example.LokaKarya.Repository.AchievementRepo;
-import com.example.LokaKarya.Repository.EmpAchievementSkillRepo;
-import com.example.LokaKarya.Repository.UserRepo;
-import com.example.LokaKarya.Services.EmpAchievementSkillServ;
-import com.example.LokaKarya.util.GetUserUtil;
+import com.example.lokakarya.Dto.EmpAchievementSkill.EmpAchievementSkillDto;
+import com.example.lokakarya.Dto.EmpAchievementSkill.EmpAchievementSkillReqDto;
+import com.example.lokakarya.Entity.Achievement;
+import com.example.lokakarya.Entity.EmpAchievementSkill;
+import com.example.lokakarya.Entity.User;
+import com.example.lokakarya.Repository.AchievementRepo;
+import com.example.lokakarya.Repository.EmpAchievementSkillRepo;
+import com.example.lokakarya.Repository.UserRepo;
+import com.example.lokakarya.Services.EmpAchievementSkillServ;
+import com.example.lokakarya.util.GetUserUtil;
 
 @Service
 public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {

@@ -1,8 +1,8 @@
-package com.example.LokaKarya.Dto.EmpSuggestion;
+package com.example.lokakarya.Dto.EmpSuggestion;
 
-import com.example.LokaKarya.Entity.Achievement;
-import com.example.LokaKarya.Entity.EmpSuggestion;
-import com.example.LokaKarya.Entity.User;
+import com.example.lokakarya.Entity.Achievement;
+import com.example.lokakarya.Entity.EmpSuggestion;
+import com.example.lokakarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 

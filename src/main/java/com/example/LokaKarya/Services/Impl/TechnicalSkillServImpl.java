@@ -1,4 +1,4 @@
-package com.example.LokaKarya.Services.Impl;
+package com.example.lokakarya.Services.Impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,12 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.LokaKarya.Dto.TechnicalSkill.TechnicalSkillDto;
-import com.example.LokaKarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
-import com.example.LokaKarya.Entity.TechnicalSkill;
-import com.example.LokaKarya.Repository.TechnicalSkillRepo;
-import com.example.LokaKarya.Services.TechnicalSkillServ;
-import com.example.LokaKarya.util.GetUserUtil;
+import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillDto;
+import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
+import com.example.lokakarya.Entity.TechnicalSkill;
+import com.example.lokakarya.Repository.TechnicalSkillRepo;
+import com.example.lokakarya.Services.TechnicalSkillServ;
+import com.example.lokakarya.util.GetUserUtil;
 
 @Service
 public class TechnicalSkillServImpl implements TechnicalSkillServ {

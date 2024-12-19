@@ -1,4 +1,4 @@
-package com.example.LokaKarya.Controller;
+package com.example.lokakarya.Controller;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
-import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
-import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillWithDetailsDto;
-import com.example.LokaKarya.Dto.ManagerDto;
-import com.example.LokaKarya.Services.GroupAttitudeSkillServ;
-import com.example.LokaKarya.util.ServerResponseList;
+import com.example.lokakarya.Dto.ManagerDto;
+import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
+import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
+import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillWithDetailsDto;
+import com.example.lokakarya.Services.GroupAttitudeSkillServ;
+import com.example.lokakarya.util.ServerResponseList;
 
 @RestController
 @RequestMapping("/group-attitude-skill")

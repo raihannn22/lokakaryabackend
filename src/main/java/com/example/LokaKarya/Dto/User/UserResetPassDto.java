@@ -1,6 +1,6 @@
-package com.example.LokaKarya.Dto.User;
+package com.example.lokakarya.Dto.User;
 
-import com.example.LokaKarya.Entity.User;
+import com.example.lokakarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;

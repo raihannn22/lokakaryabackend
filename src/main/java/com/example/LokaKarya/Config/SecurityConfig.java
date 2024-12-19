@@ -1,4 +1,4 @@
-    package com.example.LokaKarya.Config;
+    package com.example.lokakarya.Config;
 
     import java.util.Arrays;
     import java.util.Collections;

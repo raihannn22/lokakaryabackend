@@ -1,9 +1,10 @@
-package com.example.LokaKarya.Repository;
+package com.example.lokakarya.Repository;
 
-import com.example.LokaKarya.Entity.AppMenu;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import com.example.lokakarya.Entity.AppMenu;
 
 import java.util.List;
 import java.util.UUID;

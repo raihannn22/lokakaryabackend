@@ -1,8 +1,8 @@
-package com.example.LokaKarya.Dto.EmpDevPlan;
+package com.example.lokakarya.Dto.EmpDevPlan;
 
-import com.example.LokaKarya.Entity.DevPlan;
-import com.example.LokaKarya.Entity.EmpDevPlan;
-import com.example.LokaKarya.Entity.User;
+import com.example.lokakarya.Entity.DevPlan;
+import com.example.lokakarya.Entity.EmpDevPlan;
+import com.example.lokakarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

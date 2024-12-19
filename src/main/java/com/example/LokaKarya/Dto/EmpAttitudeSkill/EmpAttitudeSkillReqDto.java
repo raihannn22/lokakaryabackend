@@ -1,7 +1,7 @@
-package com.example.LokaKarya.Dto.EmpAttitudeSkill;
+package com.example.lokakarya.Dto.EmpAttitudeSkill;
 
-import com.example.LokaKarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillReqDto;
-import com.example.LokaKarya.Entity.EmpAttitudeSkill;
+import com.example.lokakarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillReqDto;
+import com.example.lokakarya.Entity.EmpAttitudeSkill;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

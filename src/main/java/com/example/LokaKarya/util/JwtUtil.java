@@ -1,4 +1,4 @@
-package com.example.LokaKarya.util;
+package com.example.lokakarya.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -1,10 +1,10 @@
-package com.example.LokaKarya.Services;
-
-import com.example.LokaKarya.Dto.EmpDevPlan.EmpDevPlanDto;
-import com.example.LokaKarya.Dto.EmpDevPlan.EmpDevPlanReqDto;
+package com.example.lokakarya.Services;
 
 import java.util.List;
 import java.util.UUID;
+
+import com.example.lokakarya.Dto.EmpDevPlan.EmpDevPlanDto;
+import com.example.lokakarya.Dto.EmpDevPlan.EmpDevPlanReqDto;
 
 public interface EmpDevPlanServ {
     List<EmpDevPlanReqDto> getAllEmpDevPlan();

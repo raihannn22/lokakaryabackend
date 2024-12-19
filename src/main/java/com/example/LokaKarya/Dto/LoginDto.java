@@ -1,4 +1,4 @@
-package com.example.LokaKarya.Dto;
+package com.example.lokakarya.Dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;

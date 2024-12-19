@@ -1,8 +1,8 @@
-package com.example.LokaKarya.Dto.Achievement;
+package com.example.lokakarya.Dto.Achievement;
 
-import com.example.LokaKarya.Dto.AssessmentSummary.AssessmentSummaryReqDto;
-import com.example.LokaKarya.Entity.Achievement;
-import com.example.LokaKarya.Entity.AssessmentSummary;
+import com.example.lokakarya.Dto.AssessmentSummary.AssessmentSummaryReqDto;
+import com.example.lokakarya.Entity.Achievement;
+import com.example.lokakarya.Entity.AssessmentSummary;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

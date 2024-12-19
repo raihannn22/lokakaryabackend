@@ -1,6 +1,6 @@
-package com.example.LokaKarya.Dto.GroupAchievement;
+package com.example.lokakarya.Dto.GroupAchievement;
 
-import com.example.LokaKarya.Entity.GroupAchievement;
+import com.example.lokakarya.Entity.GroupAchievement;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 

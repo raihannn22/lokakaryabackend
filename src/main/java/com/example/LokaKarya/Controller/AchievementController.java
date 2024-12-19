@@ -1,4 +1,4 @@
-package com.example.LokaKarya.Controller;
+package com.example.lokakarya.Controller;
 
 
 import java.util.List;
@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.LokaKarya.Dto.Achievement.AchievementDto;
-import com.example.LokaKarya.Dto.Achievement.AchievementReqDto;
-import com.example.LokaKarya.Dto.ManagerDto;
-import com.example.LokaKarya.Services.AchievementServ;
-import com.example.LokaKarya.util.ServerResponseList;
+import com.example.lokakarya.Dto.ManagerDto;
+import com.example.lokakarya.Dto.Achievement.AchievementDto;
+import com.example.lokakarya.Dto.Achievement.AchievementReqDto;
+import com.example.lokakarya.Services.AchievementServ;
+import com.example.lokakarya.util.ServerResponseList;
 
 @RestController
 @RequestMapping("/achievement")

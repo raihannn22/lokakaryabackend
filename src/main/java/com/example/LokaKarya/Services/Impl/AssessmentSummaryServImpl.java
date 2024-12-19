@@ -1,16 +1,17 @@
-package com.example.LokaKarya.Services.Impl;
+package com.example.lokakarya.Services.Impl;
 
-import com.example.LokaKarya.Dto.AssessmentSummary.TotalScoreDto;
-import com.example.LokaKarya.Entity.*;
-import com.example.LokaKarya.Repository.*;
-import com.example.LokaKarya.util.GetUserUtil;
-import com.example.LokaKarya.Dto.AssessmentSummary.AssessmentSummaryDto;
-import com.example.LokaKarya.Dto.AssessmentSummary.AssessmentSummaryReqDto;
-import com.example.LokaKarya.Services.AssessmentSummaryServ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.lokakarya.Dto.AssessmentSummary.AssessmentSummaryDto;
+import com.example.lokakarya.Dto.AssessmentSummary.AssessmentSummaryReqDto;
+import com.example.lokakarya.Dto.AssessmentSummary.TotalScoreDto;
+import com.example.lokakarya.Entity.*;
+import com.example.lokakarya.Repository.*;
+import com.example.lokakarya.Services.AssessmentSummaryServ;
+import com.example.lokakarya.util.GetUserUtil;
 
 import java.util.*;
 import java.util.stream.Collectors;

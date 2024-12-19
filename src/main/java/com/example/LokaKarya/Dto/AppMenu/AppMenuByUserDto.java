@@ -1,7 +1,7 @@
-package com.example.LokaKarya.Dto.AppMenu;
+package com.example.lokakarya.Dto.AppMenu;
 
 
-import com.example.LokaKarya.Entity.AppMenu;
+import com.example.lokakarya.Entity.AppMenu;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 

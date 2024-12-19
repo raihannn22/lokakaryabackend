@@ -1,7 +1,7 @@
-package com.example.LokaKarya.Dto.EmpAchievementSkill;
+package com.example.lokakarya.Dto.EmpAchievementSkill;
 
-import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillReqDto;
-import com.example.LokaKarya.Entity.EmpAchievementSkill;
+import com.example.lokakarya.Dto.EmpAchievementSkill.EmpAchievementSkillReqDto;
+import com.example.lokakarya.Entity.EmpAchievementSkill;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

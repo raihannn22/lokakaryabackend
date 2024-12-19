@@ -1,11 +1,11 @@
-package com.example.LokaKarya.Services;
+package com.example.lokakarya.Services;
 
 import java.util.List;
 import java.util.UUID;
 
-import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
-import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
-import com.example.LokaKarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillWithDetailsDto;
+import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
+import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
+import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillWithDetailsDto;
 
 public interface GroupAttitudeSkillServ {
     List<GroupAttitudeSkillReqDto> getAllGroupAttitudeSkill();

@@ -1,10 +1,10 @@
-package com.example.LokaKarya.Services;
+package com.example.lokakarya.Services;
 
 import java.util.List;
 import java.util.UUID;
 
-import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillDto;
-import com.example.LokaKarya.Dto.EmpAchievementSkill.EmpAchievementSkillReqDto;
+import com.example.lokakarya.Dto.EmpAchievementSkill.EmpAchievementSkillDto;
+import com.example.lokakarya.Dto.EmpAchievementSkill.EmpAchievementSkillReqDto;
 
 public interface EmpAchievementSkillServ {
     List<EmpAchievementSkillReqDto> getAllEmpAchievementSkill();

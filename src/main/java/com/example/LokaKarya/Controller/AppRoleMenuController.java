@@ -1,17 +1,18 @@
-package com.example.LokaKarya.Controller;
+package com.example.lokakarya.Controller;
 
 
-import com.example.LokaKarya.Dto.AppRoleMenu.AppRoleMenuDto;
-import com.example.LokaKarya.Dto.AppRoleMenu.AppRoleMenuReqDto;
-import com.example.LokaKarya.Dto.ManagerDto;
-import com.example.LokaKarya.Services.AppRoleMenuServ;
-import com.example.LokaKarya.util.ServerResponseList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.lokakarya.Dto.ManagerDto;
+import com.example.lokakarya.Dto.AppRoleMenu.AppRoleMenuDto;
+import com.example.lokakarya.Dto.AppRoleMenu.AppRoleMenuReqDto;
+import com.example.lokakarya.Services.AppRoleMenuServ;
+import com.example.lokakarya.util.ServerResponseList;
 
 import java.util.List;
 import java.util.Map;

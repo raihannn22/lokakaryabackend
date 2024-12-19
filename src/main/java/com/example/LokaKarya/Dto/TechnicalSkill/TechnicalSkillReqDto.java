@@ -1,7 +1,7 @@
-package com.example.LokaKarya.Dto.TechnicalSkill;
+package com.example.lokakarya.Dto.TechnicalSkill;
 
-import com.example.LokaKarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
-import com.example.LokaKarya.Entity.TechnicalSkill;
+import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
+import com.example.lokakarya.Entity.TechnicalSkill;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
