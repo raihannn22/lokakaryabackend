@@ -54,7 +54,7 @@ public class GroupAttitudeSkillServImpl implements GroupAttitudeSkillServ {
     @Override
     public List<GroupAttitudeSkillWithDetailsDto> getAllGroupAttitudeSkillsWithDetails() {
         Log.info("Start getAllGroupAttitudeSkillsWithDetails in GroupAttitudeSkillServImpl");
-        List<GroupAttitudeSkill> skills = groupAttitudeSkillRepo.findAll();
+        List<GroupAttitudeSkill> skills = groupAttitudeSkillRepo.findByEnabled(1);
         Log.info("End getAllGroupAttitudeSkillsWithDetails in GroupAttitudeSkillServImpl");
         return skills.stream()
             .map(this::convertToGroupAttitudeSkillWithDetailsDto)
@@ -115,5 +115,18 @@ public class GroupAttitudeSkillServImpl implements GroupAttitudeSkillServ {
         throw new RuntimeException("GroupAttitudeSkill not found");
     }
 
-    
+    @Override
+    public List<GroupAttitudeSkillReqDto> getAllGroupAttitudeSkillEnabled() {
+        Log.info("Start getAllGroupAttitudeSkillEnabled in GroupAttitudeSkillServImpl");
+        List<GroupAttitudeSkill> response = groupAttitudeSkillRepo.findByEnabled(1);
+        List<GroupAttitudeSkillReqDto> groupAttitudeSkillReqDto = new ArrayList<>();
+        for (GroupAttitudeSkill groupAttitudeSkill : response) {
+            groupAttitudeSkillReqDto.add(GroupAttitudeSkillReqDto.fromEntity(groupAttitudeSkill));
+        }
+        Log.info("End getAllGroupAttitudeSkillEnabled in GroupAttitudeSkillServImpl");
+        return groupAttitudeSkillReqDto;
+
+    }
+
+
 }

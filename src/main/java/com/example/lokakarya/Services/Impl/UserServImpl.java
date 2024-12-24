@@ -188,6 +188,7 @@ public class UserServImpl implements UserServ {
         findUser.setPassword(passwordEncoder.encode(genPassword));
         findUser.setUpdatedAt(new java.util.Date());
         findUser.setUpdatedBy(currentUserId);
+        findUser.setHasChangePassword(false);
         findUser = userRepo.save(findUser);
         Log.info("End resetPassword in UserServImpl");
         return genPassword;

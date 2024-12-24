@@ -51,6 +51,10 @@ public class AuthServImpl implements AuthServ {
         if (!passwordEncoder.matches(data.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
+
+        if (user.getEnabled() == 0) {
+            throw new RuntimeException("User is disabled");
+        }
         String token = jwtUtil.generateToken(user);
         UserDto userDto = UserDto.fromEntity(user);
         Log.info("End login in AuthServImpl");
@@ -66,6 +70,7 @@ public class AuthServImpl implements AuthServ {
         Log.info("Start changePassword in AuthServImpl");
         UUID currentUser = getUserUtil.getCurrentUser().getId();
         Optional<User> user = userRepo.findById(currentUser);
+
         if (!passwordEncoder.matches(data.getCurrentPassword(), user.get().getPassword())) {
             throw new RuntimeException("Invalid password");
         };
@@ -73,9 +78,11 @@ public class AuthServImpl implements AuthServ {
         if (!data.getNewPassword().equals(data.getConfirmPassword())) {
             throw new RuntimeException("Password not match");
         };
+
         user.get().setPassword(passwordEncoder.encode(data.getNewPassword()));
         user.get().setUpdatedAt(new java.util.Date());
         user.get().setUpdatedBy(currentUser);
+        user.get().setHasChangePassword(true);
 
         userRepo.save(user.get());
         Log.info("End changePassword in AuthServImpl");

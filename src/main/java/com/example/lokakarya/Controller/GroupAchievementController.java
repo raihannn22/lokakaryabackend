@@ -110,6 +110,24 @@ public class GroupAchievementController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
+    @GetMapping("get/all/enabled")
+    public ResponseEntity<ManagerDto<List<GroupAchievementReqDto>>>  getAllGroupAchievementEnabled() {
+        Log.info("Start getAllGroupAchievementEnabled in GroupAchievementController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<List<GroupAchievementReqDto>> response = new ManagerDto<>();
+        List<GroupAchievementReqDto> content = groupAchievementServ.getAllGroupAchievementEnabled();
+
+        response.setContent(content);
+        response.setTotalRows(content.size());
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+        Log.info("End getAllGroupAchievementEnabled in GroupAchievementController, time: " + (endTime - startTime) + "ms");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
 
 
 }

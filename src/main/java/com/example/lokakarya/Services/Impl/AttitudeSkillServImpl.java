@@ -89,5 +89,17 @@ public class AttitudeSkillServImpl implements AttitudeSkillServ {
         }
         throw new RuntimeException("AttitudeSkill not found");
     }
-    
+
+    @Override
+    public List<AttitudeSkillReqDto> getAllAttitudeSkillEnabled() {
+        Log.info("Start getAllAttitudeSkillEnabled in AttitudeSkillServImpl");
+        List<AttitudeSkill> response = attitudeSkillRepo.findByEnabled(1);
+        List<AttitudeSkillReqDto> attitudeSkillReqDto = new ArrayList<>();
+        for (AttitudeSkill attitudeSkill : response) {
+            attitudeSkillReqDto.add(AttitudeSkillReqDto.fromEntity(attitudeSkill));
+        }
+        Log.info("End getAllAttitudeSkillEnabled in AttitudeSkillServImpl");
+        return attitudeSkillReqDto;
+    }
+
 }
