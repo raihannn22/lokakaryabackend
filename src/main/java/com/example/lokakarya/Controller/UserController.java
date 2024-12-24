@@ -80,6 +80,44 @@ public class UserController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
+    @GetMapping("/get/by-division-id")
+    public ResponseEntity<ManagerDto<List<UserDto>>> getUsersByDivisionId(@RequestParam UUID divisionId) {
+        Log.info("Start getUsersByDivisionId in UserController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<List<UserDto>> response = new ManagerDto<>();
+        List<UserDto> content = userServ.getUsersByDivisionId(divisionId);
+
+        response.setContent(content);
+        response.setTotalRows(content.size());
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+        Log.info("End getUsersByDivisionId in UserController, time: " + executionTime + "ms");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // @GetMapping("/get/by-division-role")
+    // public ResponseEntity<ManagerDto<List<UserDto>>> getUsersByDivisionAndRole(@RequestParam UUID divisionId, 
+    //                                                                         @RequestParam UUID roleId) {
+    //     Log.info("Start getUsersByDivisionAndRole in UserController");
+    //     long startTime = System.currentTimeMillis();
+
+    //     ManagerDto<List<UserDto>> response = new ManagerDto<>();
+    //     List<UserDto> content = userServ.getUsersByDivisionIdAndRoleId(divisionId, roleId);
+
+    //     response.setContent(content);
+    //     response.setTotalRows(content.size());
+    //     long endTime = System.currentTimeMillis();
+    //     long executionTime = endTime - startTime;
+    //     response.setInfo(getInfoOk("Success get data", executionTime));
+    //     Log.info("End getUsersByDivisionAndRole in UserController, time: " + executionTime + "ms");
+    //     return new ResponseEntity<>(response, HttpStatus.OK);
+    // }
+
+
+
+
 
     @PatchMapping("/update/{id}")
     public ResponseEntity<ManagerDto<UserDto>>  updateUser(@PathVariable("id") UUID id, @RequestBody UserReqUpdateDto userDto) {

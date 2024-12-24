@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.EntityManager;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -79,7 +80,32 @@ public class UserServImpl implements UserServ {
         Optional<User> user = userRepo.findById(id);
        Log.info("End getUserById in UserServImpl");
         return user.map(UserDto::fromEntity).orElse(null);
+    }   
+
+    @Override
+    public List<UserDto> getUsersByDivisionId(UUID divisionId) {
+        Log.info("Start getUsersByDivisionId in UserServImpl");
+        List<User> users = userRepo.findByDivisionId(divisionId);
+        List<UserDto> userDtos = users.stream()
+                                    .map(UserDto::fromEntity)
+                                    .collect(Collectors.toList());
+        Log.info("End getUsersByDivisionId in UserServImpl");
+        return userDtos;
     }
+
+    // @Override
+    // public List<UserDto> getUsersByDivisionIdAndRoleId(UUID divisionId, UUID roleId) {
+    //     Log.info("Start getUsersByDivisionIdAndRoleId in UserServImpl");
+    //     List<User> users = userRepo.findByDivisionIdAndRoleId(divisionId, roleId);
+    //     List<UserDto> userDtos = users.stream()
+    //                                 .map(UserDto::fromEntity)
+    //                                 .collect(Collectors.toList());
+    //     Log.info("End getUsersByDivisionIdAndRoleId in UserServImpl");
+    //     return userDtos;
+    // }
+
+
+
 
     @Override
     @Transactional
