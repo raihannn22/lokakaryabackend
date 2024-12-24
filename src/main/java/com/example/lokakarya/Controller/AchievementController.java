@@ -1,4 +1,4 @@
-package com.example.LokaKarya.Controller;
+package com.example.lokakarya.Controller;
 
 
 import java.util.List;
@@ -136,6 +136,23 @@ public class AchievementController extends ServerResponseList {
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success delete data", executionTime));
         Log.info("End deleteAchievement in AchievementController");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("get/all/enabled")
+    public ResponseEntity<ManagerDto<List<AchievementReqDto>>> getAllEnabledAchievement() {
+        Log.info("Start getAllEnabledAchievement in AchievementController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<List<AchievementReqDto>> response = new ManagerDto<>();
+        List<AchievementReqDto> content = achievementServ.getAllAchievementEnabled();
+        response.setContent(content);
+        response.setTotalRows(content.size());
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+        Log.info("End getAllEnabledAchievement in AchievementController");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

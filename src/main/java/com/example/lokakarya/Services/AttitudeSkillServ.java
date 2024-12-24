@@ -12,5 +12,6 @@ public interface AttitudeSkillServ {
     AttitudeSkillReqDto createAttitudeSkill(AttitudeSkillDto attitudeSkillDto);
     AttitudeSkillReqDto updateAttitudeSkill(UUID id, AttitudeSkillDto attitudeSkillDto);
     Boolean deleteAttitudeSkill(UUID id);
+    List<AttitudeSkillReqDto> getAllAttitudeSkillEnabled();
 }
 

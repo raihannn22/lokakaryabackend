@@ -11,5 +11,5 @@ import com.example.lokakarya.Entity.Achievement;
 @Repository
 public interface AchievementRepo extends JpaRepository<Achievement, UUID> {
     public List<Achievement> findByGroupAchievementId(UUID groupId);
-
+    List<Achievement> findAllByEnabled(Integer number);
 }

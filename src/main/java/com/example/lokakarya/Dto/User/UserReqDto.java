@@ -40,6 +40,7 @@ public class UserReqDto {
     @JsonProperty("division_id")
     private UUID division;
 
+
     public static User toEntity(UserReqDto userDto, UUID createdBy,Date createdAt ,UUID updatedBy, Date updatedAt) {
         User user = new User();
         user.setUsername(userDto.getUsername());

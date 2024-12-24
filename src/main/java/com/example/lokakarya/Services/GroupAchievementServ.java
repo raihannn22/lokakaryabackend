@@ -12,5 +12,6 @@ public interface GroupAchievementServ {
     GroupAchievementReqDto createGroupAchievement(GroupAchievementDto groupAchievementDto);
     GroupAchievementReqDto updateGroupAchievement(UUID id, GroupAchievementDto groupAchievementDto);
     Boolean deleteGroupAchievement(UUID id);
+    List<GroupAchievementReqDto> getAllGroupAchievementEnabled();
 }
 

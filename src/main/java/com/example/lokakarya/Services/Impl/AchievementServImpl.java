@@ -105,5 +105,17 @@ public Boolean deleteAchievement(UUID id) {
     }
     throw new RuntimeException("Achievement not found");
 }
-    
+
+    @Override
+    public List<AchievementReqDto> getAllAchievementEnabled() {
+        Log.info("Start getAllAchievementEnabled in AchievementServImpl");
+        List<Achievement> response = achievementRepo.findAllByEnabled(1);
+        List<AchievementReqDto> achievementReqDto = new ArrayList<>();
+        for (Achievement achievement : response) {
+            achievementReqDto.add(AchievementReqDto.fromEntity(achievement));
+        }
+        Log.info("End getAllAchievementEnabled in AchievementServImpl");
+        return achievementReqDto;
+    }
+
 }

@@ -87,5 +87,18 @@ public class GroupAchievementServImpl implements GroupAchievementServ {
         throw new RuntimeException("GroupAchievement not found");
     }
 
-    
+    @Override
+    public List<GroupAchievementReqDto> getAllGroupAchievementEnabled() {
+        Log.info("Start getAllGroupAchievementEnabled in GroupAchievementServImpl");
+        List<GroupAchievement> response = groupAchievementRepo.findByEnabled(1);
+        List<GroupAchievementReqDto> groupAchievementReqDto = new ArrayList<>();
+
+        for (GroupAchievement groupAchievement : response) {
+            groupAchievementReqDto.add(GroupAchievementReqDto.fromEntity(groupAchievement));
+        }
+        Log.info("End getAllGroupAchievementEnabled in GroupAchievementServImpl");
+        return groupAchievementReqDto;
+    }
+
+
 }

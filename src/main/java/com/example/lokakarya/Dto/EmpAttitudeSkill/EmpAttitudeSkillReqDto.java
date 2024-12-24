@@ -26,6 +26,10 @@ public class EmpAttitudeSkillReqDto {
     private String groupAttitudeSkillName;
     @JsonProperty("group_attitude_skill_percentage")
     private Integer groupAttitudeSkillPercentage;
+    @JsonProperty("enabled")
+    private Integer enabled;
+    @JsonProperty("group_enabled")
+    private Integer groupEnabled;
     @JsonProperty("score")
     private Integer score;
     @JsonProperty("assessment_year")
@@ -38,6 +42,8 @@ public class EmpAttitudeSkillReqDto {
             empAttitudeSkillReqDto.setAttitudeSkillName(empAttitudeSkill.getAttitudeSkill().getAttitudeSkill());
             empAttitudeSkillReqDto.setGroupAttitudeSkillName(empAttitudeSkill.getAttitudeSkill().getGroupAttitudeSkill().getGroupName());
             empAttitudeSkillReqDto.setGroupAttitudeSkillPercentage(empAttitudeSkill.getAttitudeSkill().getGroupAttitudeSkill().getPercentage());
+            empAttitudeSkillReqDto.setEnabled(empAttitudeSkill.getAttitudeSkill().getEnabled());
+            empAttitudeSkillReqDto.setGroupEnabled(empAttitudeSkill.getAttitudeSkill().getGroupAttitudeSkill().getEnabled());
             empAttitudeSkillReqDto.setScore(empAttitudeSkill.getScore());
             empAttitudeSkillReqDto.setAssessmentYear(empAttitudeSkill.getAssessmentYear());
             return empAttitudeSkillReqDto;

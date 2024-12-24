@@ -137,4 +137,21 @@ public class GroupAttitudeSkillController extends ServerResponseList {
         Log.info("End deleteGroupAttitudeSkill in GroupAttitudeSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("get/all/enabled")
+    public ResponseEntity<ManagerDto<List<GroupAttitudeSkillReqDto>>>  getAllGroupAttitudeSkillEnabled() {
+        Log.info("Start getAllGroupAttitudeSkillEnabled in GroupAttitudeSkillController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<List<GroupAttitudeSkillReqDto>> response = new ManagerDto<>();
+        List<GroupAttitudeSkillReqDto> content = groupAttitudeSkillServ.getAllGroupAttitudeSkillEnabled();
+
+        response.setContent(content);
+        response.setTotalRows(content.size());
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+        Log.info("End getAllGroupAttitudeSkillEnabled in GroupAttitudeSkillController, time: " + (endTime - startTime) + "ms");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

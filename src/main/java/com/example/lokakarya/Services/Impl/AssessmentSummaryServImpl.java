@@ -108,10 +108,54 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
         return userScores;
     }
 
+//    private double calculateUserTotalScore(List<EmpAttitudeSkill> attitudeSkills, List<EmpAchievementSkill> achievements) {
+//        Log.info("Start calculateUserTotalScore in AssessmentSummaryServImpl");
+//        double score = 0.0;
+//
+//        // Filter attitudeSkills berdasarkan group_enabled dan enabled
+//        Map<GroupAttitudeSkill, List<EmpAttitudeSkill>> groupedAttitudes = attitudeSkills.stream()
+//                .filter(skill -> skill.getAttitudeSkill().getGroupAttitudeSkill().getEnabled() == 1) // Check group_enabled == 1
+//                .filter(skill -> skill.getAttitudeSkill().getEnabled() == 1) // Check enabled == 1
+//                .collect(Collectors.groupingBy(skill -> skill.getAttitudeSkill().getGroupAttitudeSkill()));
+//
+//        for (Map.Entry<GroupAttitudeSkill, List<EmpAttitudeSkill>> entry : groupedAttitudes.entrySet()) {
+//            GroupAttitudeSkill group = entry.getKey();
+//            List<EmpAttitudeSkill> skillsInGroup = entry.getValue();
+//            double groupAverageScore = skillsInGroup.stream()
+//                    .mapToDouble(EmpAttitudeSkill::getScore)
+//                    .average()
+//                    .orElse(0.0);
+//            score += groupAverageScore * (group.getPercentage() / 100.0);
+//        }
+//
+//        // Filter achievements berdasarkan group_enabled dan enabled
+//        Map<GroupAchievement, List<EmpAchievementSkill>> groupedAchievements = achievements.stream()
+//                .filter(achievement -> achievement.getAchievement().getGroupAchievement().getEnabled() == 1) // Check group_enabled == 1
+//                .filter(achievement -> achievement.getAchievement().getEnabled() == 1) // Check enabled == 1
+//                .collect(Collectors.groupingBy(achievement -> achievement.getAchievement().getGroupAchievement()));
+//
+//        for (Map.Entry<GroupAchievement, List<EmpAchievementSkill>> entry : groupedAchievements.entrySet()) {
+//            GroupAchievement group = entry.getKey();
+//            List<EmpAchievementSkill> achievementsInGroup = entry.getValue();
+//            double groupAverageScore = achievementsInGroup.stream()
+//                    .mapToDouble(EmpAchievementSkill::getScore)
+//                    .average()
+//                    .orElse(0.0);
+//            score += groupAverageScore * (group.getPercentage() / 100.0);
+//        }
+//
+//        Log.info("End calculateUserTotalScore in AssessmentSummaryServImpl");
+//        return score;
+//    }
+
     private double calculateUserTotalScore(List<EmpAttitudeSkill> attitudeSkills, List<EmpAchievementSkill> achievements) {
         Log.info("Start calculateUserTotalScore in AssessmentSummaryServImpl");
         double score = 0.0;
+
+        // Filter attitudeSkills berdasarkan group_enabled dan enabled
         Map<GroupAttitudeSkill, List<EmpAttitudeSkill>> groupedAttitudes = attitudeSkills.stream()
+                .filter(skill -> skill.getAttitudeSkill().getGroupAttitudeSkill().getEnabled() == 1) // Check group_enabled == 1
+                .filter(skill -> skill.getAttitudeSkill().getEnabled() == 1) // Check enabled == 1
                 .collect(Collectors.groupingBy(skill -> skill.getAttitudeSkill().getGroupAttitudeSkill()));
 
         for (Map.Entry<GroupAttitudeSkill, List<EmpAttitudeSkill>> entry : groupedAttitudes.entrySet()) {
@@ -123,19 +167,39 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
                     .orElse(0.0);
             score += groupAverageScore * (group.getPercentage() / 100.0);
         }
+
+        // Filter achievements berdasarkan group_enabled dan enabled
         Map<GroupAchievement, List<EmpAchievementSkill>> groupedAchievements = achievements.stream()
+                .filter(achievement -> achievement.getAchievement().getGroupAchievement().getEnabled() == 1) // Check group_enabled == 1
+                .filter(achievement -> achievement.getAchievement().getEnabled() == 1) // Check enabled == 1
                 .collect(Collectors.groupingBy(achievement -> achievement.getAchievement().getGroupAchievement()));
 
         for (Map.Entry<GroupAchievement, List<EmpAchievementSkill>> entry : groupedAchievements.entrySet()) {
             GroupAchievement group = entry.getKey();
             List<EmpAchievementSkill> achievementsInGroup = entry.getValue();
-            double groupAverageScore = achievementsInGroup.stream()
+
+            // Ambil total jumlah achievement di grup ini dari tabel `achievement`
+            int totalAchievementsInGroup = (int) group.getAchievements().stream()
+                    .filter(ach -> ach.getGroupAchievement().getEnabled() == 1) // Pastikan grup enabled
+                    .count();
+
+            // Hitung total skor dari employee achievement
+            double totalGroupScore = achievementsInGroup.stream()
                     .mapToDouble(EmpAchievementSkill::getScore)
-                    .average()
-                    .orElse(0.0);
+                    .sum();
+
+            // Rata-rata dihitung berdasarkan jumlah total achievement di grup
+            double groupAverageScore = totalAchievementsInGroup > 0
+                    ? totalGroupScore / totalAchievementsInGroup
+                    : 0.0;
+
+            // Tambahkan skor ke total dengan memperhitungkan persen grup
             score += groupAverageScore * (group.getPercentage() / 100.0);
         }
+
         Log.info("End calculateUserTotalScore in AssessmentSummaryServImpl");
         return score;
     }
+
+
 }

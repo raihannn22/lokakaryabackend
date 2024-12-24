@@ -40,6 +40,8 @@ public class UserDto {
     private String divisionName;
     @JsonProperty("app_role")
     private List<AppRole> appRole;
+    @JsonProperty("has_change_password")
+    private Boolean hasChangePassword;
 
 
     public static UserDto fromEntity(User user) {
@@ -65,6 +67,7 @@ public class UserDto {
             userDto.setDivision(null);
             userDto.setDivisionName(null); // or handle it in another way if needed
         }
+        userDto.setHasChangePassword(user.getHasChangePassword());
         return userDto;
     }
 

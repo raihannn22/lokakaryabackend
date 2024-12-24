@@ -115,4 +115,21 @@ public class AttitudeSkillController extends ServerResponseList {
         Log.info("End deleteAttitudeSKill in AttitudeController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("get/all/enabled")
+    public ResponseEntity<ManagerDto<List<AttitudeSkillReqDto>>>  getAllAttitudeSkillEnabled() {
+        Log.info("Start getAllAttitudeSkillEnabled in AttitudeSkillController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<List<AttitudeSkillReqDto>> response = new ManagerDto<>();
+        List<AttitudeSkillReqDto> content = attitudeSkillServ.getAllAttitudeSkillEnabled();
+
+        response.setContent(content);
+        response.setTotalRows(content.size());
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+        Log.info("End getAllAttitudeSkillEnabled in AttitudeSkillController, time: " + (endTime - startTime) + "ms");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

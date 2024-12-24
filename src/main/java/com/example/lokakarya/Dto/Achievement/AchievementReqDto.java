@@ -27,6 +27,8 @@ public class AchievementReqDto {
     private String groupName;
     @JsonProperty("group_percentage")
     private Integer groupPercentage;
+    @JsonProperty("group_enabled")
+    private Integer groupEnabled;
     @JsonProperty("enabled")
     private Integer enabled;
 
@@ -37,6 +39,7 @@ public class AchievementReqDto {
         achievementReqDto.setGroupPercentage(achievement.getGroupAchievement().getPercentage());
         achievementReqDto.setAchievement(achievement.getAchievement());
         achievementReqDto.setGroupId(achievement.getGroupAchievement().getId());
+        achievementReqDto.setGroupEnabled(achievement.getGroupAchievement().getEnabled());
         achievementReqDto.setEnabled(achievement.getEnabled());
         return achievementReqDto;
     }

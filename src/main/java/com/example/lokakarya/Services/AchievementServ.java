@@ -13,4 +13,5 @@ public interface AchievementServ {
     AchievementReqDto createAchievement(AchievementDto achievementDto);
     AchievementReqDto updateAchievement(UUID id, AchievementDto achievementDto);
     Boolean deleteAchievement(UUID id);
+    List<AchievementReqDto> getAllAchievementEnabled();
 }

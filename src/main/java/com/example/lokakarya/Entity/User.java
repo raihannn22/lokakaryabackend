@@ -58,6 +58,9 @@ public class User implements UserDetails {
     @JoinColumn (name = "DIVISION_ID")
     private Division division;
 
+    @JoinColumn (name = "HAS_CHANGE_PASSWORD")
+    private Boolean hasChangePassword = false;
+
     @Column(name = "CREATED_AT")
     @Temporal(TemporalType.DATE)
     private java.util.Date createdAt;
@@ -87,6 +90,8 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<AppUserRole> appRoles;
+    
+
 
 
     @Override
