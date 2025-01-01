@@ -26,7 +26,7 @@ public class AssessmentSummary {
     @Column(name = "ID", nullable = false)
     private UUID id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
@@ -34,7 +34,7 @@ public class AssessmentSummary {
     private Integer year;
 
     @Column(name = "SCORE",length = 3, nullable = false)
-    private Integer score;
+    private Double score;
 
     @Column(name = "STATUS", nullable = false)
     private Integer status = 1;

@@ -14,4 +14,6 @@ public interface AssessmentSummaryServ {
     AssessmentSummaryReqDto updateAssessmentSummary(UUID id, AssessmentSummaryDto assessmentSummaryDto);
     Boolean deleteAssessmentSummary(UUID id);
     List<TotalScoreDto> calculateTotalScoresForAllUsers(int year);
+    void calculateAndSaveScoreForUser(UUID userId, int year);
+    List<AssessmentSummaryReqDto> getAllAssessmentSummaryByYear(int year);
 }
