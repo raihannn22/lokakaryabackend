@@ -15,5 +15,8 @@ import com.example.lokakarya.Entity.GroupAttitudeSkill;
 public interface GroupAttitudeSkillRepo extends JpaRepository<GroupAttitudeSkill, UUID> {
     List<GroupAttitudeSkill> findByEnabled(Integer enabled);
     Page<GroupAttitudeSkill> findByGroupNameContainingIgnoreCase(String groupName, Pageable pageable);
+    Page<GroupAttitudeSkill> findByPercentage(Double percentage, Pageable pageable);
+
+
     long countByGroupNameContainingIgnoreCase(String groupName);
 }

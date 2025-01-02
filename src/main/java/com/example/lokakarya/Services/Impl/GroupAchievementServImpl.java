@@ -3,6 +3,7 @@ package com.example.lokakarya.Services.Impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,29 @@ public class GroupAchievementServImpl implements GroupAchievementServ {
         return groupAchievementReqDto;
     }
 
+    // @Override
+    // public List<GroupAchievementReqDto> getPaginatedGroupAchievement(int page, int size, String sort, String direction, String searchKeyword) {
+    //     Log.info("Start getPaginatedGroupAchievement in GroupAchievementServImpl");
+        
+    //     Sort sorting = direction.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
+    //     Pageable pageable = PageRequest.of(page, size, sorting);
+    //     Page<GroupAchievement> groupAchievementPage;
+
+    //     if (searchKeyword != null && !searchKeyword.isEmpty()) {
+    //         groupAchievementPage = groupAchievementRepo.findByGroupNameContainingIgnoreCase(searchKeyword, pageable);
+    //     } else {
+    //         groupAchievementPage = groupAchievementRepo.findAll(pageable);
+    //     }
+
+    //     List<GroupAchievementReqDto> groupAchievementReqDto = new ArrayList<>();
+    //     for (GroupAchievement groupAchievement : groupAchievementPage.getContent()) {
+    //         groupAchievementReqDto.add(GroupAchievementReqDto.fromEntity(groupAchievement));
+    //     }
+        
+    //     Log.info("End getPaginatedGroupAchievement in GroupAchievementServImpl");
+    //     return groupAchievementReqDto;
+    // }
+
     @Override
     public List<GroupAchievementReqDto> getPaginatedGroupAchievement(int page, int size, String sort, String direction, String searchKeyword) {
         Log.info("Start getPaginatedGroupAchievement in GroupAchievementServImpl");
@@ -53,7 +77,15 @@ public class GroupAchievementServImpl implements GroupAchievementServ {
         Page<GroupAchievement> groupAchievementPage;
 
         if (searchKeyword != null && !searchKeyword.isEmpty()) {
-            groupAchievementPage = groupAchievementRepo.findByGroupNameContainingIgnoreCase(searchKeyword, pageable);
+            try {
+                // Coba untuk mengonversi searchKeyword menjadi Double
+                Double percentage = Double.valueOf(searchKeyword);
+                // Jika berhasil, cari berdasarkan percentage
+                groupAchievementPage = groupAchievementRepo.findByPercentage(percentage, pageable);
+            } catch (NumberFormatException e) {
+                // Jika tidak bisa dikonversi, cari berdasarkan groupName
+                groupAchievementPage = groupAchievementRepo.findByGroupNameContainingIgnoreCase(searchKeyword, pageable);
+            }
         } else {
             groupAchievementPage = groupAchievementRepo.findAll(pageable);
         }

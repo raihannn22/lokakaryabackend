@@ -14,9 +14,12 @@ import com.example.lokakarya.Entity.GroupAchievement;
 public interface GroupAchievementRepo extends JpaRepository<GroupAchievement, UUID> {
     List<GroupAchievement> findByEnabled(Integer groupEnabled);
 
-    // Metode untuk mencari berdasarkan groupName
+    // Metode untuk mencari berdasarkan column
     Page<GroupAchievement> findByGroupNameContainingIgnoreCase(String groupName, Pageable pageable);
+    Page<GroupAchievement> findByPercentage(Double percentage, Pageable pageable);
     
     // Metode untuk menghitung berdasarkan groupName
     long countByGroupNameContainingIgnoreCase(String groupName);
+    // long countDistinctById(UUID id);
+
 }

@@ -58,7 +58,15 @@ public class GroupAttitudeSkillServImpl implements GroupAttitudeSkillServ {
         Page<GroupAttitudeSkill> groupAttitudeSkillPage;
 
         if (searchKeyword != null && !searchKeyword.isEmpty()) {
-            groupAttitudeSkillPage = groupAttitudeSkillRepo.findByGroupNameContainingIgnoreCase(searchKeyword, pageable);
+            try {
+                // Coba untuk mengonversi searchKeyword menjadi Double
+                Double percentage = Double.valueOf(searchKeyword);
+                // Jika berhasil, cari berdasarkan percentage
+                groupAttitudeSkillPage = groupAttitudeSkillRepo.findByPercentage(percentage, pageable);
+            } catch (NumberFormatException e) {
+                // Jika tidak bisa dikonversi, cari berdasarkan groupName
+                groupAttitudeSkillPage = groupAttitudeSkillRepo.findByGroupNameContainingIgnoreCase(searchKeyword, pageable);
+            }
         } else {
             groupAttitudeSkillPage = groupAttitudeSkillRepo.findAll(pageable);
         }
