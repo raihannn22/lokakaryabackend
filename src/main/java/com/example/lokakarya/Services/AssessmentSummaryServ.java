@@ -16,4 +16,7 @@ public interface AssessmentSummaryServ {
     List<TotalScoreDto> calculateTotalScoresForAllUsers(int year);
     void calculateAndSaveScoreForUser(UUID userId, int year);
     List<AssessmentSummaryReqDto> getAllAssessmentSummaryByYear(int year);
+
+    AssessmentSummaryReqDto setAssessmentSummary1(UUID id, int year);
+    AssessmentSummaryReqDto setAssessmentSummary0(UUID id, int year);
 }

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.example.lokakarya.Repository.AssessmentSummaryRepo;
 import com.example.lokakarya.Services.AssessmentSummaryServ;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,8 +132,10 @@ public class EmpAttitudeSkillServImpl implements EmpAttitudeSkillServ {
 
 
     @Override
+    @Transactional
     public List<EmpAttitudeSkillReqDto> createAllEmpAttitudeSkill(List<EmpAttitudeSkillDto> empAttitudeSkillDtos) {
         Log.info("Start createAllEmpAttitudeSkill in EmpAttitudeSkillServImpl");
+        empAttitudeSkillRepo.deleteByUserIdAndAssessmentYear(empAttitudeSkillDtos.get(0).getUserId(), empAttitudeSkillDtos.get(0).getAssessmentYear());
         List<EmpAttitudeSkill> empAttitudeSkills = empAttitudeSkillDtos.stream().map(empAttitudeSkillDto -> {
             Optional<AttitudeSkill> attitudeSkillOpt = attitudeSkillRepo.findById(empAttitudeSkillDto.getAttitudeSkillId());
             Optional<User> userOpt = userRepo.findById(empAttitudeSkillDto.getUserId());

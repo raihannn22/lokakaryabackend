@@ -1,6 +1,7 @@
 package com.example.lokakarya.Controller;
 
 
+import com.example.lokakarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillReqDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,6 +138,38 @@ public class AssessmentSummaryController extends ServerResponseList {
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
         Log.info("End getAllAssessmentSummaryByYear in AssessmentSummaryController");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PatchMapping("/update/{userId}/assessment/{year}/set/1")
+    public ResponseEntity<ManagerDto<AssessmentSummaryReqDto>> setAssessmentSummaryTo1(@PathVariable ("userId") UUID id, @PathVariable("year") int year){
+        Log.info("Starting ");
+        long startTime = System.currentTimeMillis();
+        ManagerDto<AssessmentSummaryReqDto> response = new ManagerDto<>();
+        AssessmentSummaryReqDto content = assessmentSummaryServ.setAssessmentSummary1(id, year);
+        response.setContent(content);
+        response.setTotalRows(1);
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data",executionTime ));
+        Log.info(("End"));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PatchMapping("/update/{userId}/assessment/{year}/set/0")
+    public ResponseEntity<ManagerDto<AssessmentSummaryReqDto>> setAssessmentSummaryTo0(@PathVariable ("userId") UUID id, @PathVariable("year") int year){
+        Log.info("Starting ");
+        long startTime = System.currentTimeMillis();
+        ManagerDto<AssessmentSummaryReqDto> response = new ManagerDto<>();
+        AssessmentSummaryReqDto content = assessmentSummaryServ.setAssessmentSummary0(id, year);
+        response.setContent(content);
+        response.setTotalRows(1);
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data",executionTime ));
+        Log.info(("End"));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

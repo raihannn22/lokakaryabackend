@@ -262,7 +262,6 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
     @Override
     public List<AssessmentSummaryReqDto> getAllAssessmentSummaryByYear(int year) {
         Log.info("Start getAllAssessmentSummaryByYear in AssessmentSummaryServImpl");
-        Log.info("Start getAllAssessmentSummary in AssessmentSummaryServImpl");
         List<AssessmentSummary> response = assessmentSummaryRepo.findByYear(year);
         List<AssessmentSummaryReqDto> assessmentSummaryReqDto = new ArrayList<>();
         for (AssessmentSummary assessmentSummary : response) {
@@ -270,6 +269,26 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
         }
         Log.info("End getAllAssessmentSummary in AssessmentSummaryServImpl");
         return assessmentSummaryReqDto;
+    }
+
+    @Override
+    public AssessmentSummaryReqDto setAssessmentSummary1(UUID id, int year) {
+        Log.info("Start setAssessmentSummary1 in AssessmentSummaryServImpl");
+        AssessmentSummary assessmentSummary = assessmentSummaryRepo.findByUserIdAndYear(id, year).orElseThrow(() -> new RuntimeException("AssessmentSummary not found"));
+        assessmentSummary.setStatus(1);
+        assessmentSummaryRepo.save(assessmentSummary);
+        Log.info("End setAssessmentSummary1 in AssessmentSummaryServImpl");
+        return AssessmentSummaryReqDto.fromEntity(assessmentSummary);
+    }
+
+    @Override
+    public AssessmentSummaryReqDto setAssessmentSummary0(UUID id, int year) {
+        Log.info("Start setAssessmentSummary2 in AssessmentSummaryServImpl");
+        AssessmentSummary assessmentSummary = assessmentSummaryRepo.findByUserIdAndYear(id, year).orElseThrow(() -> new RuntimeException("AssessmentSummary not found"));
+        assessmentSummary.setStatus(0);
+        assessmentSummaryRepo.save(assessmentSummary);
+        Log.info("End setAssessmentSummary2 in AssessmentSummaryServImpl");
+        return AssessmentSummaryReqDto.fromEntity(assessmentSummary);
     }
 
 
