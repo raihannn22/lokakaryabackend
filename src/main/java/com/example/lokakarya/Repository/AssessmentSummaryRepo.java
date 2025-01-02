@@ -14,4 +14,5 @@ public interface AssessmentSummaryRepo extends JpaRepository<AssessmentSummary, 
     Optional<AssessmentSummary> findByUserIdAndYear(UUID userId, int year);
     void deleteByUserIdAndYear(UUID userId, int year);
     List<AssessmentSummary> findByYear(int year);
+
 }

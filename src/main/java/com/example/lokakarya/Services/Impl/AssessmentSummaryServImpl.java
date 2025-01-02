@@ -291,5 +291,13 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
         return AssessmentSummaryReqDto.fromEntity(assessmentSummary);
     }
 
+    @Override
+    public AssessmentSummaryReqDto getAssessmentSummaryByUserIdAndYear(UUID id, int year) {
+        Log.info("Start getAssessmentSummaryByUserIdAndYear in AssessmentSummaryServImpl");
+        AssessmentSummary assessmentSummary = assessmentSummaryRepo.findByUserIdAndYear(id, year).orElseThrow(() -> new RuntimeException("AssessmentSummary not found"));
+        Log.info("End getAssessmentSummaryByUserIdAndYear in AssessmentSummaryServImpl");
+        return AssessmentSummaryReqDto.fromEntity(assessmentSummary);
+    }
+
 
 }

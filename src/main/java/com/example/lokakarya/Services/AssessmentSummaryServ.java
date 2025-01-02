@@ -19,4 +19,5 @@ public interface AssessmentSummaryServ {
 
     AssessmentSummaryReqDto setAssessmentSummary1(UUID id, int year);
     AssessmentSummaryReqDto setAssessmentSummary0(UUID id, int year);
+    AssessmentSummaryReqDto getAssessmentSummaryByUserIdAndYear(UUID id, int year);
 }
