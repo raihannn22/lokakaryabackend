@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.lokakarya.Dto.ManagerDto;
 import com.example.lokakarya.Dto.Division.DivisionDto;
 import com.example.lokakarya.Dto.Division.DivisionReqDto;
+import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
 import com.example.lokakarya.Services.AssessmentSummaryServ;
 import com.example.lokakarya.Services.DivisionServ;
 import com.example.lokakarya.util.ServerResponseList;
@@ -38,6 +39,30 @@ public class DivisionController extends ServerResponseList {
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
         Log.info("End getAllDivision in DivisionController, time: " + (endTime - startTime) + "ms");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/paginated")
+    public ResponseEntity<ManagerDto<List<DivisionReqDto>>> getPaginatedDivision(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "divisionName") String sort, // Kolom default untuk sorting
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(required = false) String searchKeyword) { // Arah sorting default
+        Log.info("Start getPaginatedDivision in DivisionController");
+        long startTime = System.currentTimeMillis();
+        long totalRecords = divisionServ.count();
+
+        ManagerDto<List<DivisionReqDto>> response = new ManagerDto<>();
+        List<DivisionReqDto> content = divisionServ.getPaginatedDivision(page, size, sort, direction, searchKeyword);
+
+        response.setContent(content);
+        response.setTotalData(totalRecords);
+        response.setTotalRows(content.size());
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+        Log.info("End getPaginatedDivision in DivisionController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
