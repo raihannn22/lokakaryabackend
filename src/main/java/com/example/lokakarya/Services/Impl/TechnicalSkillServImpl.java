@@ -7,10 +7,16 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementReqDto;
 import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillDto;
 import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
+import com.example.lokakarya.Entity.GroupAchievement;
 import com.example.lokakarya.Entity.TechnicalSkill;
 import com.example.lokakarya.Repository.TechnicalSkillRepo;
 import com.example.lokakarya.Services.TechnicalSkillServ;
@@ -38,6 +44,29 @@ public class TechnicalSkillServImpl implements TechnicalSkillServ {
             technicalSkillReqDto.add(TechnicalSkillReqDto.fromEntity(technicalSkill));
         }
         Log.info("End getAllTechnicalSkill in TechnicalSkillServImpl");
+        return technicalSkillReqDto;
+    }
+
+    @Override
+    public List<TechnicalSkillReqDto> getPaginatedTechnicalSkill(int page, int size, String sort, String direction, String searchKeyword) {
+        Log.info("Start getPaginatedTechnicalSkill in TechnicalSkillServImpl");
+        
+        Sort sorting = direction.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
+        Pageable pageable = PageRequest.of(page, size, sorting);
+        Page<TechnicalSkill> technicalSkillPage;
+
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            technicalSkillPage = technicalSkillRepo.findByTechnicalSkillContainingIgnoreCase(searchKeyword, pageable);
+        } else {
+            technicalSkillPage = technicalSkillRepo.findAll(pageable);
+        }
+
+        List<TechnicalSkillReqDto> technicalSkillReqDto = new ArrayList<>();
+        for (TechnicalSkill technicalSkill : technicalSkillPage.getContent()) {
+            technicalSkillReqDto.add(TechnicalSkillReqDto.fromEntity(technicalSkill));
+        }
+        
+        Log.info("End getPaginatedTechnicalSkill in TechnicalSkillServImpl");
         return technicalSkillReqDto;
     }
 
@@ -82,5 +111,17 @@ public class TechnicalSkillServImpl implements TechnicalSkillServ {
         throw new RuntimeException("TechnicalSkill not found");
     }
 
+    @Override
+    public long count() {
+        return technicalSkillRepo.count(); 
+    }
+
+    @Override
+    public long countBySearchKeyword(String searchKeyword) {
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            return technicalSkillRepo.countByTechnicalSkillContainingIgnoreCase(searchKeyword);
+        }
+        return technicalSkillRepo.count(); 
+    }
 
 }

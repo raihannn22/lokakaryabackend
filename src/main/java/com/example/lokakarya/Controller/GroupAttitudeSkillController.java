@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.lokakarya.Dto.ManagerDto;
+import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementReqDto;
 import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
 import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
 import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillWithDetailsDto;
@@ -49,6 +51,29 @@ public class GroupAttitudeSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/paginated")
+    public ResponseEntity<ManagerDto<List<GroupAttitudeSkillReqDto>>> getPaginatedGroupAttitudeSkill(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "groupName") String sort, // Kolom default untuk sorting
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(required = false) String searchKeyword) { // Arah sorting default
+        Log.info("Start getPaginatedGroupAttitudeSkill in GroupAttitudeSkillController");
+        long startTime = System.currentTimeMillis();
+        long totalRecords = groupAttitudeSkillServ.count();
+
+        ManagerDto<List<GroupAttitudeSkillReqDto>> response = new ManagerDto<>();
+        List<GroupAttitudeSkillReqDto> content = groupAttitudeSkillServ.getPaginatedGroupAttitudeSkill(page, size, sort, direction, searchKeyword);
+
+        response.setContent(content);
+        response.setTotalData(totalRecords);
+        response.setTotalRows(content.size());
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+        Log.info("End getPaginatedGroupAttitudeSkill in GroupAttitudeSkillController, time: " + (endTime - startTime) + "ms");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     
     @GetMapping("/with-details")
     public ResponseEntity<ManagerDto<List<GroupAttitudeSkillWithDetailsDto>>> getAllGroupAttitudeSkillsWithDetails() {

@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import com.example.lokakarya.Dto.ManagerDto;
 import com.example.lokakarya.Dto.DevPlan.DevPlanDto;
 import com.example.lokakarya.Dto.DevPlan.DevPlanReqDto;
+import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
+import com.example.lokakarya.Services.DevPlanServ;
+import com.example.lokakarya.Services.TechnicalSkillServ;
 import com.example.lokakarya.Services.Impl.DevPlanServImpl;
 import com.example.lokakarya.util.ServerResponseList;
 
@@ -24,6 +27,9 @@ public class DevPlanController extends ServerResponseList {
 
     @Autowired
     private DevPlanServImpl devPlanServImpl;
+
+    @Autowired
+    DevPlanServ devPlanServ;
 
     @GetMapping("/get/all")
     public ResponseEntity<ManagerDto<List<DevPlanReqDto>>> getAllDevPlan() {
@@ -39,6 +45,30 @@ public class DevPlanController extends ServerResponseList {
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
         Log.info("End getAllDevPlan in DevPlanController, time: " + (endTime - startTime) + "ms");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/paginated")
+    public ResponseEntity<ManagerDto<List<DevPlanReqDto>>> getPaginatedDevPlan(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "plan") String sort, // Kolom default untuk sorting
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(required = false) String searchKeyword) { // Arah sorting default
+        Log.info("Start getPaginatedDevPlan in DevPlanController");
+        long startTime = System.currentTimeMillis();
+        long totalRecords = devPlanServ.count();
+
+        ManagerDto<List<DevPlanReqDto>> response = new ManagerDto<>();
+        List<DevPlanReqDto> content = devPlanServ.getPaginatedDevPlan(page, size, sort, direction, searchKeyword);
+
+        response.setContent(content);
+        response.setTotalData(totalRecords);
+        response.setTotalRows(content.size());
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+        Log.info("End getPaginatedDevPlan in DevPlanController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

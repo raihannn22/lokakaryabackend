@@ -12,5 +12,8 @@ public interface TechnicalSkillServ {
     TechnicalSkillReqDto createTechnicalSkill(TechnicalSkillDto TechnicalSkillDto);
     TechnicalSkillReqDto updateTechnicalSkill(UUID id, TechnicalSkillDto TechnicalSkillDto);
     Boolean deleteTechnicalSkill(UUID id);
+    List<TechnicalSkillReqDto> getPaginatedTechnicalSkill(int page, int size, String sort, String direction, String searchKeyword); // Hapus percentage
+    long count();
+    long countBySearchKeyword(String searchKeyword);
 }
 

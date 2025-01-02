@@ -42,6 +42,30 @@ public class GroupAchievementController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/paginated")
+    public ResponseEntity<ManagerDto<List<GroupAchievementReqDto>>> getPaginatedGroupAchievement(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "groupName") String sort, // Kolom default untuk sorting
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(required = false) String searchKeyword) { // Arah sorting default
+        Log.info("Start getPaginatedGroupAchievement in GroupAchievementController");
+        long startTime = System.currentTimeMillis();
+        long totalRecords = groupAchievementServ.count();
+
+        ManagerDto<List<GroupAchievementReqDto>> response = new ManagerDto<>();
+        List<GroupAchievementReqDto> content = groupAchievementServ.getPaginatedGroupAchievement(page, size, sort, direction, searchKeyword);
+
+        response.setContent(content);
+        response.setTotalData(totalRecords);
+        response.setTotalRows(content.size());
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+        Log.info("End getPaginatedGroupAchievement in GroupAchievementController, time: " + (endTime - startTime) + "ms");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @PutMapping("/save")
     public ResponseEntity<ManagerDto<GroupAchievementReqDto>>  saveGroupAchievement(@RequestBody GroupAchievementDto groupAchievementDto) {
         Log.info("Start saveGroupAchievement in GroupAchievementController");
@@ -114,11 +138,13 @@ public class GroupAchievementController extends ServerResponseList {
     public ResponseEntity<ManagerDto<List<GroupAchievementReqDto>>>  getAllGroupAchievementEnabled() {
         Log.info("Start getAllGroupAchievementEnabled in GroupAchievementController");
         long startTime = System.currentTimeMillis();
+        Long totalRecords = groupAchievementServ.count();
 
         ManagerDto<List<GroupAchievementReqDto>> response = new ManagerDto<>();
         List<GroupAchievementReqDto> content = groupAchievementServ.getAllGroupAchievementEnabled();
 
         response.setContent(content);
+        response.setTotalData(totalRecords);
         response.setTotalRows(content.size());
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;

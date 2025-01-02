@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.lokakarya.Dto.ManagerDto;
+import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementReqDto;
 import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillDto;
 import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
 import com.example.lokakarya.Services.TechnicalSkillServ;
@@ -39,6 +40,30 @@ public class TechnicalSkillController extends ServerResponseList {
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
         Log.info("End getAllTechnicalSkill in TechnicalSkillController, time: " + (endTime - startTime) + "ms");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/paginated")
+    public ResponseEntity<ManagerDto<List<TechnicalSkillReqDto>>> getPaginatedTechnicalSkill(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "technicalSkill") String sort, // Kolom default untuk sorting
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(required = false) String searchKeyword) { // Arah sorting default
+        Log.info("Start getPaginatedTechnicalSkill in TechnicalSkillController");
+        long startTime = System.currentTimeMillis();
+        long totalRecords = technicalSkillServ.count();
+
+        ManagerDto<List<TechnicalSkillReqDto>> response = new ManagerDto<>();
+        List<TechnicalSkillReqDto> content = technicalSkillServ.getPaginatedTechnicalSkill(page, size, sort, direction, searchKeyword);
+
+        response.setContent(content);
+        response.setTotalData(totalRecords);
+        response.setTotalRows(content.size());
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+        Log.info("End getPaginatedTechnicalSkill in TechnicalSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

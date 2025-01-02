@@ -3,11 +3,17 @@ package com.example.lokakarya.Services.Impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.lokakarya.Dto.DevPlan.DevPlanDto;
 import com.example.lokakarya.Dto.DevPlan.DevPlanReqDto;
+import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
 import com.example.lokakarya.Entity.DevPlan;
+import com.example.lokakarya.Entity.TechnicalSkill;
 import com.example.lokakarya.Repository.DevPlanRepo;
 import com.example.lokakarya.Services.DevPlanServ;
 import com.example.lokakarya.util.GetUserUtil;
@@ -36,6 +42,29 @@ public class DevPlanServImpl implements DevPlanServ {
             devPlanReqDto.add(DevPlanReqDto.fromEntity(devPlan));
         }
         Log.info("End getAllDevPlan in DevPlanServImpl");
+        return devPlanReqDto;
+    }
+
+    @Override
+    public List<DevPlanReqDto> getPaginatedDevPlan(int page, int size, String sort, String direction, String searchKeyword) {
+        Log.info("Start getPaginatedDevPlan in DevPlanServImpl");
+        
+        Sort sorting = direction.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
+        Pageable pageable = PageRequest.of(page, size, sorting);
+        Page<DevPlan> devPlanPage;
+
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            devPlanPage = devPlanRepo.findByPlanContainingIgnoreCase(searchKeyword, pageable);
+        } else {
+            devPlanPage = devPlanRepo.findAll(pageable);
+        }
+
+        List<DevPlanReqDto> devPlanReqDto = new ArrayList<>();
+        for (DevPlan devPlan : devPlanPage.getContent()) {
+            devPlanReqDto.add(DevPlanReqDto.fromEntity(devPlan));
+        }
+        
+        Log.info("End getPaginatedDevPlan in DevPlanServImpl");
         return devPlanReqDto;
     }
 
@@ -75,5 +104,18 @@ public class DevPlanServImpl implements DevPlanServ {
         devPlanRepo.deleteById(id);
         Log.info("End deleteDevPlan in DevPlanServImpl");
         return true;
+    }
+
+    @Override
+    public long count() {
+        return devPlanRepo.count(); 
+    }
+
+    @Override
+    public long countBySearchKeyword(String searchKeyword) {
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            return devPlanRepo.countByPlanContainingIgnoreCase(searchKeyword);
+        }
+        return devPlanRepo.count(); 
     }
 }
