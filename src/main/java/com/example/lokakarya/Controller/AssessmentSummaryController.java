@@ -172,4 +172,20 @@ public class AssessmentSummaryController extends ServerResponseList {
         Log.info(("End"));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/get/{userId}/assessment/{year}")
+    public ResponseEntity<ManagerDto<AssessmentSummaryReqDto>> getAssessmentSummaryByUserId(@PathVariable ("userId") UUID id, @PathVariable("year") int year){
+        Log.info("Starting ");
+        long startTime = System.currentTimeMillis();
+        ManagerDto<AssessmentSummaryReqDto> response = new ManagerDto<>();
+        AssessmentSummaryReqDto content = assessmentSummaryServ.getAssessmentSummaryByUserIdAndYear(id, year);
+        response.setContent(content);
+        response.setTotalRows(1);
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data",executionTime ));
+        Log.info(("End"));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
