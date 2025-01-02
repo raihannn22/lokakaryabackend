@@ -1,5 +1,6 @@
 package com.example.lokakarya.Services.Impl;
 
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +94,7 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
     }
 
     @Override
+    @Transactional
     public List<TotalScoreDto> calculateTotalScoresForAllUsers(int year) {
         Log.info("Start calculateTotalScoresForAllUsers in AssessmentSummaryServImpl");
         List<User> users = userRepo.findAll();
@@ -100,8 +102,11 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
         List<TotalScoreDto> userScores = new ArrayList<>();
         for (User user : users) {
             List<EmpAttitudeSkill> attitudeSkills = attitudeSkillRepo.findByUserIdAndAssessmentYear(user.getId(), year);
-            List<EmpAchievementSkill> achievements = achievementRepo.findByUserIdAndAssessmentYear(user.getId(),year);
+            List<EmpAchievementSkill> achievements = achievementRepo.findByUserIdAndAssessmentYear(user.getId(), year);
+
             double totalScore = calculateUserTotalScore(attitudeSkills, achievements);
+
+            // Tambahkan ke daftar hasil
             userScores.add(new TotalScoreDto(user.getId(), user.getUsername(), totalScore));
         }
         Log.info("End calculateTotalScoresForAllUsers in AssessmentSummaryServImpl");
@@ -152,6 +157,8 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
         Log.info("Start calculateUserTotalScore in AssessmentSummaryServImpl");
         double score = 0.0;
 
+
+
         // Filter attitudeSkills berdasarkan group_enabled dan enabled
         Map<GroupAttitudeSkill, List<EmpAttitudeSkill>> groupedAttitudes = attitudeSkills.stream()
                 .filter(skill -> skill.getAttitudeSkill().getGroupAttitudeSkill().getEnabled() == 1) // Check group_enabled == 1
@@ -199,6 +206,89 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
 
         Log.info("End calculateUserTotalScore in AssessmentSummaryServImpl");
         return score;
+    }
+
+
+    private void saveAssessmentSummary(User user, int year, double totalScore) {
+        Log.info("Start saveAssessmentSummary in AssessmentSummaryServImpl");
+
+        UUID currentUserEntity = getUserUtil.getCurrentUser().getId();
+        AssessmentSummary assessmentSummary = new AssessmentSummary();
+
+        assessmentSummary.setUser(user);
+        assessmentSummary.setYear(year);
+        assessmentSummary.setScore(totalScore);
+        assessmentSummary.setStatus(0);
+        assessmentSummary.setCreatedBy(currentUserEntity);
+        assessmentSummary.setCreatedAt(new java.util.Date());
+
+
+        assessmentSummaryRepo.save(assessmentSummary);
+
+        Log.info("End saveAssessmentSummary in AssessmentSummaryServImpl");
+    }
+
+    @Override
+    @Transactional
+    public void calculateAndSaveScoreForUser(UUID userId, int year) {
+        Log.info("Start calculateAndSaveScoreForUser in AssessmentSummaryServImpl");
+
+        // Ambil user berdasarkan userId
+        Optional<User> userOptional = userRepo.findById(userId);
+        if (userOptional.isEmpty()) {
+            throw new RuntimeException("User with ID " + userId + " not found");
+        }
+
+        Optional<AssessmentSummary> assessmentSummaryOpt = assessmentSummaryRepo.findByUserIdAndYear(userId, year);
+        assessmentSummaryOpt.ifPresent(assessmentSummary -> assessmentSummaryRepo.delete(assessmentSummary));
+        User user = userOptional.get();
+
+        // Ambil data attitudeSkills dan achievements berdasarkan userId dan year
+        List<EmpAttitudeSkill> attitudeSkills = attitudeSkillRepo.findByUserIdAndAssessmentYear(userId, year);
+        List<EmpAchievementSkill> achievements = achievementRepo.findByUserIdAndAssessmentYear(userId, year);
+
+        // Hitung skor total
+        double totalScore = calculateUserTotalScore(attitudeSkills, achievements);
+
+        // Simpan hasil ke database
+        saveAssessmentSummary(user, year, totalScore);
+
+        Log.info("End calculateAndSaveScoreForUser in AssessmentSummaryServImpl");
+
+        // Return hasilnya dalam bentuk DTO
+        new TotalScoreDto(user.getId(), user.getUsername(), totalScore);
+    }
+
+    @Override
+    public List<AssessmentSummaryReqDto> getAllAssessmentSummaryByYear(int year) {
+        Log.info("Start getAllAssessmentSummaryByYear in AssessmentSummaryServImpl");
+        List<AssessmentSummary> response = assessmentSummaryRepo.findByYear(year);
+        List<AssessmentSummaryReqDto> assessmentSummaryReqDto = new ArrayList<>();
+        for (AssessmentSummary assessmentSummary : response) {
+            assessmentSummaryReqDto.add(AssessmentSummaryReqDto.fromEntity(assessmentSummary));
+        }
+        Log.info("End getAllAssessmentSummary in AssessmentSummaryServImpl");
+        return assessmentSummaryReqDto;
+    }
+
+    @Override
+    public AssessmentSummaryReqDto setAssessmentSummary1(UUID id, int year) {
+        Log.info("Start setAssessmentSummary1 in AssessmentSummaryServImpl");
+        AssessmentSummary assessmentSummary = assessmentSummaryRepo.findByUserIdAndYear(id, year).orElseThrow(() -> new RuntimeException("AssessmentSummary not found"));
+        assessmentSummary.setStatus(1);
+        assessmentSummaryRepo.save(assessmentSummary);
+        Log.info("End setAssessmentSummary1 in AssessmentSummaryServImpl");
+        return AssessmentSummaryReqDto.fromEntity(assessmentSummary);
+    }
+
+    @Override
+    public AssessmentSummaryReqDto setAssessmentSummary0(UUID id, int year) {
+        Log.info("Start setAssessmentSummary2 in AssessmentSummaryServImpl");
+        AssessmentSummary assessmentSummary = assessmentSummaryRepo.findByUserIdAndYear(id, year).orElseThrow(() -> new RuntimeException("AssessmentSummary not found"));
+        assessmentSummary.setStatus(0);
+        assessmentSummaryRepo.save(assessmentSummary);
+        Log.info("End setAssessmentSummary2 in AssessmentSummaryServImpl");
+        return AssessmentSummaryReqDto.fromEntity(assessmentSummary);
     }
 
 

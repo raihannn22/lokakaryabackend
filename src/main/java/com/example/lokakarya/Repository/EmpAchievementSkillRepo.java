@@ -13,4 +13,5 @@ public interface EmpAchievementSkillRepo extends JpaRepository<EmpAchievementSki
  List<EmpAchievementSkill> findByUserId(UUID userId);
  List<EmpAchievementSkill> findByUserIdAndAssessmentYear(UUID userId, Integer assessmentYear);
  List<EmpAchievementSkill> findByAssessmentYear(Integer assessmentYear);
+ void deleteByUserIdAndAssessmentYear(UUID userId, Integer assessmentYear);
 }

@@ -22,7 +22,7 @@ public class AssessmentSummaryDto {
     @JsonProperty("year")
     private Integer year;
     @JsonProperty("SCORE")
-    private Integer score;
+    private Double score;
     @JsonProperty("STATUS")
     private Integer status;
 

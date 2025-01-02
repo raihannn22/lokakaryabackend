@@ -13,5 +13,6 @@ public interface EmpAttitudeSkillRepo extends JpaRepository<EmpAttitudeSkill, UU
     List<EmpAttitudeSkill> findByUserId(UUID userId);
     List<EmpAttitudeSkill> findByUserIdAndAssessmentYear(UUID userId, Integer assessmentYear);
     List<EmpAttitudeSkill> findByAssessmentYear(Integer assessmentYear);
+    void deleteByUserIdAndAssessmentYear(UUID userId, Integer assessmentYear);
 
 }

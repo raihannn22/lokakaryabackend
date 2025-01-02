@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.example.lokakarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillDto;
+import com.example.lokakarya.Services.AssessmentSummaryServ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,9 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
 
     @Autowired
     GetUserUtil getUserUtil;
+
+    @Autowired
+    AssessmentSummaryServ assessmentSummaryServ;
 
     @Override
     public List<EmpAchievementSkillReqDto> getAllEmpAchievementSkill() {
@@ -82,6 +87,10 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
             new java.util.Date() 
         );
         empAchievementSkill = empAchievementSkillRepo.save(empAchievementSkill);
+
+        UUID userId = empAchievementSkillDto.getUserId();
+        int year = empAchievementSkillDto.getAssessmentYear();
+        assessmentSummaryServ.calculateAndSaveScoreForUser(userId , year);
         Log.info("End createEmpAchievementSkill in EmpAchievementSkillServImpl");
         return EmpAchievementSkillReqDto.fromEntity(empAchievementSkill);
     }
@@ -111,6 +120,10 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
             );
         }).collect(Collectors.toList());
         List<EmpAchievementSkill> savedSkills = empAchievementSkillRepo.saveAll(empAchievementSkills);
+         EmpAchievementSkillDto firstDto = empAchievementSkillDtos.get(0);
+         UUID userId = firstDto.getUserId();
+         int year = firstDto.getAssessmentYear();
+         assessmentSummaryServ.calculateAndSaveScoreForUser(userId , year);
         Log.info("End createAllEmpAchievementSkill in EmpAchievementSkillServImpl");
         return savedSkills.stream()
                           .map(EmpAchievementSkillReqDto::fromEntity)
@@ -132,6 +145,9 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
         empAchievementSkill.setUpdatedBy(currentUser);
         empAchievementSkill.setUpdatedAt(new java.util.Date());
         empAchievementSkillRepo.save(empAchievementSkill);
+        UUID userId = empAchievementSkillDto.getUserId();
+        int year = empAchievementSkillDto.getAssessmentYear();
+        assessmentSummaryServ.calculateAndSaveScoreForUser(userId , year);
         Log.info("End updateEmpAchievementSkill in EmpAchievementSkillServImpl");
         return EmpAchievementSkillReqDto.fromEntity(empAchievementSkillRepo.save(empAchievementSkill));
     }
