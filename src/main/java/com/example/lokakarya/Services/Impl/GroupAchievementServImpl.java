@@ -7,6 +7,10 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementDto;
@@ -37,6 +41,29 @@ public class GroupAchievementServImpl implements GroupAchievementServ {
             groupAchievementReqDto.add(GroupAchievementReqDto.fromEntity(groupAchievement));
         }
         Log.info("End getAllGroupAchievement in GroupAchievementServImpl");
+        return groupAchievementReqDto;
+    }
+
+    @Override
+    public List<GroupAchievementReqDto> getPaginatedGroupAchievement(int page, int size, String sort, String direction, String searchKeyword) {
+        Log.info("Start getPaginatedGroupAchievement in GroupAchievementServImpl");
+        
+        Sort sorting = direction.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
+        Pageable pageable = PageRequest.of(page, size, sorting);
+        Page<GroupAchievement> groupAchievementPage;
+
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            groupAchievementPage = groupAchievementRepo.findByGroupNameContainingIgnoreCase(searchKeyword, pageable);
+        } else {
+            groupAchievementPage = groupAchievementRepo.findAll(pageable);
+        }
+
+        List<GroupAchievementReqDto> groupAchievementReqDto = new ArrayList<>();
+        for (GroupAchievement groupAchievement : groupAchievementPage.getContent()) {
+            groupAchievementReqDto.add(GroupAchievementReqDto.fromEntity(groupAchievement));
+        }
+        
+        Log.info("End getPaginatedGroupAchievement in GroupAchievementServImpl");
         return groupAchievementReqDto;
     }
 
@@ -98,6 +125,19 @@ public class GroupAchievementServImpl implements GroupAchievementServ {
         }
         Log.info("End getAllGroupAchievementEnabled in GroupAchievementServImpl");
         return groupAchievementReqDto;
+    }
+
+    @Override
+    public long count() {
+        return groupAchievementRepo.count(); // Get total count of records
+    }
+
+    @Override
+    public long countBySearchKeyword(String searchKeyword) {
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            return groupAchievementRepo.countByGroupNameContainingIgnoreCase(searchKeyword);
+        }
+        return groupAchievementRepo.count(); // Mengembalikan total count jika tidak ada keyword pencarian
     }
 
 

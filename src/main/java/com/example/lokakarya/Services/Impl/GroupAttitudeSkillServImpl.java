@@ -8,12 +8,18 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.lokakarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
+import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementReqDto;
 import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
 import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
 import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillWithDetailsDto;
+import com.example.lokakarya.Entity.GroupAchievement;
 import com.example.lokakarya.Entity.GroupAttitudeSkill;
 import com.example.lokakarya.Repository.GroupAttitudeSkillRepo;
 import com.example.lokakarya.Services.GroupAttitudeSkillServ;
@@ -40,6 +46,29 @@ public class GroupAttitudeSkillServImpl implements GroupAttitudeSkillServ {
             groupAttitudeSkillReqDto.add(GroupAttitudeSkillReqDto.fromEntity(groupAttitudeSkill));
         }
         Log.info("End getAllGroupAttitudeSkill in GroupAttitudeSkillServImpl");
+        return groupAttitudeSkillReqDto;
+    }
+
+    @Override
+    public List<GroupAttitudeSkillReqDto> getPaginatedGroupAttitudeSkill(int page, int size, String sort, String direction, String searchKeyword) {
+        Log.info("Start getPaginatedGroupAttitudeSkill in GroupAttitudeSkillServImpl");
+        
+        Sort sorting = direction.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
+        Pageable pageable = PageRequest.of(page, size, sorting);
+        Page<GroupAttitudeSkill> groupAttitudeSkillPage;
+
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            groupAttitudeSkillPage = groupAttitudeSkillRepo.findByGroupNameContainingIgnoreCase(searchKeyword, pageable);
+        } else {
+            groupAttitudeSkillPage = groupAttitudeSkillRepo.findAll(pageable);
+        }
+
+        List<GroupAttitudeSkillReqDto> groupAttitudeSkillReqDto = new ArrayList<>();
+        for (GroupAttitudeSkill groupAttitudeSkill : groupAttitudeSkillPage.getContent()) {
+            groupAttitudeSkillReqDto.add(GroupAttitudeSkillReqDto.fromEntity(groupAttitudeSkill));
+        }
+        
+        Log.info("End getPaginatedGroupAttitudeSkill in GroupAttitudeSkillServImpl");
         return groupAttitudeSkillReqDto;
     }
 
@@ -126,6 +155,18 @@ public class GroupAttitudeSkillServImpl implements GroupAttitudeSkillServ {
         Log.info("End getAllGroupAttitudeSkillEnabled in GroupAttitudeSkillServImpl");
         return groupAttitudeSkillReqDto;
 
+    }
+    @Override
+    public long count() {
+        return groupAttitudeSkillRepo.count(); // Get total count of records
+    }
+
+    @Override
+    public long countBySearchKeyword(String searchKeyword) {
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            return groupAttitudeSkillRepo.countByGroupNameContainingIgnoreCase(searchKeyword);
+        }
+        return groupAttitudeSkillRepo.count(); // Mengembalikan total count jika tidak ada keyword pencarian
     }
 
 

@@ -17,6 +17,9 @@ public class ManagerDto<T> {
     @JsonProperty("total_rows")
     private int totalRows;
 
+    @JsonProperty("total_data")
+    private long totalData;
+
     @JsonProperty("content")
     private T content;
 }
