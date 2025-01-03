@@ -13,5 +13,9 @@ public interface AttitudeSkillServ {
     AttitudeSkillReqDto updateAttitudeSkill(UUID id, AttitudeSkillDto attitudeSkillDto);
     Boolean deleteAttitudeSkill(UUID id);
     List<AttitudeSkillReqDto> getAllAttitudeSkillEnabled();
+
+    List<AttitudeSkillReqDto> getPaginatedAttitudeSkill(int page, int size, String sort, String direction, String searchKeyword);
+    long count();
+    long countBySearchKeyword(String searchKeyword);
 }
 

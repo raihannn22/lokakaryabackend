@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.lokakarya.Dto.ManagerDto;
+import com.example.lokakarya.Dto.Achievement.AchievementReqDto;
 import com.example.lokakarya.Dto.AttitudeSkill.AttitudeSkillDto;
 import com.example.lokakarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
 import com.example.lokakarya.Services.AttitudeSkillServ;
@@ -45,6 +47,30 @@ public class AttitudeSkillController extends ServerResponseList {
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
         Log.info("End getAllAttitudeSkill in AttitudeSkillController, time: " + (endTime - startTime) + "ms");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/paginated")
+    public ResponseEntity<ManagerDto<List<AttitudeSkillReqDto>>> getPaginatedAttitudeSkill(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "groupAttitudeSkill.id") String sort, // Kolom default untuk sorting
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(required = false) String searchKeyword) { // Arah sorting default
+        Log.info("Start getPaginatedAttitudeSkill in AttitudeSkillController");
+        long startTime = System.currentTimeMillis();
+        long totalRecords = attitudeSkillServ.count();
+
+        ManagerDto<List<AttitudeSkillReqDto>> response = new ManagerDto<>();
+        List<AttitudeSkillReqDto> content = attitudeSkillServ.getPaginatedAttitudeSkill(page, size, sort, direction, searchKeyword);
+
+        response.setContent(content);
+        response.setTotalData(totalRecords);
+        response.setTotalRows(content.size());
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+        Log.info("End getPaginatedAttitudeSkill in AttitudeSkillController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
