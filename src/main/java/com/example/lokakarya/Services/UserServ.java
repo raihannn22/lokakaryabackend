@@ -20,6 +20,8 @@ public interface UserServ {
     List<UserDto> getUsersByDivisionId(UUID divisionId);
     // List<UserDto> getUsersByDivisionIdAndRoleId(UUID divisionId, UUID roleId);
 
+    List<UserDto> getPaginatedUser (int page, int size, String sort, String direction, String searchKeyword);
+    long count();
 
 
 }

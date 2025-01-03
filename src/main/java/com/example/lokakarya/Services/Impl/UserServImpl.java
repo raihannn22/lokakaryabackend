@@ -12,14 +12,20 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.lokakarya.Dto.Achievement.AchievementReqDto;
 import com.example.lokakarya.Dto.AppUserRole.AppUserRoleReqDto;
 import com.example.lokakarya.Dto.User.UserDto;
 import com.example.lokakarya.Dto.User.UserReqDto;
 import com.example.lokakarya.Dto.User.UserReqUpdateDto;
 import com.example.lokakarya.Dto.User.UserResetPassDto;
+import com.example.lokakarya.Entity.Achievement;
 import com.example.lokakarya.Entity.AppRole;
 import com.example.lokakarya.Entity.AppUserRole;
 import com.example.lokakarya.Entity.Division;
@@ -72,6 +78,29 @@ public class UserServImpl implements UserServ {
         }
         Log.info("End getAllUsers in UserServImpl");
         return userList;
+    }
+
+    @Override
+    public List<UserDto> getPaginatedUser (int page, int size, String sort, String direction, String searchKeyword) {
+        Log.info("Start getPaginatedUser  in UserServImpl");
+
+        Sort sorting = direction.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
+        Pageable pageable = PageRequest.of(page, size, sorting);
+        Page<User> userPage;
+
+        // Jika searchKeyword tidak kosong, cari berdasarkan pencarian
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            userPage = userRepo .searchUsers(searchKeyword, pageable);
+        } else {
+            userPage = userRepo.findAll(pageable);
+        }
+
+        List<UserDto> userDtoList = userPage.getContent().stream()
+            .map(UserDto::fromEntity) // Mengonversi User menjadi UserDto
+            .collect(Collectors.toList());
+
+        Log.info("End getPaginatedUser   in UserServImpl");
+        return userDtoList;
     }
 
     @Override
@@ -243,6 +272,19 @@ public class UserServImpl implements UserServ {
             existingUser.setEnabled(userDto.getEnabled());
         }
     }
+
+    @Override
+    public long count() {
+        return userRepo.count(); // Get total count of records
+    }
+
+    // @Override
+    // public long countBySearchKeyword(String searchKeyword) {
+    //     if (searchKeyword != null && !searchKeyword.isEmpty()) {
+    //         return userRepo.countByUserNameContainingIgnoreCase(searchKeyword);
+    //     }
+    //     return userRepo.count(); // Mengembalikan total count jika tidak ada keyword pencarian
+    // }
 
 }
 

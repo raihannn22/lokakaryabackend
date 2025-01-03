@@ -46,6 +46,30 @@ public class UserController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/get/paginated")
+    public ResponseEntity<ManagerDto<List<UserDto>>> getPaginatedUser  (
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "username") String sort,
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(required = false) String searchKeyword) {
+        Log.info("Start getPaginatedUser  in UserController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<List<UserDto>> response = new ManagerDto<>();
+        List<UserDto> content = userServ.getPaginatedUser (page, size, sort, direction, searchKeyword);
+
+        response.setContent(content);
+        response.setTotalRows(content.size()); // Total rows dari hasil paginasi
+        response.setTotalData(userServ.count()); // Total data dari semua pengguna
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success get data", executionTime));
+        Log.info("End getPaginatedUser  in UserController, time: " + (endTime - startTime) + "ms");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    
+
     @PutMapping("/save")
     public ResponseEntity<ManagerDto<UserDto>>  saveUser(@RequestBody UserReqDto userDto) {
         Log.info("Start saveUser in UserController");
