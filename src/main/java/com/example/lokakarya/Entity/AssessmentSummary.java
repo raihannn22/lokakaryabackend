@@ -39,6 +39,12 @@ public class AssessmentSummary {
     @Column(name = "STATUS", nullable = false)
     private Integer status = 1;
 
+    @Column(name= "APPROVER_ID", nullable = true)
+    private UUID approverId;
+
+    @Column(name="APPROVAL_DATE", nullable = true)
+    private Date approvalDate;
+
     @Column(name = "CREATED_BY", nullable = false)
     private UUID createdBy;
 
@@ -50,5 +56,7 @@ public class AssessmentSummary {
 
     @Column(name = "UPDATED_AT")
     private Date updatedAt;
+
+
 
 }
