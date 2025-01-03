@@ -187,5 +187,7 @@ public class EmpAttitudeSkillController extends ServerResponseList {
         response.setInfo(getInfoOk("Success delete data", executionTime));
         Log.info("End deleteEmpAttitudeSkill in EmpAttitudeSkillController");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
-    }    
+    }
+
+
 }
