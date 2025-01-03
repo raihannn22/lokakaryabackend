@@ -8,10 +8,15 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.lokakarya.Dto.Achievement.AchievementDto;
 import com.example.lokakarya.Dto.Achievement.AchievementReqDto;
+import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementReqDto;
 import com.example.lokakarya.Entity.Achievement;
 import com.example.lokakarya.Entity.GroupAchievement;
 import com.example.lokakarya.Repository.AchievementRepo;
@@ -50,6 +55,34 @@ public class AchievementServImpl implements AchievementServ {
         return AchievementReqDto.fromEntity(achievement);
     }
 
+    @Override
+    public List<AchievementReqDto> getPaginatedAchievement(int page, int size, String sort, String direction, String searchKeyword) {
+        Log.info("Start getPaginatedAchievement in AchievementServImpl");
+
+        Sort sorting = direction.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
+        Pageable pageable = PageRequest.of(page, size, sorting);
+        Page<Achievement> achievementPage;
+
+        // Jika searchKeyword tidak kosong, cari berdasarkan pencapaian atau grup
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            // Mencari berdasarkan achievement
+            achievementPage = achievementRepo.findByAchievementContainingIgnoreCase(searchKeyword, pageable);
+        } else {
+            // Jika tidak ada keyword pencarian, ambil semua achievement
+            achievementPage = achievementRepo.findAll(pageable);
+        }
+
+        List<AchievementReqDto> achievementReqDto = new ArrayList<>();
+        for (Achievement achievement : achievementPage.getContent()) {
+            achievementReqDto.add(AchievementReqDto.fromEntity(achievement));
+        }
+
+        Log.info("End getPaginatedAchievement in AchievementServImpl");
+        return achievementReqDto;
+    }
+    
+    
+    
     @Override
     public List<AchievementReqDto> getAchievementsByGroupId(UUID groupId) {
         List<Achievement> achievements = achievementRepo.findByGroupAchievementId(groupId);
@@ -116,6 +149,19 @@ public Boolean deleteAchievement(UUID id) {
         }
         Log.info("End getAllAchievementEnabled in AchievementServImpl");
         return achievementReqDto;
+    }
+
+    @Override
+    public long count() {
+        return achievementRepo.count(); // Get total count of records
+    }
+
+    @Override
+    public long countBySearchKeyword(String searchKeyword) {
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            return achievementRepo.countByAchievementContainingIgnoreCase(searchKeyword);
+        }
+        return achievementRepo.count(); // Mengembalikan total count jika tidak ada keyword pencarian
     }
 
 }
