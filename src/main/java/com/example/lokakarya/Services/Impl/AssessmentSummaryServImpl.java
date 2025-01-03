@@ -274,8 +274,11 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
     @Override
     public AssessmentSummaryReqDto setAssessmentSummary1(UUID id, int year) {
         Log.info("Start setAssessmentSummary1 in AssessmentSummaryServImpl");
+        UUID currentUserEntity = getUserUtil.getCurrentUser().getId();
         AssessmentSummary assessmentSummary = assessmentSummaryRepo.findByUserIdAndYear(id, year).orElseThrow(() -> new RuntimeException("AssessmentSummary not found"));
         assessmentSummary.setStatus(1);
+        assessmentSummary.setApprovalDate(new Date());
+        assessmentSummary.setApproverId(currentUserEntity);
         assessmentSummaryRepo.save(assessmentSummary);
         Log.info("End setAssessmentSummary1 in AssessmentSummaryServImpl");
         return AssessmentSummaryReqDto.fromEntity(assessmentSummary);
