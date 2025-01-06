@@ -194,6 +194,43 @@ public class EmpAttitudeSkillServImpl implements EmpAttitudeSkillServ {
             }
             throw new RuntimeException("EmpAttitudeSkill not found");
         }
+    @Override
+    @Transactional
+    public List<EmpAttitudeSkillReqDto> createAllEmpAttitudeSkill2(List<EmpAttitudeSkillDto> empAttitudeSkillDtos) {
+        Log.info("Start createAllEmpAttitudeSkill in EmpAttitudeSkillServImpl");
+        empAttitudeSkillRepo.deleteByUserIdAndAssessmentYear(empAttitudeSkillDtos.get(0).getUserId(), empAttitudeSkillDtos.get(0).getAssessmentYear());
+        List<EmpAttitudeSkill> empAttitudeSkills = empAttitudeSkillDtos.stream().map(empAttitudeSkillDto -> {
+            Optional<AttitudeSkill> attitudeSkillOpt = attitudeSkillRepo.findById(empAttitudeSkillDto.getAttitudeSkillId());
+            Optional<User> userOpt = userRepo.findById(empAttitudeSkillDto.getUserId());
+            UUID currentUser = getUserUtil.getCurrentUser().getId();
+            if (attitudeSkillOpt.isEmpty()) {
+                throw new RuntimeException("Attitude Skill not found with ID: " + empAttitudeSkillDto.getAttitudeSkillId());
+            }
+            if (userOpt.isEmpty()) {
+                throw new RuntimeException("User not found with ID: " + empAttitudeSkillDto.getUserId());
+            }
+
+            return empAttitudeSkillDto.toEntity(
+                    empAttitudeSkillDto,
+                    attitudeSkillOpt.get(),
+                    userOpt.get(),
+                    null,
+                    null,
+                    currentUser,
+                    new Date()
+            );
+        }).collect(Collectors.toList());
+        List<EmpAttitudeSkill> savedSkills = empAttitudeSkillRepo.saveAll(empAttitudeSkills);
+        EmpAttitudeSkillDto firstDto = empAttitudeSkillDtos.get(0);
+        UUID userId = firstDto.getUserId();
+        int year = firstDto.getAssessmentYear();
+//        assessmentSummaryServ.calculateAndSaveScoreForUser(userId , year);
+        Log.info("End createAllEmpAttitudeSkill in EmpAttitudeSkillServImpl");
+        return savedSkills.stream()
+                .map(EmpAttitudeSkillReqDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
 
 
 

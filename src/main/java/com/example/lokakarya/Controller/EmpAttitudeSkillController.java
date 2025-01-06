@@ -189,5 +189,24 @@ public class EmpAttitudeSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
+    @PostMapping("/save-all2")
+    public ResponseEntity<ManagerDto<List<EmpAttitudeSkillReqDto>>> createAllEmpAttitudeSkills2(@RequestBody List<EmpAttitudeSkillDto> empAttitudeSkills) {
+        Log.info("Start saveAllEmpAttitudeSkills in EmpAttitudeSkillController");
+        long startTime = System.currentTimeMillis();
+
+        ManagerDto<List<EmpAttitudeSkillReqDto>> response = new ManagerDto<>();
+        List<EmpAttitudeSkillReqDto> content = empAttitudeSkillServ.createAllEmpAttitudeSkill2(empAttitudeSkills);
+
+        response.setContent(content);
+        response.setTotalRows(content.size());
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        response.setInfo(getInfoOk("Success save all data", executionTime));
+
+        Log.info("End saveAllEmpAttitudeSkills in EmpAttitudeSkillController, time: " + (endTime - startTime) + "ms");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 
 }
