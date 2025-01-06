@@ -184,7 +184,9 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
         List<EmpAchievementSkillReqDto> empAchievementSkillReqDto = new ArrayList<>();
 
         for (EmpAchievementSkill empAchievementSkill : response) {
-            empAchievementSkillReqDto.add(EmpAchievementSkillReqDto.fromEntity(empAchievementSkill));
+            if (empAchievementSkill.getAchievement().getGroupAchievement().getEnabled() == 1 && empAchievementSkill.getAchievement().getEnabled() == 1) {
+                empAchievementSkillReqDto.add(EmpAchievementSkillReqDto.fromEntity(empAchievementSkill));
+            }
         }
         Log.info("End getAllEmpAchievementSkill in EmpAchievementSkillServImpl");
         return empAchievementSkillReqDto;

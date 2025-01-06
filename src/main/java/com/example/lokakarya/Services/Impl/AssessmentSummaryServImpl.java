@@ -161,8 +161,8 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
 
         // Filter attitudeSkills berdasarkan group_enabled dan enabled
         Map<GroupAttitudeSkill, List<EmpAttitudeSkill>> groupedAttitudes = attitudeSkills.stream()
-                .filter(skill -> skill.getAttitudeSkill().getGroupAttitudeSkill().getEnabled() == 1) // Check group_enabled == 1
-                .filter(skill -> skill.getAttitudeSkill().getEnabled() == 1) // Check enabled == 1
+//                .filter(skill -> skill.getAttitudeSkill().getGroupAttitudeSkill().getEnabled() == 1) // Check group_enabled == 1
+                .filter(skill -> skill.getAttitudeSkill().getEnabled() == 1 && skill.getAttitudeSkill().getGroupAttitudeSkill().getEnabled() == 1) // Check enabled == 1
                 .collect(Collectors.groupingBy(skill -> skill.getAttitudeSkill().getGroupAttitudeSkill()));
 
         for (Map.Entry<GroupAttitudeSkill, List<EmpAttitudeSkill>> entry : groupedAttitudes.entrySet()) {
@@ -177,8 +177,8 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
 
         // Filter achievements berdasarkan group_enabled dan enabled
         Map<GroupAchievement, List<EmpAchievementSkill>> groupedAchievements = achievements.stream()
-                .filter(achievement -> achievement.getAchievement().getGroupAchievement().getEnabled() == 1) // Check group_enabled == 1
-                .filter(achievement -> achievement.getAchievement().getEnabled() == 1) // Check enabled == 1
+//                .filter(achievement -> achievement.getAchievement().getGroupAchievement().getEnabled() == 1) // Check group_enabled == 1
+                .filter(achievement -> achievement.getAchievement().getEnabled() == 1 && achievement.getAchievement().getGroupAchievement().getEnabled() == 1) // Check enabled == 1
                 .collect(Collectors.groupingBy(achievement -> achievement.getAchievement().getGroupAchievement()));
 
         for (Map.Entry<GroupAchievement, List<EmpAchievementSkill>> entry : groupedAchievements.entrySet()) {
@@ -188,6 +188,7 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
             // Ambil total jumlah achievement di grup ini dari tabel `achievement`
             int totalAchievementsInGroup = (int) group.getAchievements().stream()
                     .filter(ach -> ach.getGroupAchievement().getEnabled() == 1) // Pastikan grup enabled
+                    .filter(ach -> ach.getEnabled() == 1)
                     .count();
 
             // Hitung total skor dari employee achievement
