@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import com.example.lokakarya.Services.AssessmentSummaryServ;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -193,4 +194,26 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
         Log.info("End getEmpAchievementSkillByYear in EmpAchievementSkillServImpl");
         return empAchievementSkillReqDto;
     }
+    @Override
+    @Transactional
+    public EmpAchievementSkillReqDto updateEmpAchievementSkill2(UUID id, EmpAchievementSkillDto empAchievementSkillDto) {
+        Log.info("Start updateEmpAchievementSkill in EmpAchievementSkillServImpl");
+        UUID currentUser = getUserUtil.getCurrentUser().getId();
+        EmpAchievementSkill empAchievementSkill = empAchievementSkillRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Emp Achievement Skill not found"));
+        empAchievementSkill.setUser(userRepo.findById(empAchievementSkillDto.getUserId()).orElseThrow(() -> new RuntimeException("User not found")));
+        empAchievementSkill.setNotes(empAchievementSkillDto.getNotes());
+        empAchievementSkill.setAchievement(achievementRepo.findById(empAchievementSkillDto.getAchievementId()).orElseThrow(() -> new RuntimeException("Achievement not found")));
+        empAchievementSkill.setScore(empAchievementSkillDto.getScore());
+        empAchievementSkill.setAssessmentYear(empAchievementSkillDto.getAssessmentYear());
+        empAchievementSkill.setUpdatedBy(currentUser);
+        empAchievementSkill.setUpdatedAt(new java.util.Date());
+        empAchievementSkillRepo.save(empAchievementSkill);
+        UUID userId = empAchievementSkillDto.getUserId();
+        int year = empAchievementSkillDto.getAssessmentYear();
+        assessmentSummaryServ.calculateAndSaveScoreForUser(userId , year);
+        Log.info("End updateEmpAchievementSkill in EmpAchievementSkillServImpl");
+        return EmpAchievementSkillReqDto.fromEntity(empAchievementSkillRepo.save(empAchievementSkill));
+    }
+
 }
