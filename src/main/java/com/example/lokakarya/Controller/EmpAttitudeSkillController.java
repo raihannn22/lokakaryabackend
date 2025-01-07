@@ -166,3 +166,4 @@ public class EmpAttitudeSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 }
+

@@ -131,7 +131,7 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
             GroupAchievement group = entry.getKey();
             List<EmpAchievementSkill> achievementsInGroup = entry.getValue();
             int totalAchievementsInGroup = (int) group.getAchievements().stream()
-                    .filter(ach -> ach.getGroupAchievement().getEnabled() == 1) // Pastikan grup enabled
+                    .filter(ach -> ach.getGroupAchievement().getEnabled() == 1) // Pastikan grup enabledu
                     .filter(ach -> ach.getEnabled() == 1)
                     .count();
             double totalGroupScore = achievementsInGroup.stream()
