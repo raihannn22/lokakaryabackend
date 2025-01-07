@@ -1,10 +1,8 @@
 package com.example.lokakarya.Services.Impl;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import com.example.lokakarya.Dto.Achievement.AchievementDto;
 import com.example.lokakarya.Dto.Achievement.AchievementReqDto;
-import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementReqDto;
 import com.example.lokakarya.Entity.Achievement;
 import com.example.lokakarya.Entity.GroupAchievement;
 import com.example.lokakarya.Repository.AchievementRepo;
@@ -27,7 +23,6 @@ import com.example.lokakarya.util.GetUserUtil;
 @Service
 public class AchievementServImpl implements AchievementServ {
     private final Logger Log = LoggerFactory.getLogger(AchievementServImpl.class);
-
     @Autowired
     AchievementRepo achievementRepo;
 
@@ -58,31 +53,22 @@ public class AchievementServImpl implements AchievementServ {
     @Override
     public List<AchievementReqDto> getPaginatedAchievement(int page, int size, String sort, String direction, String searchKeyword) {
         Log.info("Start getPaginatedAchievement in AchievementServImpl");
-
         Sort sorting = direction.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
         Pageable pageable = PageRequest.of(page, size, sorting);
         Page<Achievement> achievementPage;
-
-        // Jika searchKeyword tidak kosong, cari berdasarkan pencapaian atau grup
-        if (searchKeyword != null && !searchKeyword.isEmpty()) {
-            // Mencari berdasarkan achievement
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {            
             achievementPage = achievementRepo.findByAchievementContainingIgnoreCase(searchKeyword, pageable);
         } else {
-            // Jika tidak ada keyword pencarian, ambil semua achievement
             achievementPage = achievementRepo.findAll(pageable);
         }
-
         List<AchievementReqDto> achievementReqDto = new ArrayList<>();
         for (Achievement achievement : achievementPage.getContent()) {
             achievementReqDto.add(AchievementReqDto.fromEntity(achievement));
         }
-
         Log.info("End getPaginatedAchievement in AchievementServImpl");
         return achievementReqDto;
     }
-    
-    
-    
+
     @Override
     public List<AchievementReqDto> getAchievementsByGroupId(UUID groupId) {
         List<Achievement> achievements = achievementRepo.findByGroupAchievementId(groupId);
@@ -92,9 +78,6 @@ public class AchievementServImpl implements AchievementServ {
         }
         return achievementReqDtos;
     }
-
-
-
 
     @Override
     public AchievementReqDto createAchievement(AchievementDto achievementDto) {
@@ -128,16 +111,16 @@ public class AchievementServImpl implements AchievementServ {
     }
 
     @Override
-public Boolean deleteAchievement(UUID id) {
-    Log.info("Start deleteAchievement in AchievementServImpl");
+    public Boolean deleteAchievement(UUID id) {
+        Log.info("Start deleteAchievement in AchievementServImpl");
 
-    if (achievementRepo.existsById(id)) {
-        achievementRepo.deleteById(id); 
-        Log.info("End deleteAchievement in AchievementServImpl");
-        return true;
+        if (achievementRepo.existsById(id)) {
+            achievementRepo.deleteById(id); 
+            Log.info("End deleteAchievement in AchievementServImpl");
+            return true;
+        }
+        throw new RuntimeException("Achievement not found");
     }
-    throw new RuntimeException("Achievement not found");
-}
 
     @Override
     public List<AchievementReqDto> getAllAchievementEnabled() {
@@ -153,7 +136,7 @@ public Boolean deleteAchievement(UUID id) {
 
     @Override
     public long count() {
-        return achievementRepo.count(); // Get total count of records
+        return achievementRepo.count(); 
     }
 
     @Override
@@ -161,7 +144,6 @@ public Boolean deleteAchievement(UUID id) {
         if (searchKeyword != null && !searchKeyword.isEmpty()) {
             return achievementRepo.countByAchievementContainingIgnoreCase(searchKeyword);
         }
-        return achievementRepo.count(); // Mengembalikan total count jika tidak ada keyword pencarian
+        return achievementRepo.count(); 
     }
-
 }

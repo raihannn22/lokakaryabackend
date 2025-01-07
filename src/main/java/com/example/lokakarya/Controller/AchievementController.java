@@ -1,9 +1,6 @@
 package com.example.lokakarya.Controller;
-
-
 import java.util.List;
 import java.util.UUID;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.lokakarya.Dto.ManagerDto;
 import com.example.lokakarya.Dto.Achievement.AchievementDto;
 import com.example.lokakarya.Dto.Achievement.AchievementReqDto;
-import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementReqDto;
 import com.example.lokakarya.Services.AchievementServ;
 import com.example.lokakarya.util.ServerResponseList;
 
@@ -38,12 +33,10 @@ public class AchievementController extends ServerResponseList {
     public ResponseEntity<ManagerDto<List<AchievementReqDto>>> getAllAchievement() {
         Log.info("Start getAllAchievement in AchievementController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<List<AchievementReqDto>> response = new ManagerDto<>();
         List<AchievementReqDto> content = achievementServ.getAllAchievement();
         response.setContent(content);
         response.setTotalRows(content.size());
-
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
@@ -55,16 +48,14 @@ public class AchievementController extends ServerResponseList {
     public ResponseEntity<ManagerDto<List<AchievementReqDto>>> getPaginatedAchievement(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
-            @RequestParam(defaultValue = "groupAchievement.id") String sort, // Kolom default untuk sorting
+            @RequestParam(defaultValue = "groupAchievement.id") String sort, 
             @RequestParam(defaultValue = "asc") String direction,
-            @RequestParam(required = false) String searchKeyword) { // Arah sorting default
+            @RequestParam(required = false) String searchKeyword) { 
         Log.info("Start getPaginatedAchievement in AchievementController");
         long startTime = System.currentTimeMillis();
         long totalRecords = achievementServ.count();
-
         ManagerDto<List<AchievementReqDto>> response = new ManagerDto<>();
         List<AchievementReqDto> content = achievementServ.getPaginatedAchievement(page, size, sort, direction, searchKeyword);
-
         response.setContent(content);
         response.setTotalData(totalRecords);
         response.setTotalRows(content.size());
@@ -79,12 +70,10 @@ public class AchievementController extends ServerResponseList {
     public ResponseEntity<ManagerDto<AchievementReqDto>> getAchievementDetail(@PathVariable("id") UUID id) {
         Log.info("Start getAchievementDetail in AchievementController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<AchievementReqDto> response = new ManagerDto<>();
         AchievementReqDto content = achievementServ.getAchievementById(id);
         response.setContent(content);
         response.setTotalRows(1);
-
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
@@ -96,12 +85,10 @@ public class AchievementController extends ServerResponseList {
     public ResponseEntity<ManagerDto<List<AchievementReqDto>>> getAchievementByGroupId(@PathVariable("groupId") UUID groupId) {
         Log.info("Start getAchievementsByGroup in AchievementController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<List<AchievementReqDto>> response = new ManagerDto<>();
-        List<AchievementReqDto> content = achievementServ.getAchievementsByGroupId(groupId); // pastikan method di service mengembalikan list
+        List<AchievementReqDto> content = achievementServ.getAchievementsByGroupId(groupId); 
         response.setContent(content);
         response.setTotalRows(content.size());
-
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
@@ -109,20 +96,14 @@ public class AchievementController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
-
-
-
     @PutMapping("/save")
     public ResponseEntity<ManagerDto<AchievementReqDto>> saveAchievement (@RequestBody AchievementDto achievementDto) {
         Log.info("Start saveAchievement in AchievementController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<AchievementReqDto> response = new ManagerDto<>();
         AchievementReqDto content = achievementServ.createAchievement(achievementDto);
         response.setContent(content);
         response.setTotalRows(1);
-
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success save data", executionTime));
@@ -134,12 +115,10 @@ public class AchievementController extends ServerResponseList {
     public ResponseEntity<ManagerDto<AchievementReqDto>> updateAchievement(@PathVariable("id") UUID id, @RequestBody AchievementDto achievementDto) {
         Log.info("Start updateAchievement in AchievementController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<AchievementReqDto> response = new ManagerDto<>();
         AchievementReqDto content = achievementServ.updateAchievement(id, achievementDto);
         response.setContent(content);
         response.setTotalRows(1);
-
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success update data", executionTime));
@@ -151,12 +130,10 @@ public class AchievementController extends ServerResponseList {
     public ResponseEntity<ManagerDto<Boolean>> deleteAchievement(@PathVariable("id") UUID id) {
         Log.info("Start deleteAchievement in AchievementController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<Boolean> response = new ManagerDto<>();
         Boolean content = achievementServ.deleteAchievement(id);
         response.setContent(content);
         response.setTotalRows(1);
-
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success delete data", executionTime));
@@ -168,17 +145,14 @@ public class AchievementController extends ServerResponseList {
     public ResponseEntity<ManagerDto<List<AchievementReqDto>>> getAllEnabledAchievement() {
         Log.info("Start getAllEnabledAchievement in AchievementController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<List<AchievementReqDto>> response = new ManagerDto<>();
         List<AchievementReqDto> content = achievementServ.getAllAchievementEnabled();
         response.setContent(content);
         response.setTotalRows(content.size());
-
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
         Log.info("End getAllEnabledAchievement in AchievementController");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 }

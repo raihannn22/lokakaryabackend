@@ -1,5 +1,4 @@
 package com.example.lokakarya.Entity;
-
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
@@ -43,9 +42,6 @@ public class GroupAchievement {
     @Temporal(TemporalType.DATE)
     private Date updatedAt;
 
-
     @OneToMany(mappedBy = "groupAchievement", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Achievement> achievements;
-
-    
 }

@@ -1,8 +1,6 @@
 package com.example.lokakarya.Entity;
-
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -46,6 +44,4 @@ public class Achievement {
     
     @OneToMany(mappedBy = "achievement", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<EmpAchievementSkill> empAchievementSkills;
-
-    
 }

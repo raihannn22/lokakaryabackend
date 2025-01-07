@@ -1,22 +1,15 @@
 package com.example.lokakarya.Services.Impl;
-
 import java.util.*;
 import java.util.stream.Collectors;
-
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.lokakarya.Dto.EmpSuggestion.EmpSuggestionDto;
 import com.example.lokakarya.Dto.EmpSuggestion.EmpSuggestionReqDto;
-import com.example.lokakarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillDto;
-import com.example.lokakarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillReqDto;
 import com.example.lokakarya.Entity.EmpSuggestion;
-import com.example.lokakarya.Entity.EmpTechnicalSkill;
-import com.example.lokakarya.Entity.TechnicalSkill;
 import com.example.lokakarya.Entity.User;
 import com.example.lokakarya.Repository.EmpSuggestionRepo;
 import com.example.lokakarya.Repository.UserRepo;
@@ -45,7 +38,6 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
        Log.info("Start getAllEmpSuggestion in EmpSuggestionServImpl");
         List<EmpSuggestion> response = empSuggestionRepo.findAll();
         List<EmpSuggestionReqDto> empSuggestionReqDto = new ArrayList<>();
-
         for (EmpSuggestion empSuggestion : response) {
             empSuggestionReqDto.add(EmpSuggestionReqDto.fromEntity(empSuggestion));
         }
@@ -100,44 +92,38 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
         List<EmpSuggestionReqDto> empSuggestionDtos = empSuggestionList.stream()
             .map(EmpSuggestionReqDto::fromEntity)
             .collect(Collectors.toList());
-
         Log.info("End getEmpSuggestionByUserIdAndYear in EmpSuggestionServImpl");
         return empSuggestionDtos;
     }
 
-        @Transactional
-        @Override
-        public List<EmpSuggestionReqDto> createAllEmpSuggestion(List<EmpSuggestionDto> empSuggestionDtos) {
-            Log.info("Start createAllEmpSuggestion in EmpSuggestionServImpl");
-            List<EmpSuggestion> empSuggestions = empSuggestionDtos.stream().map(empSuggestionDto -> {
-
-                Optional<User> userOpt = userRepo.findById(empSuggestionDto.getUserId());
-                UUID currentUser = getUserUtil.getCurrentUser().getId();
-                Integer currentYear = Calendar.getInstance().get(Calendar.YEAR);
-
-                if (userOpt.isEmpty()) {
-                        throw new RuntimeException("Suggestion not found with ID: " + empSuggestionDto.getUserId());
-                }
-
-                empSuggestionRepo.deleteByAssessmentYearAndUserId( currentYear, currentUser);
-
-                entityManager.flush();
-                return empSuggestionDto.toEntity(
-                    empSuggestionDto,
-                    userOpt.get(), 
-                    null,
-                    null,
-                    currentUser,
-                    new java.util.Date() 
-                );
-            }).collect(Collectors.toList());
-            List<EmpSuggestion> savedSkills = empSuggestionRepo.saveAll(empSuggestions);
-            Log.info("End createAllEmpSuggestion in EmpSuggestionServImpl");
-            return savedSkills.stream()
-                            .map(EmpSuggestionReqDto::fromEntity)
-                            .collect(Collectors.toList());
-        
-        }
+    @Transactional
+    @Override
+    public List<EmpSuggestionReqDto> createAllEmpSuggestion(List<EmpSuggestionDto> empSuggestionDtos) {
+        Log.info("Start createAllEmpSuggestion in EmpSuggestionServImpl");
+        List<EmpSuggestion> empSuggestions = empSuggestionDtos.stream().map(empSuggestionDto -> {
+            Optional<User> userOpt = userRepo.findById(empSuggestionDto.getUserId());
+            UUID currentUser = getUserUtil.getCurrentUser().getId();
+            Integer currentYear = Calendar.getInstance().get(Calendar.YEAR);
+            if (userOpt.isEmpty()) {
+                    throw new RuntimeException("Suggestion not found with ID: " + empSuggestionDto.getUserId());
+            }
+            empSuggestionRepo.deleteByAssessmentYearAndUserId( currentYear, currentUser);
+            entityManager.flush();
+            return empSuggestionDto.toEntity(
+                empSuggestionDto,
+                userOpt.get(), 
+                null,
+                null,
+                currentUser,
+                new java.util.Date() 
+            );
+        }).collect(Collectors.toList());
+        List<EmpSuggestion> savedSkills = empSuggestionRepo.saveAll(empSuggestions);
+        Log.info("End createAllEmpSuggestion in EmpSuggestionServImpl");
+        return savedSkills.stream()
+                        .map(EmpSuggestionReqDto::fromEntity)
+                        .collect(Collectors.toList());
+    }
     @Override
     public EmpSuggestionReqDto updateEmpSuggestion(UUID id, EmpSuggestionDto empSuggestionDto) {
         Log.info("Start updateEmpSuggestion in EmpSuggestionServImpl");
@@ -157,7 +143,6 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
     @Override
         public Boolean deleteEmpSuggestion(UUID id) {
             Log.info("Start deleteEmpSuggestion in EmpSuggestionServImpl");
-
             if (empSuggestionRepo.existsById(id)) {
                 empSuggestionRepo.deleteById(id);
                 Log.info("End deleteEmpSuggestion in EmpSuggestionServImpl");
@@ -166,4 +151,3 @@ public class EmpSuggestionServImpl implements EmpSuggestionServ {
             throw new RuntimeException("EmpSuggestion not found");
         }
     }
-

@@ -1,11 +1,9 @@
 package com.example.lokakarya.Dto.User;
-
 import com.example.lokakarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.data.annotation.ReadOnlyProperty;
-
 import java.util.Date;
 import java.util.UUID;
 
@@ -15,7 +13,6 @@ import java.util.UUID;
 @Data
 @ToString
 public class UserResetPassDto {
-
     @ReadOnlyProperty
     @JsonIgnoreProperties
     @JsonIgnore

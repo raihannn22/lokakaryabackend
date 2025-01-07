@@ -1,5 +1,4 @@
 package com.example.lokakarya.Entity;
-
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Date;
@@ -41,6 +40,4 @@ public class EmpSuggestion {
     @Column(name = "UPDATED_AT")
     @Temporal(TemporalType.DATE)
     private Date updatedAt;
-
-    
 }

@@ -1,9 +1,7 @@
 package com.example.lokakarya.Services.Impl;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementReqDto;
 import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillDto;
 import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
-import com.example.lokakarya.Entity.GroupAchievement;
 import com.example.lokakarya.Entity.TechnicalSkill;
 import com.example.lokakarya.Repository.TechnicalSkillRepo;
 import com.example.lokakarya.Services.TechnicalSkillServ;
@@ -24,7 +19,6 @@ import com.example.lokakarya.util.GetUserUtil;
 
 @Service
 public class TechnicalSkillServImpl implements TechnicalSkillServ {
-
     private final Logger Log = LoggerFactory.getLogger(TechnicalSkillServImpl.class);
 
     @Autowired
@@ -33,13 +27,11 @@ public class TechnicalSkillServImpl implements TechnicalSkillServ {
     @Autowired
     GetUserUtil getUserUtil;
 
-
     @Override
     public List<TechnicalSkillReqDto> getAllTechnicalSkill() {
         Log.info("Start getAllTechnicalSkill in TechnicalSkillServImpl");
         List<TechnicalSkill> response = technicalSkillRepo.findAll();
         List<TechnicalSkillReqDto> technicalSkillReqDto = new ArrayList<>();
-
         for (TechnicalSkill technicalSkill : response) {
             technicalSkillReqDto.add(TechnicalSkillReqDto.fromEntity(technicalSkill));
         }
@@ -50,22 +42,18 @@ public class TechnicalSkillServImpl implements TechnicalSkillServ {
     @Override
     public List<TechnicalSkillReqDto> getPaginatedTechnicalSkill(int page, int size, String sort, String direction, String searchKeyword) {
         Log.info("Start getPaginatedTechnicalSkill in TechnicalSkillServImpl");
-        
         Sort sorting = direction.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
         Pageable pageable = PageRequest.of(page, size, sorting);
         Page<TechnicalSkill> technicalSkillPage;
-
         if (searchKeyword != null && !searchKeyword.isEmpty()) {
             technicalSkillPage = technicalSkillRepo.findByTechnicalSkillContainingIgnoreCase(searchKeyword, pageable);
         } else {
             technicalSkillPage = technicalSkillRepo.findAll(pageable);
         }
-
         List<TechnicalSkillReqDto> technicalSkillReqDto = new ArrayList<>();
         for (TechnicalSkill technicalSkill : technicalSkillPage.getContent()) {
             technicalSkillReqDto.add(TechnicalSkillReqDto.fromEntity(technicalSkill));
         }
-        
         Log.info("End getPaginatedTechnicalSkill in TechnicalSkillServImpl");
         return technicalSkillReqDto;
     }
@@ -123,5 +111,4 @@ public class TechnicalSkillServImpl implements TechnicalSkillServ {
         }
         return technicalSkillRepo.count(); 
     }
-
 }

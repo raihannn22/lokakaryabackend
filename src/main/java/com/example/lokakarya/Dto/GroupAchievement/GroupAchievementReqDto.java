@@ -1,9 +1,7 @@
 package com.example.lokakarya.Dto.GroupAchievement;
-
 import com.example.lokakarya.Entity.GroupAchievement;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -14,10 +12,13 @@ import java.util.UUID;
 public class GroupAchievementReqDto {
     @JsonProperty("id")
     private UUID id;
+    
     @JsonProperty("group_name")
     private String groupName;
+    
     @JsonProperty("percentage")
     private Integer percentage;
+    
     @JsonProperty("enabled")
     private Integer enabled;
 
@@ -30,4 +31,3 @@ public class GroupAchievementReqDto {
         return groupAchievementReqDto;
     }
 }
-

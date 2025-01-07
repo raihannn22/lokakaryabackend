@@ -1,16 +1,12 @@
 package com.example.lokakarya.Services.Impl;
-
 import java.util.*;
 import java.util.stream.Collectors;
-
-import com.example.lokakarya.Repository.AssessmentSummaryRepo;
 import com.example.lokakarya.Services.AssessmentSummaryServ;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.lokakarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillDto;
 import com.example.lokakarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillReqDto;
 import com.example.lokakarya.Entity.AttitudeSkill;
@@ -24,7 +20,6 @@ import com.example.lokakarya.util.GetUserUtil;
 
 @Service
 public class EmpAttitudeSkillServImpl implements EmpAttitudeSkillServ {
-
     private final Logger Log = LoggerFactory.getLogger(EmpAttitudeSkillServImpl.class);
 
     @Autowired
@@ -42,18 +37,15 @@ public class EmpAttitudeSkillServImpl implements EmpAttitudeSkillServ {
     @Autowired
     AssessmentSummaryServ assessmentSummaryServ;
 
-
-
     @Override
     public List<EmpAttitudeSkillReqDto> getAllEmpAttitudeSkill() {
-       Log.info("Start getAllEmpAttitudeSkill in EmpAttitudeSkillServImpl");
+    Log.info("Start getAllEmpAttitudeSkill in EmpAttitudeSkillServImpl");
         List<EmpAttitudeSkill> response = empAttitudeSkillRepo.findAll();
         List<EmpAttitudeSkillReqDto> empAttitudeSkillReqDto = new ArrayList<>();
-
         for (EmpAttitudeSkill empAttitudeSkill : response) {
             empAttitudeSkillReqDto.add(EmpAttitudeSkillReqDto.fromEntity(empAttitudeSkill));
         }
-       Log.info("End getAllEmpAttitudeSkillt in EmpAttitudeSkillServImpl");
+    Log.info("End getAllEmpAttitudeSkillt in EmpAttitudeSkillServImpl");
         return empAttitudeSkillReqDto;
     }
 
@@ -64,8 +56,6 @@ public class EmpAttitudeSkillServImpl implements EmpAttitudeSkillServ {
         Log.info("End getEmpAttitudeSkillById in EmpAttitudeSkillServImpl");
         return EmpAttitudeSkillReqDto.fromEntity(empAttitudeSkill);
     }
-
-    
 
     @Override
     public EmpAttitudeSkillReqDto createEmpAttitudeSkill(EmpAttitudeSkillDto empAttitudeSkillDto) {
@@ -79,7 +69,6 @@ public class EmpAttitudeSkillServImpl implements EmpAttitudeSkillServ {
         if (userOpt.isEmpty()) {
             throw new RuntimeException("User not found with ID: " + empAttitudeSkillDto.getUserId());
         }
-
         AssessmentSummaryServ assessmentSummaryServ = new AssessmentSummaryServImpl();
         assessmentSummaryServ.calculateAndSaveScoreForUser(empAttitudeSkillDto.getUserId() , empAttitudeSkillDto.getAssessmentYear());
         EmpAttitudeSkill empAttitudeSkill = empAttitudeSkillDto.toEntity(
@@ -130,7 +119,6 @@ public class EmpAttitudeSkillServImpl implements EmpAttitudeSkillServ {
         return empAttitudeSkillDtos;
     }
 
-
     @Override
     @Transactional
     public List<EmpAttitudeSkillReqDto> createAllEmpAttitudeSkill(List<EmpAttitudeSkillDto> empAttitudeSkillDtos) {
@@ -146,7 +134,6 @@ public class EmpAttitudeSkillServImpl implements EmpAttitudeSkillServ {
             if (userOpt.isEmpty()) {
                     throw new RuntimeException("User not found with ID: " + empAttitudeSkillDto.getUserId());
             }
-
             return empAttitudeSkillDto.toEntity(
                 empAttitudeSkillDto,
                 attitudeSkillOpt.get(),
@@ -167,6 +154,7 @@ public class EmpAttitudeSkillServImpl implements EmpAttitudeSkillServ {
                         .map(EmpAttitudeSkillReqDto::fromEntity)
                         .collect(Collectors.toList());
     }
+
     @Override
     public EmpAttitudeSkillReqDto updateEmpAttitudeSkill(UUID id, EmpAttitudeSkillDto empAttitudeSkillDto) {
         Log.info("Start updateEmpAttitudeSkill in EmpAttitudeSkillServImpl");
@@ -185,53 +173,13 @@ public class EmpAttitudeSkillServImpl implements EmpAttitudeSkillServ {
     }
     
     @Override
-        public Boolean deleteEmpAttitudeSkill(UUID id) {
-            Log.info("Start deleteEmpAttitudeSkill in EmpAttitudeSkillServImpl");
-            if (empAttitudeSkillRepo.existsById(id)) {
-                empAttitudeSkillRepo.deleteById(id);  // hanya menghapus Attitude berdasarkan id
-                Log.info("End deleteEmpAttitudeSkill in EmpAttitudeSkillServImpl");
-                return true;
-            }
-            throw new RuntimeException("EmpAttitudeSkill not found");
+    public Boolean deleteEmpAttitudeSkill(UUID id) {
+        Log.info("Start deleteEmpAttitudeSkill in EmpAttitudeSkillServImpl");
+        if (empAttitudeSkillRepo.existsById(id)) {
+            empAttitudeSkillRepo.deleteById(id);  // hanya menghapus Attitude berdasarkan id
+            Log.info("End deleteEmpAttitudeSkill in EmpAttitudeSkillServImpl");
+            return true;
         }
-    @Override
-    @Transactional
-    public List<EmpAttitudeSkillReqDto> createAllEmpAttitudeSkill2(List<EmpAttitudeSkillDto> empAttitudeSkillDtos) {
-        Log.info("Start createAllEmpAttitudeSkill in EmpAttitudeSkillServImpl");
-        empAttitudeSkillRepo.deleteByUserIdAndAssessmentYear(empAttitudeSkillDtos.get(0).getUserId(), empAttitudeSkillDtos.get(0).getAssessmentYear());
-        List<EmpAttitudeSkill> empAttitudeSkills = empAttitudeSkillDtos.stream().map(empAttitudeSkillDto -> {
-            Optional<AttitudeSkill> attitudeSkillOpt = attitudeSkillRepo.findById(empAttitudeSkillDto.getAttitudeSkillId());
-            Optional<User> userOpt = userRepo.findById(empAttitudeSkillDto.getUserId());
-            UUID currentUser = getUserUtil.getCurrentUser().getId();
-            if (attitudeSkillOpt.isEmpty()) {
-                throw new RuntimeException("Attitude Skill not found with ID: " + empAttitudeSkillDto.getAttitudeSkillId());
-            }
-            if (userOpt.isEmpty()) {
-                throw new RuntimeException("User not found with ID: " + empAttitudeSkillDto.getUserId());
-            }
-
-            return empAttitudeSkillDto.toEntity(
-                    empAttitudeSkillDto,
-                    attitudeSkillOpt.get(),
-                    userOpt.get(),
-                    null,
-                    null,
-                    currentUser,
-                    new Date()
-            );
-        }).collect(Collectors.toList());
-        List<EmpAttitudeSkill> savedSkills = empAttitudeSkillRepo.saveAll(empAttitudeSkills);
-        EmpAttitudeSkillDto firstDto = empAttitudeSkillDtos.get(0);
-        UUID userId = firstDto.getUserId();
-        int year = firstDto.getAssessmentYear();
-//        assessmentSummaryServ.calculateAndSaveScoreForUser(userId , year);
-        Log.info("End createAllEmpAttitudeSkill in EmpAttitudeSkillServImpl");
-        return savedSkills.stream()
-                .map(EmpAttitudeSkillReqDto::fromEntity)
-                .collect(Collectors.toList());
+        return false;
     }
-
-
-
-
 }

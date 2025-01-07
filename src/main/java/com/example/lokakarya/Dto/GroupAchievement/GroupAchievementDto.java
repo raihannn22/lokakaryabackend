@@ -1,9 +1,7 @@
 package com.example.lokakarya.Dto.GroupAchievement;
-
 import com.example.lokakarya.Entity.GroupAchievement;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-
 import java.util.Date;
 import java.util.UUID;
 
@@ -15,14 +13,15 @@ import java.util.UUID;
 public class GroupAchievementDto {
     @JsonProperty("id")
     private UUID id;
+    
     @JsonProperty("group_name")
     private String groupName;
+    
     @JsonProperty("percentage")
     private Integer percentage;
+    
     @JsonProperty("enabled")
     private Integer enabled;
-
-
     
     public static GroupAchievement toEntity(GroupAchievementDto groupAchievementDto, UUID updateBy, Date updateAt, UUID createdBy, Date createdAt) {
         GroupAchievement groupAchievement = new GroupAchievement();
@@ -37,4 +36,3 @@ public class GroupAchievementDto {
         return groupAchievement;
     }
 }
-

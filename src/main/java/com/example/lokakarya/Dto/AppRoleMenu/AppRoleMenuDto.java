@@ -1,12 +1,7 @@
 package com.example.lokakarya.Dto.AppRoleMenu;
-
-import com.example.lokakarya.Entity.AppMenu;
-import com.example.lokakarya.Entity.AppRole;
 import com.example.lokakarya.Entity.AppRoleMenu;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 @AllArgsConstructor
@@ -15,7 +10,6 @@ import java.util.UUID;
 @Data
 @ToString
 public class AppRoleMenuDto {
-
     @JsonProperty("ID")
     private UUID id;
 

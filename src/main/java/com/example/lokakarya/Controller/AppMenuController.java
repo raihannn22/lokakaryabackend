@@ -1,19 +1,16 @@
 package com.example.lokakarya.Controller;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.example.lokakarya.Dto.ManagerDto;
 import com.example.lokakarya.Dto.AppMenu.AppMenuByUserDto;
 import com.example.lokakarya.Dto.AppMenu.AppMenuDto;
 import com.example.lokakarya.Dto.AppMenu.AppMenuReqDto;
 import com.example.lokakarya.Services.AppMenuServ;
 import com.example.lokakarya.util.ServerResponseList;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -81,16 +78,13 @@ public class AppMenuController extends ServerResponseList {
     public ResponseEntity<ManagerDto<Boolean>> deleteAppRole(@PathVariable("id") UUID id) {
         Log.info("Start deleteAppRole in AppRoleController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<Boolean> response = new ManagerDto<>();
         Boolean content = appMenuServ.deleteAppMenu(id);
         response.setContent(content);
-
         long endTime = System.currentTimeMillis();
         response.setInfo(getInfoOk("Success Delete data", endTime - startTime));
         Log.info("End deleteAppRole in AppRoleController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
 
     @GetMapping("/get/byUserId/{id}")
@@ -118,5 +112,4 @@ public class AppMenuController extends ServerResponseList {
         Log.info("End getAppMenuByUserId in AppMenuController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 }

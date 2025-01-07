@@ -1,12 +1,8 @@
 package com.example.lokakarya.Dto.EmpTechnicalSkill;
-
-import com.example.lokakarya.Dto.EmpTechnicalSkill.EmpTechnicalSkillDto;
 import com.example.lokakarya.Entity.EmpTechnicalSkill;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.*;
-
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -18,15 +14,18 @@ public class EmpTechnicalSkillReqDto {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonProperty("user_id")
     private UUID userId;
+    
     @JsonProperty("technical_skill_id")
     private UUID technicalSkillId;
+    
     @JsonProperty("criteria")
     private String criteria;
+    
     @JsonProperty("score")
     private Integer score;
+    
     @JsonProperty("assessment_year")
     private Integer assessmentYear;
-
 
     public static EmpTechnicalSkillReqDto fromEntity(EmpTechnicalSkill empTechnicalSkill) {
         EmpTechnicalSkillReqDto empTechnicalSkillReqDto = new EmpTechnicalSkillReqDto();
@@ -38,4 +37,3 @@ public class EmpTechnicalSkillReqDto {
         return empTechnicalSkillReqDto;
     }
 }
-

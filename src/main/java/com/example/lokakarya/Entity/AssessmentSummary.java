@@ -1,15 +1,11 @@
 package com.example.lokakarya.Entity;
-
-
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
-
 import java.util.Date;
 import java.util.UUID;
 
@@ -56,7 +52,4 @@ public class AssessmentSummary {
 
     @Column(name = "UPDATED_AT")
     private Date updatedAt;
-
-
-
 }

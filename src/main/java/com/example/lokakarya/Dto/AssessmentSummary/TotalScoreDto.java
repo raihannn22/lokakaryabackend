@@ -1,7 +1,5 @@
 package com.example.lokakarya.Dto.AssessmentSummary;
-
 import lombok.*;
-
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -11,6 +9,8 @@ import java.util.UUID;
 @ToString
 public class TotalScoreDto  {
     private UUID userId;
+
     private String userName;
+    
     private Double totalScore;
 }

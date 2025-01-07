@@ -1,9 +1,7 @@
 package com.example.lokakarya.Dto.AppMenu;
-
 import com.example.lokakarya.Entity.AppMenu;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-
 import java.util.UUID;
 
 @AllArgsConstructor
