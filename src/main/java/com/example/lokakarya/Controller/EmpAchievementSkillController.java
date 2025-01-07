@@ -180,22 +180,7 @@ public class EmpAchievementSkillController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
 
-    @PatchMapping("/update2/{id}")
-    public ResponseEntity<ManagerDto<EmpAchievementSkillReqDto>>  updateEmpAchievementSkill2(@PathVariable("id") UUID id, @RequestBody EmpAchievementSkillDto empAchievementSkillDto) {
-        Log.info("Start updateEmpAchievementSkill in EmpAchievementSkillController");
-        long startTime = System.currentTimeMillis();
 
-        ManagerDto<EmpAchievementSkillReqDto> response = new ManagerDto<>();
-        EmpAchievementSkillReqDto content = empAchievementSkillServ.updateEmpAchievementSkill2(id, empAchievementSkillDto);
-
-        response.setContent(content);
-        response.setTotalRows(1);
-        long endTime = System.currentTimeMillis();
-        long executionTime = endTime - startTime;
-        response.setInfo(getInfoOk("Success update data", executionTime));
-        Log.info("End updateEmpAchievementSkill in EmpAchievementSkillController, time: " + (endTime - startTime) + "ms");
-        return new ResponseEntity<>(response, HttpStatus.OK) ;
-    }
 
 
 
