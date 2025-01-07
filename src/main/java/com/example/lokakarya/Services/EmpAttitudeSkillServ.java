@@ -15,3 +15,4 @@ public interface EmpAttitudeSkillServ {
     EmpAttitudeSkillReqDto updateEmpAttitudeSkill(UUID id, EmpAttitudeSkillDto empAttitudeSkillReqDto);
     Boolean deleteEmpAttitudeSkill(UUID id);
 }
+
