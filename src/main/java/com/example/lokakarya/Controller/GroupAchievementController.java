@@ -1,20 +1,15 @@
 package com.example.lokakarya.Controller;
-
-
-import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.example.lokakarya.Dto.ManagerDto;
 import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementDto;
 import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementReqDto;
 import com.example.lokakarya.Services.GroupAchievementServ;
 import com.example.lokakarya.util.ServerResponseList;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -22,17 +17,16 @@ import java.util.UUID;
 @RequestMapping("/group-achievement")
 public class GroupAchievementController extends ServerResponseList {
     private final Logger Log = LoggerFactory.getLogger(GroupAchievementController.class);
-@Autowired
+    
+    @Autowired
     GroupAchievementServ groupAchievementServ;
 
     @GetMapping("/all")
     public ResponseEntity<ManagerDto<List<GroupAchievementReqDto>>>  getAllGroupAchievement() {
         Log.info("Start getAllGroupAchievement in GroupAchievementController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<List<GroupAchievementReqDto>> response = new ManagerDto<>();
         List<GroupAchievementReqDto> content = groupAchievementServ.getAllGroupAchievement();
-
         response.setContent(content);
         response.setTotalRows(content.size());
         long endTime = System.currentTimeMillis();
@@ -46,16 +40,14 @@ public class GroupAchievementController extends ServerResponseList {
     public ResponseEntity<ManagerDto<List<GroupAchievementReqDto>>> getPaginatedGroupAchievement(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
-            @RequestParam(defaultValue = "groupName") String sort, // Kolom default untuk sorting
+            @RequestParam(defaultValue = "groupName") String sort, 
             @RequestParam(defaultValue = "asc") String direction,
-            @RequestParam(required = false) String searchKeyword) { // Arah sorting default
+            @RequestParam(required = false) String searchKeyword) { 
         Log.info("Start getPaginatedGroupAchievement in GroupAchievementController");
         long startTime = System.currentTimeMillis();
         long totalRecords = groupAchievementServ.count();
-
         ManagerDto<List<GroupAchievementReqDto>> response = new ManagerDto<>();
         List<GroupAchievementReqDto> content = groupAchievementServ.getPaginatedGroupAchievement(page, size, sort, direction, searchKeyword);
-
         response.setContent(content);
         response.setTotalData(totalRecords);
         response.setTotalRows(content.size());
@@ -70,10 +62,8 @@ public class GroupAchievementController extends ServerResponseList {
     public ResponseEntity<ManagerDto<GroupAchievementReqDto>>  saveGroupAchievement(@RequestBody GroupAchievementDto groupAchievementDto) {
         Log.info("Start saveGroupAchievement in GroupAchievementController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<GroupAchievementReqDto> response = new ManagerDto<>();
         GroupAchievementReqDto content = groupAchievementServ.createGroupAchievement(groupAchievementDto);
-
         response.setContent(content);
         response.setTotalRows(1);
         long endTime = System.currentTimeMillis();
@@ -87,10 +77,8 @@ public class GroupAchievementController extends ServerResponseList {
     public ResponseEntity<ManagerDto<GroupAchievementReqDto>>  getGroupAchievementDetail(@PathVariable("id") UUID id) {
         Log.info("Start getGroupAchievementDetail in GroupAchievementController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<GroupAchievementReqDto> response = new ManagerDto<>();
         GroupAchievementReqDto content = groupAchievementServ.getGroupAchievementById(id);
-
         response.setContent(content);
         response.setTotalRows(1);
         long endTime = System.currentTimeMillis();
@@ -104,10 +92,8 @@ public class GroupAchievementController extends ServerResponseList {
     public ResponseEntity<ManagerDto<GroupAchievementReqDto>>  updateGroupAchievement(@PathVariable("id") UUID id, @RequestBody GroupAchievementDto groupAchievementDto) {
         Log.info("Start updateGroupAchievement in GroupAchievementController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<GroupAchievementReqDto> response = new ManagerDto<>();
         GroupAchievementReqDto content = groupAchievementServ.updateGroupAchievement(id, groupAchievementDto);
-
         response.setContent(content);
         response.setTotalRows(1);
         long endTime = System.currentTimeMillis();
@@ -121,10 +107,8 @@ public class GroupAchievementController extends ServerResponseList {
     public ResponseEntity<ManagerDto<Boolean>> deleteGroupAchievement(@PathVariable("id") UUID id) {
         Log.info("Start deleteGroupAchievement in GroupAchievementController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<Boolean> response = new ManagerDto<>();
         Boolean content = groupAchievementServ.deleteGroupAchievement(id);
-
         response.setContent(content);
         response.setTotalRows(1);
         long endTime = System.currentTimeMillis();
@@ -139,10 +123,8 @@ public class GroupAchievementController extends ServerResponseList {
         Log.info("Start getAllGroupAchievementEnabled in GroupAchievementController");
         long startTime = System.currentTimeMillis();
         Long totalRecords = groupAchievementServ.count();
-
         ManagerDto<List<GroupAchievementReqDto>> response = new ManagerDto<>();
         List<GroupAchievementReqDto> content = groupAchievementServ.getAllGroupAchievementEnabled();
-
         response.setContent(content);
         response.setTotalData(totalRecords);
         response.setTotalRows(content.size());
@@ -152,8 +134,4 @@ public class GroupAchievementController extends ServerResponseList {
         Log.info("End getAllGroupAchievementEnabled in GroupAchievementController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-
-
-
 }

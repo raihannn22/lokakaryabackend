@@ -1,21 +1,15 @@
 package com.example.lokakarya.Controller;
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.example.lokakarya.Dto.ManagerDto;
 import com.example.lokakarya.Dto.Division.DivisionDto;
 import com.example.lokakarya.Dto.Division.DivisionReqDto;
-import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
-import com.example.lokakarya.Services.AssessmentSummaryServ;
 import com.example.lokakarya.Services.DivisionServ;
 import com.example.lokakarya.util.ServerResponseList;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -46,16 +40,14 @@ public class DivisionController extends ServerResponseList {
     public ResponseEntity<ManagerDto<List<DivisionReqDto>>> getPaginatedDivision(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
-            @RequestParam(defaultValue = "divisionName") String sort, // Kolom default untuk sorting
+            @RequestParam(defaultValue = "divisionName") String sort, 
             @RequestParam(defaultValue = "asc") String direction,
-            @RequestParam(required = false) String searchKeyword) { // Arah sorting default
+            @RequestParam(required = false) String searchKeyword) { 
         Log.info("Start getPaginatedDivision in DivisionController");
         long startTime = System.currentTimeMillis();
         long totalRecords = divisionServ.count();
-
         ManagerDto<List<DivisionReqDto>> response = new ManagerDto<>();
         List<DivisionReqDto> content = divisionServ.getPaginatedDivision(page, size, sort, direction, searchKeyword);
-
         response.setContent(content);
         response.setTotalData(totalRecords);
         response.setTotalRows(content.size());

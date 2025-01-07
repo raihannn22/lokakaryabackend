@@ -1,11 +1,9 @@
 package com.example.lokakarya.Dto.EmpAchievementSkill;
-
 import com.example.lokakarya.Entity.Achievement;
 import com.example.lokakarya.Entity.EmpAchievementSkill;
 import com.example.lokakarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-
 import java.util.Date;
 import java.util.UUID;
 
@@ -28,8 +26,6 @@ public class EmpAchievementSkillDto {
     @JsonProperty("assessment_year")
     private Integer assessmentYear;
 
-
-    
     public static EmpAchievementSkill toEntity(EmpAchievementSkillDto empAchievementSkillDto, Achievement achievement, User user, UUID updateBy, Date updateAt, UUID createdBy, Date createdAt) {
         EmpAchievementSkill empAchievementSkill = new EmpAchievementSkill();
         empAchievementSkill.setId(empAchievementSkillDto.getId());
@@ -43,9 +39,5 @@ public class EmpAchievementSkillDto {
         empAchievementSkill.setUpdatedAt(updateAt);
         empAchievementSkill.setUpdatedBy(updateBy);
         return empAchievementSkill;
-
-
-
     }
 }
-

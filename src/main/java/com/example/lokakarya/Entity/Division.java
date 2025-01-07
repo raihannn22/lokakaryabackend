@@ -1,9 +1,6 @@
 package com.example.lokakarya.Entity;
-
-
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.Date;
 import java.util.UUID;
 

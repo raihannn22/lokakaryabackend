@@ -1,10 +1,8 @@
 package com.example.lokakarya.util;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-
 import com.example.lokakarya.Entity.User;
 import com.example.lokakarya.Repository.UserRepo;
 
@@ -19,7 +17,6 @@ public class GetUserUtil {
         if (user == null) {
             throw new RuntimeException("Current User Couldn't be found!");
         }
-
         return user;
     }
 }

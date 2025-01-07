@@ -1,10 +1,7 @@
 package com.example.lokakarya.Dto.GroupAttitudeSkill;
-
 import com.example.lokakarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
-import com.example.lokakarya.Entity.GroupAttitudeSkill;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -14,7 +11,6 @@ import java.util.UUID;
 @Data
 @ToString
 public class GroupAttitudeSkillWithDetailsDto {
-
     @JsonProperty("id")
     private UUID id;
 
@@ -31,5 +27,3 @@ public class GroupAttitudeSkillWithDetailsDto {
     private List<AttitudeSkillReqDto> attitudeSkills;
 
 }
-
-

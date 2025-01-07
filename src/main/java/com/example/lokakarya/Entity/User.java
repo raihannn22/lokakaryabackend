@@ -24,7 +24,6 @@ import java.util.UUID;
 @Table(name = "TBL_APP_USER")
 
 public class User implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "ID", nullable = false)
@@ -43,7 +42,7 @@ public class User implements UserDetails {
     private String email;
 
     @Column(name = "EMPLOYEE_STATUS", nullable = false)
-    private int employeeStatus; // 1: kontrak, 2: permanen
+    private int employeeStatus; 
 
     @Column(name = "JOIN_DATE")
     private Date joinDate;
@@ -90,9 +89,6 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<AppUserRole> appRoles;
-    
-
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -110,6 +106,4 @@ public class User implements UserDetails {
     public String getUsernameRiilNoFake() {
         return username;
     }
-
- 
 }

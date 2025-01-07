@@ -1,5 +1,4 @@
 package com.example.lokakarya.Entity;
-
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Date;
@@ -45,5 +44,4 @@ public class GroupAttitudeSkill {
 
     @OneToMany(mappedBy = "groupAttitudeSkill", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<AttitudeSkill> attitudeSkill;
-    
 }

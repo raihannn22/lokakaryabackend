@@ -1,9 +1,7 @@
 package com.example.lokakarya.Dto.AppRole;
-
 import com.example.lokakarya.Entity.AppRole;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-
 import java.util.Date;
 import java.util.UUID;
 

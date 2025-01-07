@@ -1,7 +1,5 @@
 package com.example.lokakarya.Services.Impl;
-
 import java.util.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import com.example.lokakarya.Dto.Achievement.AchievementReqDto;
 import com.example.lokakarya.Dto.AttitudeSkill.AttitudeSkillDto;
 import com.example.lokakarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
-import com.example.lokakarya.Entity.Achievement;
 import com.example.lokakarya.Entity.AttitudeSkill;
 import com.example.lokakarya.Entity.GroupAttitudeSkill;
 import com.example.lokakarya.Repository.AttitudeSkillRepo;
@@ -50,25 +45,18 @@ public class AttitudeSkillServImpl implements AttitudeSkillServ {
     @Override
     public List<AttitudeSkillReqDto> getPaginatedAttitudeSkill(int page, int size, String sort, String direction, String searchKeyword) {
         Log.info("Start getPaginatedAttitudeSkill in AttitudeSkillServImpl");
-
         Sort sorting = direction.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
         Pageable pageable = PageRequest.of(page, size, sorting);
         Page<AttitudeSkill> attitudeSkillPage;
-
-        // Jika searchKeyword tidak kosong, cari berdasarkan pencapaian atau grup
-        if (searchKeyword != null && !searchKeyword.isEmpty()) {
-            // Mencari berdasarkan AttitudeSkill
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {            
             attitudeSkillPage = attitudeSkillRepo.findByAttitudeSkillContainingIgnoreCase(searchKeyword, pageable);
         } else {
-            // Jika tidak ada keyword pencarian, ambil semua AttitudeSkill
             attitudeSkillPage = attitudeSkillRepo.findAll(pageable);
         }
-
         List<AttitudeSkillReqDto> attitudeSkillReqDto = new ArrayList<>();
         for (AttitudeSkill attitudeSkill : attitudeSkillPage.getContent()) {
             attitudeSkillReqDto.add(AttitudeSkillReqDto.fromEntity(attitudeSkill));
         }
-
         Log.info("End getPaginatedAttitudeSkill in AttitudeSkillServImpl");
         return attitudeSkillReqDto;
     }
@@ -113,9 +101,8 @@ public class AttitudeSkillServImpl implements AttitudeSkillServ {
     @Override
     public Boolean deleteAttitudeSkill(UUID id) {
         Log.info("Start deleteAttitudeSkill in AttitudeSkillServImpl");
-
         if (attitudeSkillRepo.existsById(id)) {
-            attitudeSkillRepo.deleteById(id);  // hanya menghapus AttitudeSkill berdasarkan id
+            attitudeSkillRepo.deleteById(id);  
             Log.info("End deleteAttitudeSkill in AttitudeSkillServImpl");
             return true;
         }
@@ -136,7 +123,7 @@ public class AttitudeSkillServImpl implements AttitudeSkillServ {
 
     @Override
     public long count() {
-        return attitudeSkillRepo.count(); // Get total count of records
+        return attitudeSkillRepo.count(); 
     }
 
     @Override
@@ -144,6 +131,6 @@ public class AttitudeSkillServImpl implements AttitudeSkillServ {
         if (searchKeyword != null && !searchKeyword.isEmpty()) {
             return attitudeSkillRepo.countByAttitudeSkillContainingIgnoreCase(searchKeyword);
         }
-        return attitudeSkillRepo.count(); // Mengembalikan total count jika tidak ada keyword pencarian
+        return attitudeSkillRepo.count(); 
     }
 }

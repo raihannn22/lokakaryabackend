@@ -1,13 +1,10 @@
 package com.example.lokakarya.Services.Impl;
-
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import jakarta.persistence.EntityManager;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.example.lokakarya.Dto.Achievement.AchievementReqDto;
-import com.example.lokakarya.Dto.AppUserRole.AppUserRoleReqDto;
 import com.example.lokakarya.Dto.User.UserDto;
 import com.example.lokakarya.Dto.User.UserReqDto;
 import com.example.lokakarya.Dto.User.UserReqUpdateDto;
 import com.example.lokakarya.Dto.User.UserResetPassDto;
-import com.example.lokakarya.Entity.Achievement;
 import com.example.lokakarya.Entity.AppRole;
 import com.example.lokakarya.Entity.AppUserRole;
 import com.example.lokakarya.Entity.Division;
@@ -36,7 +29,6 @@ import com.example.lokakarya.Repository.DivisionRepo;
 import com.example.lokakarya.Repository.UserRepo;
 import com.example.lokakarya.Services.UserServ;
 import com.example.lokakarya.util.GetUserUtil;
-
 import jakarta.transaction.Transactional;
 
 @Service
@@ -61,11 +53,6 @@ public class UserServImpl implements UserServ {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private EntityManager entityManager;
-
-
-
     @Override
     public List<UserDto> getAllUsers() {
         Log.info("Start getAllUsers in UserServImpl");
@@ -83,31 +70,26 @@ public class UserServImpl implements UserServ {
     @Override
     public List<UserDto> getPaginatedUser (int page, int size, String sort, String direction, String searchKeyword) {
         Log.info("Start getPaginatedUser  in UserServImpl");
-
         Sort sorting = direction.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
         Pageable pageable = PageRequest.of(page, size, sorting);
         Page<User> userPage;
-
-        // Jika searchKeyword tidak kosong, cari berdasarkan pencarian
         if (searchKeyword != null && !searchKeyword.isEmpty()) {
             userPage = userRepo .searchUsers(searchKeyword, pageable);
         } else {
             userPage = userRepo.findAll(pageable);
         }
-
         List<UserDto> userDtoList = userPage.getContent().stream()
-            .map(UserDto::fromEntity) // Mengonversi User menjadi UserDto
+            .map(UserDto::fromEntity) 
             .collect(Collectors.toList());
-
         Log.info("End getPaginatedUser   in UserServImpl");
         return userDtoList;
     }
 
     @Override
     public UserDto getUserById(UUID id) {
-       Log.info("Start getUserById in UserServImpl");
+        Log.info("Start getUserById in UserServImpl");
         Optional<User> user = userRepo.findById(id);
-       Log.info("End getUserById in UserServImpl");
+        Log.info("End getUserById in UserServImpl");
         return user.map(UserDto::fromEntity).orElse(null);
     }   
 
@@ -121,20 +103,6 @@ public class UserServImpl implements UserServ {
         Log.info("End getUsersByDivisionId in UserServImpl");
         return userDtos;
     }
-
-    // @Override
-    // public List<UserDto> getUsersByDivisionIdAndRoleId(UUID divisionId, UUID roleId) {
-    //     Log.info("Start getUsersByDivisionIdAndRoleId in UserServImpl");
-    //     List<User> users = userRepo.findByDivisionIdAndRoleId(divisionId, roleId);
-    //     List<UserDto> userDtos = users.stream()
-    //                                 .map(UserDto::fromEntity)
-    //                                 .collect(Collectors.toList());
-    //     Log.info("End getUsersByDivisionIdAndRoleId in UserServImpl");
-    //     return userDtos;
-    // }
-
-
-
 
     @Override
     @Transactional
@@ -157,14 +125,10 @@ public class UserServImpl implements UserServ {
             }
         }
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-
         user = userRepo.save(user);
-
         if (userDto.getAppRole() !=null) {
-
             for (UUID roleId: userDto.getAppRole()) {
                 System.out.println(roleId + "ini id role!123213!");
-
                 Optional<AppRole> idRole =  appRoleRepo.findById(roleId);
                 if (idRole.isEmpty()) {
                     throw new RuntimeException("Role not found");
@@ -188,7 +152,6 @@ public class UserServImpl implements UserServ {
         Log.info("Start updateUser in UserServImpl");
         UUID currentUserId = getUserUtil.getCurrentUser().getId();
         User findUser  = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User  not found"));
-
         updateUserFields2(findUser, userDto);
         findUser.setUpdatedBy(currentUserId);
         findUser.setUpdatedAt(new java.util.Date());
@@ -198,14 +161,11 @@ public class UserServImpl implements UserServ {
             findUser.setDivision(division);
         }
         findUser = userRepo.save(findUser);
-
         if (userDto.getAppRole() !=null) {
             List<AppUserRole> appUserRoles = appUserRoleRepo.findByUserId(id);
-
             appUserRoles.forEach(appUserRole -> appUserRoleRepo.delete(appUserRole));
             for (UUID roleId: userDto.getAppRole()) {
                 System.out.println(roleId + "ini id role!123213!");
-
                 Optional<AppRole> idRole =  appRoleRepo.findById(roleId);
                 if (idRole.isEmpty()) {
                     throw new RuntimeException("Role not found");
@@ -275,16 +235,6 @@ public class UserServImpl implements UserServ {
 
     @Override
     public long count() {
-        return userRepo.count(); // Get total count of records
+        return userRepo.count(); 
     }
-
-    // @Override
-    // public long countBySearchKeyword(String searchKeyword) {
-    //     if (searchKeyword != null && !searchKeyword.isEmpty()) {
-    //         return userRepo.countByUserNameContainingIgnoreCase(searchKeyword);
-    //     }
-    //     return userRepo.count(); // Mengembalikan total count jika tidak ada keyword pencarian
-    // }
-
 }
-

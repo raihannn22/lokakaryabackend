@@ -1,9 +1,6 @@
 package com.example.lokakarya.Controller;
-
-
 import java.util.List;
 import java.util.UUID;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.lokakarya.Dto.ManagerDto;
-import com.example.lokakarya.Dto.Achievement.AchievementReqDto;
 import com.example.lokakarya.Dto.AttitudeSkill.AttitudeSkillDto;
 import com.example.lokakarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
 import com.example.lokakarya.Services.AttitudeSkillServ;
@@ -37,10 +32,8 @@ public class AttitudeSkillController extends ServerResponseList {
     public ResponseEntity<ManagerDto<List<AttitudeSkillReqDto>>>  getAllAttitudeSkill() {
         Log.info("Start getAllAttitudeSkill in AttitudeSkillController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<List<AttitudeSkillReqDto>> response = new ManagerDto<>();
         List<AttitudeSkillReqDto> content = attitudeSkillServ.getAllAttitudeSkill();
-
         response.setContent(content);
         response.setTotalRows(content.size());
         long endTime = System.currentTimeMillis();
@@ -54,16 +47,14 @@ public class AttitudeSkillController extends ServerResponseList {
     public ResponseEntity<ManagerDto<List<AttitudeSkillReqDto>>> getPaginatedAttitudeSkill(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
-            @RequestParam(defaultValue = "groupAttitudeSkill.id") String sort, // Kolom default untuk sorting
+            @RequestParam(defaultValue = "groupAttitudeSkill.id") String sort, 
             @RequestParam(defaultValue = "asc") String direction,
-            @RequestParam(required = false) String searchKeyword) { // Arah sorting default
+            @RequestParam(required = false) String searchKeyword) { 
         Log.info("Start getPaginatedAttitudeSkill in AttitudeSkillController");
         long startTime = System.currentTimeMillis();
         long totalRecords = attitudeSkillServ.count();
-
         ManagerDto<List<AttitudeSkillReqDto>> response = new ManagerDto<>();
         List<AttitudeSkillReqDto> content = attitudeSkillServ.getPaginatedAttitudeSkill(page, size, sort, direction, searchKeyword);
-
         response.setContent(content);
         response.setTotalData(totalRecords);
         response.setTotalRows(content.size());
@@ -78,10 +69,8 @@ public class AttitudeSkillController extends ServerResponseList {
     public ResponseEntity<ManagerDto<AttitudeSkillReqDto>>  saveAttitudeSkill(@RequestBody AttitudeSkillDto attitudeSkillDto) {
         Log.info("Start saveAttitudeSkill in AttitudeSkillController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<AttitudeSkillReqDto> response = new ManagerDto<>();
         AttitudeSkillReqDto content = attitudeSkillServ.createAttitudeSkill(attitudeSkillDto);
-
         response.setContent(content);
         response.setTotalRows(1);
         long endTime = System.currentTimeMillis();
@@ -95,10 +84,8 @@ public class AttitudeSkillController extends ServerResponseList {
     public ResponseEntity<ManagerDto<AttitudeSkillReqDto>>  getAttitudeSkillDetail(@PathVariable("id") UUID id) {
         Log.info("Start getAttitudeSkillDetail in AttitudeSkillController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<AttitudeSkillReqDto> response = new ManagerDto<>();
         AttitudeSkillReqDto content = attitudeSkillServ.getAttitudeSkillById(id);
-
         response.setContent(content);
         response.setTotalRows(1);
         long endTime = System.currentTimeMillis();
@@ -112,10 +99,8 @@ public class AttitudeSkillController extends ServerResponseList {
     public ResponseEntity<ManagerDto<AttitudeSkillReqDto>>  updateAttitudeSkill(@PathVariable("id") UUID id, @RequestBody AttitudeSkillDto attitudeSkillDto) {
         Log.info("Start updateAttitudeSkill in AttitudeSkillController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<AttitudeSkillReqDto> response = new ManagerDto<>();
         AttitudeSkillReqDto content = attitudeSkillServ.updateAttitudeSkill(id, attitudeSkillDto);
-
         response.setContent(content);
         response.setTotalRows(1);
         long endTime = System.currentTimeMillis();
@@ -129,12 +114,10 @@ public class AttitudeSkillController extends ServerResponseList {
     public ResponseEntity<ManagerDto<Boolean>> deleteAttitudeSkill(@PathVariable("id") UUID id) {
         Log.info("Start deleteAttitudeSKill in AttitudeController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<Boolean> response = new ManagerDto<>();
         Boolean content = attitudeSkillServ.deleteAttitudeSkill(id);
         response.setContent(content);
         response.setTotalRows(1);
-
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success delete data", executionTime));
@@ -146,10 +129,8 @@ public class AttitudeSkillController extends ServerResponseList {
     public ResponseEntity<ManagerDto<List<AttitudeSkillReqDto>>>  getAllAttitudeSkillEnabled() {
         Log.info("Start getAllAttitudeSkillEnabled in AttitudeSkillController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<List<AttitudeSkillReqDto>> response = new ManagerDto<>();
         List<AttitudeSkillReqDto> content = attitudeSkillServ.getAllAttitudeSkillEnabled();
-
         response.setContent(content);
         response.setTotalRows(content.size());
         long endTime = System.currentTimeMillis();

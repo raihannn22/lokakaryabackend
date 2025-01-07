@@ -1,15 +1,11 @@
 package com.example.lokakarya.Controller;
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.example.lokakarya.Dto.ManagerDto;
-import com.example.lokakarya.Dto.AppRoleMenu.AppRoleMenuDto;
 import com.example.lokakarya.Dto.AppRoleMenu.AppRoleMenuReqDto;
 import com.example.lokakarya.Services.AppRoleMenuServ;
 import com.example.lokakarya.util.ServerResponseList;
@@ -57,7 +53,7 @@ public class AppRoleMenuController extends ServerResponseList {
         Log.info("Start createAppRoleMenu in AppRoleMenuController");
         long startTime = System.currentTimeMillis();
         ManagerDto<Void> response = new ManagerDto<>();
-         appRoleMenuServ.createAppRoleMenu(appRoleMenuReqDto);
+        appRoleMenuServ.createAppRoleMenu(appRoleMenuReqDto);
         long endTime = System.currentTimeMillis();
         response.setInfo(getInfoOk("Success Create data", endTime - startTime));
         Log.info("End createAppRoleMenu in AppRoleMenuController, time: " + (endTime - startTime) + "ms");

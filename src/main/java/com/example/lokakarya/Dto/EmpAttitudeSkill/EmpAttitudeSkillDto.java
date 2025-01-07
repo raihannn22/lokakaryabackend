@@ -1,12 +1,9 @@
 package com.example.lokakarya.Dto.EmpAttitudeSkill;
-
 import com.example.lokakarya.Entity.AttitudeSkill;
 import com.example.lokakarya.Entity.EmpAttitudeSkill;
 import com.example.lokakarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.*;
-
 import java.util.Date;
 import java.util.UUID;
 
@@ -27,7 +24,6 @@ public class EmpAttitudeSkillDto {
     @JsonProperty("assessment_year")
     private Integer assessmentYear;
 
-    
     public static EmpAttitudeSkill toEntity(EmpAttitudeSkillDto empAttitudeSkillDto, AttitudeSkill attitudeSkill, User user, UUID updateBy, Date updateAt, UUID createdBy, Date createdAt) {
         EmpAttitudeSkill empAttitudeSkill = new EmpAttitudeSkill();
         empAttitudeSkill.setId(empAttitudeSkillDto.getId());
@@ -40,7 +36,5 @@ public class EmpAttitudeSkillDto {
         empAttitudeSkill.setUpdatedAt(updateAt);
         empAttitudeSkill.setUpdatedBy(updateBy);
         return empAttitudeSkill;
-
     }
 }
-
