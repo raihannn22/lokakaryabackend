@@ -1,9 +1,6 @@
 package com.example.lokakarya.Services;
-
 import java.util.List;
 import java.util.UUID;
-
-import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementReqDto;
 import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
 import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
 import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillWithDetailsDto;
@@ -20,4 +17,3 @@ public interface GroupAttitudeSkillServ {
     long count();
     long countBySearchKeyword(String searchKeyword);
 }
-

@@ -1,21 +1,15 @@
 package com.example.lokakarya.Controller;
-
-
-import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.example.lokakarya.Dto.ManagerDto;
-import com.example.lokakarya.Dto.AppUserRole.AppUserRoleReqDto;
 import com.example.lokakarya.Dto.User.UserDto;
 import com.example.lokakarya.Dto.User.UserReqDto;
 import com.example.lokakarya.Dto.User.UserReqUpdateDto;
 import com.example.lokakarya.Dto.User.UserResetPassDto;
-import com.example.lokakarya.Entity.User;
 import com.example.lokakarya.Services.UserServ;
 import com.example.lokakarya.util.ServerResponseList;
 
@@ -26,17 +20,16 @@ import java.util.UUID;
 @RequestMapping("/user")
 public class UserController extends ServerResponseList {
     private final Logger Log = LoggerFactory.getLogger(UserController.class);
-@Autowired
+
+    @Autowired
     UserServ userServ;
 
     @GetMapping("/get/all")
     public ResponseEntity<ManagerDto<List<UserDto>>>  getAllUsers() {
         Log.info("Start getAllUsers in UserController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<List<UserDto>> response = new ManagerDto<>();
         List<UserDto> content = userServ.getAllUsers();
-
         response.setContent(content);
         response.setTotalRows(content.size());
         long endTime = System.currentTimeMillis();
@@ -55,13 +48,11 @@ public class UserController extends ServerResponseList {
             @RequestParam(required = false) String searchKeyword) {
         Log.info("Start getPaginatedUser  in UserController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<List<UserDto>> response = new ManagerDto<>();
         List<UserDto> content = userServ.getPaginatedUser (page, size, sort, direction, searchKeyword);
-
         response.setContent(content);
-        response.setTotalRows(content.size()); // Total rows dari hasil paginasi
-        response.setTotalData(userServ.count()); // Total data dari semua pengguna
+        response.setTotalRows(content.size()); 
+        response.setTotalData(userServ.count()); 
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         response.setInfo(getInfoOk("Success get data", executionTime));
@@ -69,15 +60,12 @@ public class UserController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
-
     @PutMapping("/save")
     public ResponseEntity<ManagerDto<UserDto>>  saveUser(@RequestBody UserReqDto userDto) {
         Log.info("Start saveUser in UserController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<UserDto> response = new ManagerDto<>();
         UserDto content = userServ.createUser(userDto);
-
         response.setContent(content);
         response.setTotalRows(1);
         long endTime = System.currentTimeMillis();
@@ -91,10 +79,8 @@ public class UserController extends ServerResponseList {
     public ResponseEntity<ManagerDto<UserDto>>  getUserDetail(@PathVariable("id") UUID id) {
         Log.info("Start getUserDetail in UserController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<UserDto> response = new ManagerDto<>();
         UserDto content = userServ.getUserById(id);
-
         response.setContent(content);
         response.setTotalRows(1);
         long endTime = System.currentTimeMillis();
@@ -108,10 +94,8 @@ public class UserController extends ServerResponseList {
     public ResponseEntity<ManagerDto<List<UserDto>>> getUsersByDivisionId(@RequestParam UUID divisionId) {
         Log.info("Start getUsersByDivisionId in UserController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<List<UserDto>> response = new ManagerDto<>();
         List<UserDto> content = userServ.getUsersByDivisionId(divisionId);
-
         response.setContent(content);
         response.setTotalRows(content.size());
         long endTime = System.currentTimeMillis();
@@ -121,36 +105,12 @@ public class UserController extends ServerResponseList {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    // @GetMapping("/get/by-division-role")
-    // public ResponseEntity<ManagerDto<List<UserDto>>> getUsersByDivisionAndRole(@RequestParam UUID divisionId, 
-    //                                                                         @RequestParam UUID roleId) {
-    //     Log.info("Start getUsersByDivisionAndRole in UserController");
-    //     long startTime = System.currentTimeMillis();
-
-    //     ManagerDto<List<UserDto>> response = new ManagerDto<>();
-    //     List<UserDto> content = userServ.getUsersByDivisionIdAndRoleId(divisionId, roleId);
-
-    //     response.setContent(content);
-    //     response.setTotalRows(content.size());
-    //     long endTime = System.currentTimeMillis();
-    //     long executionTime = endTime - startTime;
-    //     response.setInfo(getInfoOk("Success get data", executionTime));
-    //     Log.info("End getUsersByDivisionAndRole in UserController, time: " + executionTime + "ms");
-    //     return new ResponseEntity<>(response, HttpStatus.OK);
-    // }
-
-
-
-
-
     @PatchMapping("/update/{id}")
     public ResponseEntity<ManagerDto<UserDto>>  updateUser(@PathVariable("id") UUID id, @RequestBody UserReqUpdateDto userDto) {
         Log.info("Start updateUser in UserController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<UserDto> response = new ManagerDto<>();
         UserDto content = userServ.updateUser(id, userDto);
-
         response.setContent(content);
         response.setTotalRows(1);
         long endTime = System.currentTimeMillis();
@@ -164,10 +124,8 @@ public class UserController extends ServerResponseList {
     public ResponseEntity<ManagerDto<Boolean>>  deleteUser(@PathVariable("id") UUID id) {
         Log.info("Start deleteUser in UserController");
         long startTime = System.currentTimeMillis();
-
         ManagerDto<Boolean> response = new ManagerDto<>();
         Boolean content = userServ.deleteUser(id);
-
         response.setContent(content);
         response.setTotalRows(1);
         long endTime = System.currentTimeMillis();
@@ -191,7 +149,4 @@ public class UserController extends ServerResponseList {
         Log.info("End resetPassword in UserController, time: " + (endTime - startTime) + "ms");
         return new ResponseEntity<>(response, HttpStatus.OK) ;
     }
-
-
-
 }

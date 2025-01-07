@@ -1,8 +1,5 @@
 package com.example.lokakarya.Dto.User;
-
-import com.example.lokakarya.Entity.Division;
 import com.example.lokakarya.Entity.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -17,29 +14,36 @@ import java.util.UUID;
 @Data
 @ToString
 public class UserReqDto {
-
     @JsonProperty("username")
     private String username;
+    
     @JsonProperty("full_name")
     private String fullName;
+    
     @JsonProperty("position")
     private String position;
+    
     @JsonProperty("email_address")
     private String emailAddress;
+    
     @JsonProperty("employee_status")
     private Integer employeeStatus;
+    
     @JsonProperty ("app_role")
     private Set<UUID> appRole;
+    
     @JsonProperty("join_date")
     private java.sql.Date joinDate;
+    
     @JsonProperty("enabled")
     private Integer enabled;
+    
     @ReadOnlyProperty
     @JsonIgnoreProperties
     private String password = "ogya123";
+    
     @JsonProperty("division_id")
     private UUID division;
-
 
     public static User toEntity(UserReqDto userDto, UUID createdBy,Date createdAt ,UUID updatedBy, Date updatedAt) {
         User user = new User();

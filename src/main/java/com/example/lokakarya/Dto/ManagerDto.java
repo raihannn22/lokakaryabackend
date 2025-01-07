@@ -1,6 +1,4 @@
 package com.example.lokakarya.Dto;
-
-
 import com.example.lokakarya.util.ResponseDetail;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

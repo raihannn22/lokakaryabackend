@@ -1,17 +1,14 @@
 package com.example.lokakarya.Services.Impl;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.lokakarya.Dto.AppRole.AppRoleDto;
 import com.example.lokakarya.Dto.AppRole.AppRoleReqDto;
 import com.example.lokakarya.Entity.AppRole;
 import com.example.lokakarya.Repository.AppRoleRepo;
 import com.example.lokakarya.Services.AppRoleServ;
 import com.example.lokakarya.util.GetUserUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +16,7 @@ import java.util.UUID;
 
 @Service
 public class AppRoleServImpl implements AppRoleServ {
+
     @Autowired
     private AppRoleRepo appRoleRepo;
 

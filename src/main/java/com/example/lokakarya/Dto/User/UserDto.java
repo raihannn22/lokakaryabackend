@@ -1,11 +1,9 @@
 package com.example.lokakarya.Dto.User;
-
 import com.example.lokakarya.Entity.AppRole;
 import com.example.lokakarya.Entity.AppUserRole;
 import com.example.lokakarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-
 import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
@@ -18,31 +16,42 @@ import java.util.UUID;
 public class UserDto {
     @JsonProperty("id")
     private UUID id;
+    
     @JsonProperty("username")
     private String username;
+    
     @JsonProperty("full_name")
     private String fullName;
+    
     @JsonProperty("position")
     private String position;
+    
     @JsonProperty("email_address")
     private String emailAddress;
+    
     @JsonProperty("employee_status")
     private Integer employeeStatus;
+    
     @JsonProperty("join_date")
     private Date joinDate;
+    
     @JsonProperty("enabled")
     private Integer enabled;
+    
     @JsonProperty("password")
     private String password;
+    
     @JsonProperty("division_id")
     private UUID division;
+    
     @JsonProperty("division_name")
     private String divisionName;
+    
     @JsonProperty("app_role")
     private List<AppRole> appRole;
+    
     @JsonProperty("has_change_password")
     private Boolean hasChangePassword;
-
 
     public static UserDto fromEntity(User user) {
         UserDto userDto = new UserDto();

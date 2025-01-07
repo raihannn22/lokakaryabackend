@@ -1,9 +1,6 @@
 package com.example.lokakarya.Services;
-
 import java.util.List;
 import java.util.UUID;
-
-import com.example.lokakarya.Dto.AppUserRole.AppUserRoleReqDto;
 import com.example.lokakarya.Dto.User.UserDto;
 import com.example.lokakarya.Dto.User.UserReqDto;
 import com.example.lokakarya.Dto.User.UserReqUpdateDto;
@@ -16,12 +13,7 @@ public interface UserServ {
     UserDto updateUser(UUID id, UserReqUpdateDto userDto);
     Boolean deleteUser(UUID id);
     String resetPassword(UUID id, UserResetPassDto userDto);
-
     List<UserDto> getUsersByDivisionId(UUID divisionId);
-    // List<UserDto> getUsersByDivisionIdAndRoleId(UUID divisionId, UUID roleId);
-
     List<UserDto> getPaginatedUser (int page, int size, String sort, String direction, String searchKeyword);
     long count();
-
-
 }

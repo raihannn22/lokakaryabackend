@@ -1,19 +1,15 @@
 package com.example.lokakarya.Services.Impl;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import com.example.lokakarya.Dto.EmpAttitudeSkill.EmpAttitudeSkillDto;
 import com.example.lokakarya.Services.AssessmentSummaryServ;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.lokakarya.Dto.EmpAchievementSkill.EmpAchievementSkillDto;
 import com.example.lokakarya.Dto.EmpAchievementSkill.EmpAchievementSkillReqDto;
 import com.example.lokakarya.Entity.Achievement;
@@ -47,14 +43,13 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
 
     @Override
     public List<EmpAchievementSkillReqDto> getAllEmpAchievementSkill() {
-       Log.info("Start getAllEmpAchievementSkill in EmpAchievementSkillServImpl");
+        Log.info("Start getAllEmpAchievementSkill in EmpAchievementSkillServImpl");
         List<EmpAchievementSkill> response = empAchievementSkillRepo.findAll();
         List<EmpAchievementSkillReqDto> empAchievementSkillReqDto = new ArrayList<>();
-
-         for (EmpAchievementSkill empAchievementSkill : response) {
+        for (EmpAchievementSkill empAchievementSkill : response) {
             empAchievementSkillReqDto.add(EmpAchievementSkillReqDto.fromEntity(empAchievementSkill));
         }
-       Log.info("End getAllEmpAchievementSkill in EmpAchievementSkillServImpl");
+        Log.info("End getAllEmpAchievementSkill in EmpAchievementSkillServImpl");
         return empAchievementSkillReqDto;
     }
 
@@ -103,7 +98,6 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
             Optional<Achievement> achievementOpt = achievementRepo.findById(empAchievementSkillDto.getAchievementId());
             Optional<User> userOpt = userRepo.findById(empAchievementSkillDto.getUserId());
             UUID currentUser = getUserUtil.getCurrentUser().getId();
-
             if (achievementOpt.isEmpty()) {
                 throw new RuntimeException("Achievement not found with ID: " + empAchievementSkillDto.getAchievementId());
             }
@@ -121,16 +115,15 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
             );
         }).collect(Collectors.toList());
         List<EmpAchievementSkill> savedSkills = empAchievementSkillRepo.saveAll(empAchievementSkills);
-         EmpAchievementSkillDto firstDto = empAchievementSkillDtos.get(0);
-         UUID userId = firstDto.getUserId();
-         int year = firstDto.getAssessmentYear();
-         assessmentSummaryServ.calculateAndSaveScoreForUser(userId , year);
+        EmpAchievementSkillDto firstDto = empAchievementSkillDtos.get(0);
+        UUID userId = firstDto.getUserId();
+        int year = firstDto.getAssessmentYear();
+        assessmentSummaryServ.calculateAndSaveScoreForUser(userId , year);
         Log.info("End createAllEmpAchievementSkill in EmpAchievementSkillServImpl");
         return savedSkills.stream()
-                          .map(EmpAchievementSkillReqDto::fromEntity)
-                          .collect(Collectors.toList());
+            .map(EmpAchievementSkillReqDto::fromEntity)
+            .collect(Collectors.toList());
     }
-
 
     @Override
     public EmpAchievementSkillReqDto updateEmpAchievementSkill(UUID id, EmpAchievementSkillDto empAchievementSkillDto) {
@@ -156,7 +149,6 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
     @Override
         public Boolean deleteEmpAchievementSkill(UUID id) {
             Log.info("Start deleteEmpAchievementSkill in EmpAchievementSkillServImpl");
-
             if (empAchievementSkillRepo.existsById(id)) {
                 empAchievementSkillRepo.deleteById(id); 
                 Log.info("End deleteEmpAchievementSkill in EmpAchievementSkillServImpl");
@@ -170,7 +162,6 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
         Log.info("Start getAllEmpAchievementSkill in EmpAchievementSkillServImpl");
         List<EmpAchievementSkill> response = empAchievementSkillRepo.findByUserId(id);
         List<EmpAchievementSkillReqDto> empAchievementSkillReqDto = new ArrayList<>();
-
         for (EmpAchievementSkill empAchievementSkill : response) {
             empAchievementSkillReqDto.add(EmpAchievementSkillReqDto.fromEntity(empAchievementSkill));
         }
@@ -183,7 +174,6 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
         Log.info("Start getAllEmpAchievementSkill in EmpAchievementSkillServImpl");
         List<EmpAchievementSkill> response = empAchievementSkillRepo.findByUserIdAndAssessmentYear(id, year);
         List<EmpAchievementSkillReqDto> empAchievementSkillReqDto = new ArrayList<>();
-
         for (EmpAchievementSkill empAchievementSkill : response) {
             if (empAchievementSkill.getAchievement().getGroupAchievement().getEnabled() == 1 && empAchievementSkill.getAchievement().getEnabled() == 1) {
                 empAchievementSkillReqDto.add(EmpAchievementSkillReqDto.fromEntity(empAchievementSkill));
@@ -198,7 +188,6 @@ public class EmpAchievementSkillServImpl implements EmpAchievementSkillServ {
         Log.info("Start getEmpAchievementSkillByYear in EmpAchievementSkillServImpl");
         List<EmpAchievementSkill> response = empAchievementSkillRepo.findByAssessmentYear(year);
         List<EmpAchievementSkillReqDto> empAchievementSkillReqDto = new ArrayList<>();
-
         for (EmpAchievementSkill empAchievementSkill : response) {
             empAchievementSkillReqDto.add(EmpAchievementSkillReqDto.fromEntity(empAchievementSkill));
         }

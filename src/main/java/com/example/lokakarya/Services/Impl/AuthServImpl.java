@@ -1,25 +1,18 @@
 package com.example.lokakarya.Services.Impl;
-
 import com.example.lokakarya.Dto.Auth.ChangePassDto;
 import com.example.lokakarya.Dto.Auth.LoginDto;
 import com.example.lokakarya.Dto.Auth.LoginResponseDto;
-import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.example.lokakarya.Dto.Auth.ChangePassDto;
-import com.example.lokakarya.Dto.Auth.LoginDto;
-import com.example.lokakarya.Dto.Auth.LoginResponseDto;
 import com.example.lokakarya.Dto.User.UserDto;
 import com.example.lokakarya.Entity.User;
 import com.example.lokakarya.Repository.UserRepo;
 import com.example.lokakarya.Services.AuthServ;
 import com.example.lokakarya.util.GetUserUtil;
 import com.example.lokakarya.util.JwtUtil;
-
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,7 +32,6 @@ public class AuthServImpl implements AuthServ {
 
     private static final Logger Log = LoggerFactory.getLogger(AuthServImpl.class);
 
-
     @Override
     public LoginResponseDto login(LoginDto data) {
         Log.info("Start login in AuthServImpl");
@@ -51,7 +43,6 @@ public class AuthServImpl implements AuthServ {
         if (!passwordEncoder.matches(data.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
-
         if (user.getEnabled() == 0) {
             throw new RuntimeException("User is disabled");
         }
@@ -63,8 +54,6 @@ public class AuthServImpl implements AuthServ {
                 .token(token)
                 .build();
     }
-
-
 
     public UserDto changePassword(ChangePassDto data){
         Log.info("Start changePassword in AuthServImpl");
@@ -88,5 +77,4 @@ public class AuthServImpl implements AuthServ {
         Log.info("End changePassword in AuthServImpl");
         return UserDto.fromEntity(user.get());
     }
-
 }

@@ -1,10 +1,8 @@
 package com.example.lokakarya.Services.Impl;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +11,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import com.example.lokakarya.Dto.AttitudeSkill.AttitudeSkillReqDto;
-import com.example.lokakarya.Dto.GroupAchievement.GroupAchievementReqDto;
 import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillDto;
 import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillReqDto;
 import com.example.lokakarya.Dto.GroupAttitudeSkill.GroupAttitudeSkillWithDetailsDto;
-import com.example.lokakarya.Entity.GroupAchievement;
 import com.example.lokakarya.Entity.GroupAttitudeSkill;
 import com.example.lokakarya.Repository.GroupAttitudeSkillRepo;
 import com.example.lokakarya.Services.GroupAttitudeSkillServ;
@@ -27,7 +22,6 @@ import com.example.lokakarya.util.GetUserUtil;
 
 @Service
 public class GroupAttitudeSkillServImpl implements GroupAttitudeSkillServ {
-
     private final Logger Log = LoggerFactory.getLogger(GroupAttitudeSkillServImpl.class);
 
     @Autowired
@@ -41,7 +35,6 @@ public class GroupAttitudeSkillServImpl implements GroupAttitudeSkillServ {
         Log.info("Start getAllGroupAttitudeSkill in GroupAttitudeSkillServImpl");
         List<GroupAttitudeSkill> response = groupAttitudeSkillRepo.findAll();
         List<GroupAttitudeSkillReqDto> groupAttitudeSkillReqDto = new ArrayList<>();
-
         for (GroupAttitudeSkill groupAttitudeSkill : response) {
             groupAttitudeSkillReqDto.add(GroupAttitudeSkillReqDto.fromEntity(groupAttitudeSkill));
         }
@@ -52,30 +45,23 @@ public class GroupAttitudeSkillServImpl implements GroupAttitudeSkillServ {
     @Override
     public List<GroupAttitudeSkillReqDto> getPaginatedGroupAttitudeSkill(int page, int size, String sort, String direction, String searchKeyword) {
         Log.info("Start getPaginatedGroupAttitudeSkill in GroupAttitudeSkillServImpl");
-        
         Sort sorting = direction.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
         Pageable pageable = PageRequest.of(page, size, sorting);
         Page<GroupAttitudeSkill> groupAttitudeSkillPage;
-
         if (searchKeyword != null && !searchKeyword.isEmpty()) {
             try {
-                // Coba untuk mengonversi searchKeyword menjadi Double
                 Double percentage = Double.valueOf(searchKeyword);
-                // Jika berhasil, cari berdasarkan percentage
                 groupAttitudeSkillPage = groupAttitudeSkillRepo.findByPercentage(percentage, pageable);
             } catch (NumberFormatException e) {
-                // Jika tidak bisa dikonversi, cari berdasarkan groupName
                 groupAttitudeSkillPage = groupAttitudeSkillRepo.findByGroupNameContainingIgnoreCase(searchKeyword, pageable);
             }
         } else {
             groupAttitudeSkillPage = groupAttitudeSkillRepo.findAll(pageable);
         }
-
         List<GroupAttitudeSkillReqDto> groupAttitudeSkillReqDto = new ArrayList<>();
         for (GroupAttitudeSkill groupAttitudeSkill : groupAttitudeSkillPage.getContent()) {
             groupAttitudeSkillReqDto.add(GroupAttitudeSkillReqDto.fromEntity(groupAttitudeSkill));
         }
-        
         Log.info("End getPaginatedGroupAttitudeSkill in GroupAttitudeSkillServImpl");
         return groupAttitudeSkillReqDto;
     }
@@ -112,9 +98,6 @@ public class GroupAttitudeSkillServImpl implements GroupAttitudeSkillServ {
             attitudeSkillDtos
         );
     }
-
-
-
 
     @Override
     public GroupAttitudeSkillReqDto createGroupAttitudeSkill(GroupAttitudeSkillDto groupAttitudeSkillDto) {
@@ -162,11 +145,10 @@ public class GroupAttitudeSkillServImpl implements GroupAttitudeSkillServ {
         }
         Log.info("End getAllGroupAttitudeSkillEnabled in GroupAttitudeSkillServImpl");
         return groupAttitudeSkillReqDto;
-
     }
     @Override
     public long count() {
-        return groupAttitudeSkillRepo.count(); // Get total count of records
+        return groupAttitudeSkillRepo.count(); 
     }
 
     @Override
@@ -174,8 +156,6 @@ public class GroupAttitudeSkillServImpl implements GroupAttitudeSkillServ {
         if (searchKeyword != null && !searchKeyword.isEmpty()) {
             return groupAttitudeSkillRepo.countByGroupNameContainingIgnoreCase(searchKeyword);
         }
-        return groupAttitudeSkillRepo.count(); // Mengembalikan total count jika tidak ada keyword pencarian
+        return groupAttitudeSkillRepo.count(); 
     }
-
-
 }

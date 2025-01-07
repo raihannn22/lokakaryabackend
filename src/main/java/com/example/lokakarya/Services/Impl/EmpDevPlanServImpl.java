@@ -1,12 +1,10 @@
 package com.example.lokakarya.Services.Impl;
-
 import jakarta.persistence.EntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.example.lokakarya.Dto.EmpDevPlan.EmpDevPlanDto;
 import com.example.lokakarya.Dto.EmpDevPlan.EmpDevPlanReqDto;
 import com.example.lokakarya.Entity.DevPlan;
@@ -17,7 +15,6 @@ import com.example.lokakarya.Repository.EmpDevPlanRepo;
 import com.example.lokakarya.Repository.UserRepo;
 import com.example.lokakarya.Services.EmpDevPlanServ;
 import com.example.lokakarya.util.GetUserUtil;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -68,16 +65,11 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         empDevPlanRepo.deleteByUserIdAndAssessmentYear(currentUserId, currentYear);
         entityManager.flush();
-
         List<EmpDevPlan> empDevPlans = new ArrayList<>();
         for (EmpDevPlanDto empDevPlanDto : empDevPlanDtos) {
             empDevPlanDto.setUser(currentUserId);
-            System.out.println("ini id user " + empDevPlanDto.getUser());
-            System.out.println("ini id devplan " + empDevPlanDto.getDevPlan());
-
             Optional<DevPlan> devPlan = devPlanRepo.findById(empDevPlanDto.getDevPlan());
             Optional<User> user = userRepo.findById(empDevPlanDto.getUser());
-
             if (devPlan.isPresent() && user.isPresent()) {
                 EmpDevPlan empDevPlan = EmpDevPlanDto.toEntity(empDevPlanDto, currentUserId, new Date(), null, null);
                 empDevPlan.setDevPlan(devPlan.get());
@@ -89,13 +81,11 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
         }
         empDevPlanRepo.saveAll(empDevPlans); 
         entityManager.flush(); 
-
         Log.info("End createEmpDevPlans in EmpDevPlanServImpl");
         return empDevPlans.stream()
                 .map(EmpDevPlanReqDto::fromEntity)
                 .collect(Collectors.toList());
     }
-
     @Override
     public EmpDevPlanReqDto updateEmpDevPlan(UUID id, EmpDevPlanDto empDevPlanDto) {
         Log.info("Start updateEmpDevPlan in EmpDevPlanServImpl");
@@ -116,7 +106,6 @@ public class EmpDevPlanServImpl implements EmpDevPlanServ {
         empDevPlan.setId(id);
         empDevPlan.setAssessmentYear(empDevPlanDto.getAssessmentYear());
         empDevPlanRepo.save(empDevPlan);
-
         Log.info("End updateEmpDevPlan in EmpDevPlanServImpl");
         return EmpDevPlanReqDto.fromEntity(empDevPlan);
     }

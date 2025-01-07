@@ -1,5 +1,4 @@
 package com.example.lokakarya.Services.Impl;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,16 +7,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import com.example.lokakarya.Dto.DevPlan.DevPlanDto;
 import com.example.lokakarya.Dto.DevPlan.DevPlanReqDto;
-import com.example.lokakarya.Dto.TechnicalSkill.TechnicalSkillReqDto;
 import com.example.lokakarya.Entity.DevPlan;
-import com.example.lokakarya.Entity.TechnicalSkill;
 import com.example.lokakarya.Repository.DevPlanRepo;
 import com.example.lokakarya.Services.DevPlanServ;
 import com.example.lokakarya.util.GetUserUtil;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,22 +43,18 @@ public class DevPlanServImpl implements DevPlanServ {
     @Override
     public List<DevPlanReqDto> getPaginatedDevPlan(int page, int size, String sort, String direction, String searchKeyword) {
         Log.info("Start getPaginatedDevPlan in DevPlanServImpl");
-        
         Sort sorting = direction.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
         Pageable pageable = PageRequest.of(page, size, sorting);
         Page<DevPlan> devPlanPage;
-
         if (searchKeyword != null && !searchKeyword.isEmpty()) {
             devPlanPage = devPlanRepo.findByPlanContainingIgnoreCase(searchKeyword, pageable);
         } else {
             devPlanPage = devPlanRepo.findAll(pageable);
         }
-
         List<DevPlanReqDto> devPlanReqDto = new ArrayList<>();
         for (DevPlan devPlan : devPlanPage.getContent()) {
             devPlanReqDto.add(DevPlanReqDto.fromEntity(devPlan));
         }
-        
         Log.info("End getPaginatedDevPlan in DevPlanServImpl");
         return devPlanReqDto;
     }

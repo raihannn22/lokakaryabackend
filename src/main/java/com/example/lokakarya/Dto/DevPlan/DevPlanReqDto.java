@@ -1,12 +1,9 @@
 package com.example.lokakarya.Dto.DevPlan;
-
 import com.example.lokakarya.Entity.DevPlan;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-
 import java.util.Date;
 import java.util.UUID;
-
 
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,13 +1,8 @@
 package com.example.lokakarya.Dto.Achievement;
-
-import com.example.lokakarya.Dto.AssessmentSummary.AssessmentSummaryReqDto;
 import com.example.lokakarya.Entity.Achievement;
-import com.example.lokakarya.Entity.AssessmentSummary;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-
-import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -43,7 +38,4 @@ public class AchievementReqDto {
         achievementReqDto.setEnabled(achievement.getEnabled());
         return achievementReqDto;
     }
-
-
 }
-

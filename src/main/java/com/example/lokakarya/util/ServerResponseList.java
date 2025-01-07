@@ -1,9 +1,7 @@
 package com.example.lokakarya.util;
-
 import org.springframework.http.HttpStatus;
 
 public class ServerResponseList {
-    // 200 OK with message
     public ResponseDetail getInfoOk(String message, long executionTime) {
         ResponseDetail info = new ResponseDetail();
         info.setStatus(HttpStatus.OK.value());
@@ -14,7 +12,6 @@ public class ServerResponseList {
         return info;
     }
 
-    // 400 BAD REQUEST with message
     public ResponseDetail getInfoBadRequest(String message) {
         ResponseDetail info = new ResponseDetail();
         info.setStatus(HttpStatus.BAD_REQUEST.value());
@@ -24,7 +21,6 @@ public class ServerResponseList {
         return info;
     }
 
-    // 401 UNAUTHORIZED with message
     public ResponseDetail getInfoUnauthorized(String message) {
         ResponseDetail info = new ResponseDetail();
         info.setStatus(HttpStatus.UNAUTHORIZED.value());
@@ -33,8 +29,7 @@ public class ServerResponseList {
         info.setDetailInfo(HttpStatus.UNAUTHORIZED);
         return info;
     }
-
-    // 500 INTERNAL SERVER ERROR with message
+    
     public ResponseDetail getInfoInternalServerError(String message) {
         ResponseDetail info = new ResponseDetail();
         info.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());

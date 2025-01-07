@@ -1,5 +1,4 @@
 package com.example.lokakarya.Entity;
-
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Date;
@@ -47,5 +46,4 @@ public class EmpAttitudeSkill {
     @Temporal(TemporalType.DATE)
     private Date updatedAt;
 
-    
 }

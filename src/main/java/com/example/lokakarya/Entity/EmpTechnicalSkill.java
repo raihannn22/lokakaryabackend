@@ -1,5 +1,4 @@
 package com.example.lokakarya.Entity;
-
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Date;
@@ -22,9 +21,6 @@ public class EmpTechnicalSkill {
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
     
-    // @Column(name = "USER_ID", length = 32, nullable = false)
-    // private UUID userId;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "TECHNICAL_SKILL_ID", nullable = false)
     private TechnicalSkill technicalSkill;
@@ -51,6 +47,4 @@ public class EmpTechnicalSkill {
     @Column(name = "UPDATED_AT")
     @Temporal(TemporalType.DATE)
     private Date updatedAt;
-
-    
 }

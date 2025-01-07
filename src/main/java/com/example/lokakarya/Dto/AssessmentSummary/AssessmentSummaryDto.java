@@ -1,11 +1,8 @@
 package com.example.lokakarya.Dto.AssessmentSummary;
-
-
 import com.example.lokakarya.Entity.AssessmentSummary;
 import com.example.lokakarya.Entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-
 import java.util.Date;
 import java.util.UUID;
 
@@ -17,12 +14,16 @@ import java.util.UUID;
 public class AssessmentSummaryDto {
     @JsonProperty("id")
     private UUID id;
+
     @JsonProperty("user_id")
     private UUID userId;
+
     @JsonProperty("year")
     private Integer year;
+
     @JsonProperty("SCORE")
     private Double score;
+
     @JsonProperty("STATUS")
     private Integer status;
 
@@ -41,4 +42,3 @@ public class AssessmentSummaryDto {
         return assessmentSummary;
     }
 }
-

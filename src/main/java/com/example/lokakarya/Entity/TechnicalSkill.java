@@ -1,5 +1,4 @@
 package com.example.lokakarya.Entity;
-
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Date;
@@ -41,5 +40,4 @@ public class TechnicalSkill {
 
     @OneToMany(mappedBy = "technicalSkill", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<EmpTechnicalSkill> empTechnicalSkills;
-    
 }
