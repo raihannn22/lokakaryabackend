@@ -17,5 +17,6 @@ public interface EmpAttitudeSkillServ {
     List<EmpAttitudeSkillReqDto> getEmpAttitudeSkillByYear( Integer assessmentYear);
     EmpAttitudeSkillReqDto updateEmpAttitudeSkill(UUID id, EmpAttitudeSkillDto empAttitudeSkillReqDto);
     Boolean deleteEmpAttitudeSkill(UUID id);
+    List<EmpAttitudeSkillReqDto> createAllEmpAttitudeSkill2(List<EmpAttitudeSkillDto> empAttitudeSkillDtos);
 }
 

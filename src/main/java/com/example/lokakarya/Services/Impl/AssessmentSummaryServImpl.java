@@ -187,7 +187,7 @@ public class AssessmentSummaryServImpl implements AssessmentSummaryServ {
 
             // Ambil total jumlah achievement di grup ini dari tabel `achievement`
             int totalAchievementsInGroup = (int) group.getAchievements().stream()
-                    .filter(ach -> ach.getGroupAchievement().getEnabled() == 1) // Pastikan grup enabled
+                    .filter(ach -> ach.getGroupAchievement().getEnabled() == 1) // Pastikan grup enabledu
                     .filter(ach -> ach.getEnabled() == 1)
                     .count();
 
