@@ -17,6 +17,5 @@ public interface EmpAchievementSkillServ {
     List<EmpAchievementSkillReqDto> getAllEmpAchievementSkillByUserAndYear(UUID id, Integer year);
 
     List<EmpAchievementSkillReqDto> getEmpAchievementSkillByYear(Integer year);
-    EmpAchievementSkillReqDto updateEmpAchievementSkill2(UUID id, EmpAchievementSkillDto empAchievementSkillDto);
 }
 
